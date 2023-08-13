@@ -5,7 +5,6 @@ import (
     "fmt"
 
 	"github.com/gofiber/fiber/v2"
-	_ "github.com/graphql-go/graphql"
 )
 
 func main() {
