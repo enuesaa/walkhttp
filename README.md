@@ -1,5 +1,5 @@
-# edity
-My hobby editor
+# walkin
+My hobby editor & finder
 
 ## モチベーション
 - graphql を使いたい
