@@ -1,7 +1,7 @@
 root = "."
 tmp_dir = "tmp"
 [build]
-  cmd = "go run ."
+  cmd = "go build -o ./tmp/main ."
   bin = "./tmp/main"
   delay = 1000
   exclude_dir = ["tmp", "apps", "node_modules"]
