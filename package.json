@@ -4,8 +4,10 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "esbuild web/main.tsx --bundle --outdir=dist --platform=node --format=esm --watch",
-    "build": "esbuild web/main.tsx --bundle --outdir=dist --platform=node --format=esm",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
     "format": "prettier --write \"web/**/*.{ts,tsx}\""
   },
   "dependencies": {
@@ -17,9 +19,10 @@
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
-    "esbuild": "^0.19.1",
+    "@vitejs/plugin-react": "^4.0.4",
     "prettier": "^3.0.0",
     "prettier-plugin-organize-imports": "^3.2.3",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "vite": "^4.4.9"
   }
 }
