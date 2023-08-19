@@ -1,7 +1,6 @@
+import { Routes } from '@generouted/react-router'
+
 export const App = () => {
-  return (
-    <div>
-      a
-    </div>
-  )
+  // file based routing
+  return (<Routes />)
 }
