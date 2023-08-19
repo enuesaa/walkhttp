@@ -19,8 +19,13 @@ func main() {
 	fmt.Println(workdir)
 
     app := fiber.New()
+	
+	api := app.Group("/api")
+	// create api routes here
+
     app.Get("/", func(c *fiber.Ctx) error {
-        return c.SendString("Hello, World 👋!")
+		// should return html or assets
+        return c.SendString("")
     })
     app.Listen(":3000")
 }
