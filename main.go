@@ -4,10 +4,10 @@ import (
 	// "flag"
 	// "fmt"
 
-	// "github.com/gofiber/fiber/v2"
+	"fmt"
+
+	"github.com/gofiber/fiber/v2"
 	graphql "github.com/graph-gophers/graphql-go"
-	"github.com/graph-gophers/graphql-go/relay"
-	"net/http"
 )
 
 type query struct{}
@@ -25,31 +25,48 @@ func main() {
 	// workdir := args[0]
 	// fmt.Println(workdir)
 
-	// app := fiber.New()
+	app := fiber.New()
 
 	// _ := app.Group("/api")
 	// create api routes here
 
-	s := `
-	type Query {
-		hey: String!
+	// see https://pkg.go.dev/github.com/graph-gophers/graphql-go@v1.5.0/relay#Handler.ServeHTTP
+	type QueryRequestSchema struct {
+		Query         string                 `json:"query"`
+		OperationName string                 `json:"operationName"`
+		Variables     map[string]interface{} `json:"variables"`
 	}
-	`
+	app.Post("/query", func(c *fiber.Ctx) error {
+		body := new(QueryRequestSchema)
+		if err := c.BodyParser(body); err != nil {
+			return err
+		}
 
-	schema := graphql.MustParseSchema(s, &query{})
+		fmt.Printf("%+v", body)
 
-	// app.Post("/query", func(c *fiber.Ctx) error {
-	// 	handler := &relay.Handler{Schema: schema}
-	// 	handler.ServeHTTP(c.Response(), c.Request())
-	// 	c.SendString()
-	// 	return nil
-	// })
-	http.Handle("/query", &relay.Handler{Schema: schema})
-	http.ListenAndServe(":3000", nil)
+		// definition
+		s := `
+		type Query {
+			hey: String!
+		}
+		`
+		schema := graphql.MustParseSchema(s, &query{})
+
+		response := schema.Exec(
+			c.Context(),
+			body.Query,
+			body.OperationName,
+			body.Variables,
+		)
+	
+		return c.JSON(response)
+	})
+	// http.Handle("/query", &relay.Handler{Schema: schema})
+	// http.ListenAndServe(":3000", nil)
 
 	// app.Get("/", func(c *fiber.Ctx) error {
 	// 	// should return html or assets
 	// 	return c.SendString("")
 	// })
-	// app.Listen(":3000")
+	app.Listen(":3000")
 }
