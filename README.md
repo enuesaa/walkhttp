@@ -2,11 +2,8 @@
 My hobby editor & finder
 
 ## モチベーション
-- graphql を使いたい
 - textlint や openai api を組み入れて自分用のエディターを作りたい
-- editor というか converter のようなものでもいい
-
-## Stacks
-- golang (fiber)
-- esbuild
-- apollo
+- デフォルトでは何もしてほしくない (unlike vscode)
+  - 設定は何もなし
+- gitプロジェクトというより finder 寄り
+- 通信は go でする
