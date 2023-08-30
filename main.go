@@ -7,6 +7,7 @@ import (
 
 	"github.com/enuesaa/walkin/controller"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
 func main() {
@@ -18,6 +19,8 @@ func main() {
 	fmt.Printf("workdir: %s\n", workdir)
 
 	app := fiber.New()
+	// this is for develpoment
+	app.Use(cors.New())
 
 	queryCtl := controller.QueryController{}
 	app.Post("/query", queryCtl.Query)
