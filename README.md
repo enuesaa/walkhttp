@@ -6,7 +6,6 @@ My hobby editor & finder
 - デフォルトでは何もしてほしくない (unlike vscode)
   - 設定は何もなし
 - gitプロジェクトというより finder 寄り
-- 通信は go でする
 
 ## TODO
 - web は embed したい
