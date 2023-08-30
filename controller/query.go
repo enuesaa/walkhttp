@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"github.com/enuesaa/edity/service"
+	"github.com/enuesaa/walkin/service"
 	"github.com/gofiber/fiber/v2"
 )
 

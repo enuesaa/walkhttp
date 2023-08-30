@@ -1,4 +1,4 @@
-module github.com/enuesaa/edity
+module github.com/enuesaa/walkin
 
 go 1.21.0
 

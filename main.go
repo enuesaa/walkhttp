@@ -1,32 +1,26 @@
 package main
 
 import (
-	"flag"
 	"fmt"
+	"log"
+	"os"
 
-	"github.com/enuesaa/edity/controller"
+	"github.com/enuesaa/walkin/controller"
 	"github.com/gofiber/fiber/v2"
 )
 
 func main() {
-	flag.Parse()
-	args := flag.Args()
-	if len(args) == 0 {
-		fmt.Println("Required argument missing: WORKDIR")
-		return
+	workdir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
 	}
-	workdir := args[0]
-	fmt.Println(workdir)
+	fmt.Printf("running..\n\n")
+	fmt.Printf("workdir: %s\n", workdir)
 
 	app := fiber.New()
 
 	queryCtl := controller.QueryController{}
 	app.Post("/query", queryCtl.Query)
-
-	// app.Get("/", func(c *fiber.Ctx) error {
-	// 	// should return html or assets
-	// 	return c.SendString("")
-	// })
 
 	app.Listen(":3000")
 }
