@@ -6,6 +6,8 @@ import (
 )
 
 // see https://pkg.go.dev/github.com/graph-gophers/graphql-go@v1.5.0/relay#Handler.ServeHTTP
+// { "query": "{ fileinfo(name: \"aa\") { name, description } }" }
+
 type QueryRequestSchema struct {
 	Query         string                 `json:"query"`
 	OperationName string                 `json:"operationName"`
@@ -20,12 +22,7 @@ func (ctl *QueryController) Query(c *fiber.Ctx) error {
 		return err
 	}
 
-	querySrv := service.QueryService{}
-	response := querySrv.Exec(
-		body.Query,
-		body.OperationName,
-		body.Variables,
-	)
+	response := service.ExecQuery(body.Query, body.OperationName, body.Variables)
 
 	return c.JSON(response)
 }
