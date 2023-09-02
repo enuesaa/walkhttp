@@ -8,6 +8,6 @@ import (
 )
 
 func ExecQuery(query string, operationName string, variables map[string]interface{}) *graphql.Response {
-	schema := graphql.MustParseSchema(resolver.Schema, &resolver.QueryResolver{})
+	schema := graphql.MustParseSchema(resolver.Schema, &resolver.Resolver{})
 	return schema.Exec(context.Background(), query, operationName, variables)
 }
