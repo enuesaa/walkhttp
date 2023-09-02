@@ -1,23 +1,9 @@
-import { useQuery, gql } from '@apollo/client'
-
-const GET_FILEINFO = gql`
-query {
-  fileinfo(name: "aa") {
-    name
-    description
-  }
-}
-`;
+import { useQuery } from '@apollo/client'
+import { QueryFileinfo } from '@/graph'
 
 export default function Page() {
-  const { loading, error, data } = useQuery(GET_FILEINFO)
-  if (loading) return (<p>loading..</p>);
-  if (error) return (<p>error {error.message}</p>);
+  const { data } = useQuery(QueryFileinfo)
   console.log(data)
 
-  return (
-    <>
-      top page
-    </>
-  )
+  return (<></>)
 }
