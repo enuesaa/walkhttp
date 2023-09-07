@@ -7,7 +7,6 @@ import (
 
 // see https://pkg.go.dev/github.com/graph-gophers/graphql-go@v1.5.0/relay#Handler.ServeHTTP
 // { "query": "{ fileinfo(name: \"aa\") { name, description } }" }
-
 type QueryRequestSchema struct {
 	Query         string                 `json:"query"`
 	OperationName string                 `json:"operationName"`
