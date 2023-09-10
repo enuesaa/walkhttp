@@ -18,4 +18,4 @@ yarn-error.log*
 
 # app
 /tmp
-/dist
+/web/dist

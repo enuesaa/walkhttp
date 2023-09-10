@@ -4,6 +4,14 @@ import path from 'node:path'
 
 export default defineConfig({
   root: './web',
+  build: {
+    outDir: './dist',
+    rollupOptions: {
+			output: {
+				entryFileNames: '[name].js',
+			},
+		},
+  },
   plugins: [
     react(),
   ],
