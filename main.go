@@ -11,9 +11,9 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/cors"
 )
 
-//go:embed web/dist/index.html
+//go:embed tmp/dist/index.html
 var indexHtmlBytes []byte
-//go:embed web/dist/index.js
+//go:embed tmp/dist/index.js
 var indexJsBytes []byte
 
 func main() {
