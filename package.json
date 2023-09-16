@@ -4,7 +4,6 @@
   "private": true,
   "license": "MIT",
   "scripts": {
-    "dev": "vite --port 3001",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "format": "prettier --write \"web/**/*.{ts,tsx}\""

@@ -6,3 +6,7 @@ tasks:
       - pnpm install
       - pnpm build
       - go install
+
+  dev:
+    cmds:
+      - air

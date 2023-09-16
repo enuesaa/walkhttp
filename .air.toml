@@ -1,0 +1,10 @@
+root = "."
+tmp_dir = "tmp"
+[build]
+  cmd = "go build -o tmp/main && pnpm build"
+  bin = "./tmp/main"
+  args_bin = ["-task", "serve"]
+  delay = 1000
+  exclude_dir = ["tmp", "node_modules"]
+  include_ext = ["go", "tpl", "tmpl", "html", "tsx"]
+  exclude_regex = ["_test\\.go"]
