@@ -1,6 +1,8 @@
 package controller
 
 import (
+	"fmt"
+
 	"github.com/enuesaa/walkin/service"
 	"github.com/gofiber/fiber/v2"
 )
@@ -21,7 +23,11 @@ func (ctl *QueryController) Query(c *fiber.Ctx) error {
 		return err
 	}
 
-	response := service.ExecQuery(body.Query, body.OperationName, body.Variables)
+	response, err := service.ExecQuery(body.Query, body.OperationName, body.Variables)
+	if err != nil {
+		fmt.Println(err)
+		return c.JSON("{}")
+	}
 
 	return c.JSON(response)
 }

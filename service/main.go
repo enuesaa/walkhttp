@@ -7,7 +7,10 @@ import (
 	"github.com/enuesaa/walkin/resolver"
 )
 
-func ExecQuery(query string, operationName string, variables map[string]interface{}) *graphql.Response {
-	schema := graphql.MustParseSchema(resolver.Schema, &resolver.Resolver{})
-	return schema.Exec(context.Background(), query, operationName, variables)
+func ExecQuery(query string, operationName string, variables map[string]interface{}) (*graphql.Response, error) {
+	schema, err := graphql.ParseSchema(resolver.Schema2, &resolver.Resolver{})
+	if err != nil {
+		return nil, err
+	}
+	return schema.Exec(context.Background(), query, operationName, variables), nil
 }
