@@ -21,10 +21,10 @@ var Schema = `
 
 type Resolver struct {}
 
-func (_ *Resolver) Query() *QueryResolver {
+func (*Resolver) Query() *QueryResolver {
 	return &QueryResolver{}
 }
 
-func (_ *Resolver) Mutation() *MutationResolver {
+func (*Resolver) Mutation() *MutationResolver {
 	return &MutationResolver{}
 }

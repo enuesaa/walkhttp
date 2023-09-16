@@ -8,7 +8,7 @@ import (
 )
 
 func ExecQuery(query string, operationName string, variables map[string]interface{}) (*graphql.Response, error) {
-	schema, err := graphql.ParseSchema(resolver.Schema2, &resolver.Resolver{})
+	schema, err := graphql.ParseSchema(resolver.Schema, &resolver.Resolver{})
 	if err != nil {
 		return nil, err
 	}
