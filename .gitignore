@@ -17,5 +17,5 @@ yarn-error.log*
 .vscode
 
 # app
-/tmp
+/build
 /web/dist
