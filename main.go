@@ -16,6 +16,8 @@ import (
 var indexHtmlBytes []byte
 //go:embed build/index.js
 var indexJsBytes []byte
+//go:embed build/assets/index.css
+var assetsIndexCssBytes []byte
 
 type ErrorResponse struct {
 	Error string `json:"error"`
@@ -51,6 +53,10 @@ func main() {
 	app.Get("/index.js", func(c *fiber.Ctx) error {
 		c.Set(fiber.HeaderContentType, fiber.MIMETextJavaScript)
 		return c.SendString(string(indexJsBytes))
+	})
+	app.Get("/assets/index.css", func(c * fiber.Ctx) error {
+		c.Set(fiber.HeaderContentType, "text/css")
+		return c.SendString(string(assetsIndexCssBytes))
 	})
 
 	app.Listen(":3000")

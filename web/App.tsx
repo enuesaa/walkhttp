@@ -1,9 +1,6 @@
 import { RouterProvider } from 'react-router-dom'
 import { createRouter } from './routes'
 import { ApolloClient, InMemoryCache, ApolloProvider, gql } from '@apollo/client'
-import { ChakraProvider } from '@chakra-ui/react'
-import { Global } from '@emotion/react'
-import { globalStyle } from './styles/global'
 import './styles/globals.css'
 
 export const App = () => {
@@ -15,10 +12,7 @@ export const App = () => {
 
   return (
     <ApolloProvider client={client}>
-      <Global styles={globalStyle} />
-      <ChakraProvider>
-        <RouterProvider router={router} />
-      </ChakraProvider>
+      <RouterProvider router={router} />
     </ApolloProvider>
   )
 }

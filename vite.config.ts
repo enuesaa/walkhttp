@@ -9,7 +9,8 @@ export default defineConfig({
     rollupOptions: {
 			output: {
 				entryFileNames: '[name].js',
-			},
+        assetFileNames: 'assets/[name][extname]',
+      },
 		},
   },
   plugins: [
@@ -17,7 +18,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@/': path.join(__dirname, 'web/')
+      '@/': path.join(__dirname, './web/')
     }
   },
 })

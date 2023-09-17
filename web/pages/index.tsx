@@ -1,7 +1,5 @@
 import { useQuery } from '@apollo/client'
 import { QueryFileinfo } from '@/graph'
-import { FileDrawer } from '@/components/FileDrawer'
-import { Heading } from '@chakra-ui/react'
 import { Button } from "@/components/ui/button"
 
 export default function Page() {
@@ -10,9 +8,7 @@ export default function Page() {
 
   return (
     <>
-      <Heading>walkin</Heading>
-      <Button variant='secondary'>aa</Button>
-      <FileDrawer />
+      <Button variant='destructive'>aa</Button>
     </>
   )
 }

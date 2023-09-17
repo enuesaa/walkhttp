@@ -20,16 +20,13 @@
     "incremental": false,
     "baseUrl": "./",
     "paths": {
-      "@/*": [
-        "web/*"
-      ]
+      "@/*": ["./web/*"]
     }
   },
   "include": [
     "web/vite-env.d.ts",
     "**/*.ts",
-    "**/*.tsx",
-    "dist/types/**/*.ts"
+    "**/*.tsx"
   ],
   "exclude": [
     "node_modules"
