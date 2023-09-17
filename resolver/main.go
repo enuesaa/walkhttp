@@ -2,10 +2,6 @@ package resolver
 
 // see https://github.com/graph-gophers/graphql-go/blob/master/example/starwars/starwars.go#L146
 var Schema = `
-	schema {
-		query: Query
-		mutation: Mutation
-	}
 	type Query {
 		fileinfo(name: String!): Fileinfo
 	}
@@ -21,10 +17,14 @@ var Schema = `
 
 type Resolver struct {}
 
-func (*Resolver) Query() *QueryResolver {
-	return &QueryResolver{}
+func (r *Resolver) Fileinfo(args struct{ Name string }) *FileinfoResolver {
+	// run os
+	if args.Name == "aa" {
+		return &FileinfoResolver{ name: "aa", description: "aa-description" }
+	}
+	return &FileinfoResolver{ name: "aa", description: "aa-description" }
 }
 
-func (*Resolver) Mutation() *MutationResolver {
-	return &MutationResolver{}
+func (r *Resolver) CreateFile(args struct{ Name string }) *FileinfoResolver {
+	return &FileinfoResolver{ name: "aa", description: "aa-description" }
 }
