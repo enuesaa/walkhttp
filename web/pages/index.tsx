@@ -11,7 +11,7 @@ export default function Page() {
     <>
       <h2 className='text-3xl font-bold tracking-tight'>walkin</h2>
       <Card>aa</Card>
-      <Button variant='destructive'>aa</Button>    
+      <Button variant='destructive'>aa</Button>
     </>
   )
 }
