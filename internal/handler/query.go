@@ -1,9 +1,9 @@
-package controller
+package handler
 
 import (
 	"fmt"
 
-	"github.com/enuesaa/walkin/service"
+	"github.com/enuesaa/walkin/internal/service"
 	"github.com/gofiber/fiber/v2"
 )
 
