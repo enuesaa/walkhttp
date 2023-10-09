@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"errors"
 	"fmt"
+	"io"
 	"log"
 	"os"
 
@@ -39,6 +40,22 @@ func main() {
 
 	queryCtl := controller.QueryController{}
 	app.Post("/query", queryCtl.Query)
+
+	app.Get("/", func(c *fiber.Ctx) error {
+		f, err := os.Open("./testdata/index.html")
+		if err != nil {
+			return err
+		}
+		defer f.Close()
+
+		content, err := io.ReadAll(f)
+		if err != nil {
+			return err
+		}
+		c.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
+
+		return c.SendString(string(content))
+	})
 
 	app.Listen(":3000")
 }
