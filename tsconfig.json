@@ -20,11 +20,11 @@
     "incremental": false,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["./web/*"]
+      "@/*": ["admin/*"]
     }
   },
   "include": [
-    "web/vite-env.d.ts",
+    "admin/vite-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
   ],

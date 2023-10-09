@@ -1,7 +1,7 @@
 import { useQuery } from '@apollo/client'
-import { QueryFileinfo } from '@/graph'
-import { Button } from '@/components/ui/button'
-import { Card } from '@/components/ui/card'
+import { QueryFileinfo } from 'admin/graph'
+import { Button } from 'admin/components/ui/button'
+import { Card } from 'admin/components/ui/card'
 
 export default function Page() {
   const { data } = useQuery(QueryFileinfo)
