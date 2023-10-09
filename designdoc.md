@@ -1,3 +1,4 @@
 # designdoc
-## Development Plan
-- とりあえずファイル一覧
+## features
+- instant web server
+- serve graohql or rest api (files info)
