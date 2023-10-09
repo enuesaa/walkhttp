@@ -44,6 +44,16 @@ func main() {
 	})
 	app.Use(recover.New())
 
+	something := "aaa"
+	app.Post("/aaa", func(c *fiber.Ctx) error {
+		something = "bbb"
+		return nil
+	})
+
+	app.Get("/aaa", func(c *fiber.Ctx) error {
+		return c.SendString(something)
+	})
+
 	queryCtl := controller.QueryController{}
 	app.Post("/query", queryCtl.Query)
 	app.Get("/", func(c *fiber.Ctx) error {
