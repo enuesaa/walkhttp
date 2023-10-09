@@ -23,7 +23,7 @@ func errorHandler(ctx *fiber.Ctx, err error) error {
 	return ctx.Status(code).JSON(ErrorResponse { Error: "Internal Sever Error" })
 }
 
-func Handle() {
+func Handle(port string) {
 	workdir, err := os.Getwd()
 	if err != nil {
 		log.Fatal(err)
@@ -54,5 +54,6 @@ func Handle() {
 		return c.SendString(string(content))
 	})
 
-	app.Listen(":3000")
+	addr := fmt.Sprintf(":%s", port)
+	app.Listen(addr)
 }
