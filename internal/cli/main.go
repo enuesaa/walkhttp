@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"github.com/enuesaa/walkin/internal/handler"
 	"github.com/spf13/cobra"
 )
 
@@ -11,11 +10,10 @@ func CreateApp() *cobra.Command {
 		Short:   "Instant web server.",
 		Version: "0.0.1",
 		Run: func(cmd *cobra.Command, args []string) {
-			port, _ := cmd.Flags().GetString("port")
-			handler.Handle(port)
+			cmd.Help()
 		},
 	}
-	cmd.Flags().String("port", "3000", "port")
+	cmd.AddCommand(CreateServeCmd())
 
 	// disable default
 	cmd.SetHelpCommand(&cobra.Command{Hidden: true})

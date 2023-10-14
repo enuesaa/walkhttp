@@ -5,8 +5,6 @@ import (
 )
 
 func main() {
-	// repos
-
 	app := cli.CreateApp()
 	app.Execute()
 }
