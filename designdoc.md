@@ -1,17 +1,12 @@
 # designdoc
 ## Features
 - instant web server
-- serve files info with graohql
-- serve files info with rest api
+- configure to serve files info with graohql or rest api
 
 ### Instant Web Server
 - ローカルにあるファイルを serve できる
 - 開発しているとウェブサーバーが欲しい時がある
 - api gateway ライクにレスポンスとか変えられる
-
-### Usecases
-- API Mock
-- HTML/CSS 確認
 
 ## Commands
 ```bash
@@ -25,10 +20,24 @@ walkin serve --config ./config.json
 {
     "paths": {
         "/": {
-            // this is optional setting to append content-type header to response.
             "Content-Type": "application/json"
         },
-    }
+    },
+    "default": {
+        "respone": {
+            "headers": {
+                // this is optional setting to append content-type header to response.
+                "Content-Type": "application/json"
+            }
+        }
+    },
+    "rules": [
+        {
+            "if": {
+                "path": "/"
+            }
+        }
+    ]
 }
 ```
 
