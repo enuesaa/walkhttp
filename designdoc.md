@@ -55,3 +55,37 @@ walkin serve --config ./config.json
     }
 }
 ```
+
+### (c) only one config file with multiple rules.
+```json
+{
+    "rules": [
+        {
+            "path": "/*",
+            "behavior": "passThrough",
+            "accessWithoutExtention": true, // like `/users/aaa.json` or `/users/aaa/`
+            "accessWithoutTrailingSlash": true, // like `/users/aaa.json` or `/users/aaa`. if accessWithoutExtention is false, this also do not work.
+            "responseHeaders": {
+                "Content-Type": "application/json"
+            },
+            "responseStatus": "200"
+        },
+        {
+            "path": "/users",
+            "behavior": "listFiles",
+            "listFilesDirectory": "./users",
+            "accessWithoutTrailingSlash": true,
+            // todo re-consider
+            "listFilesBodyBase": {
+                "items": "LIST_FILES_ITEMS",
+                "page": 1
+            },
+        },
+        {
+            "path": "/users-graph",
+            "behavior": "graphFiles",
+            "graphFilesDirectory": "./users",
+        },
+    ]
+}
+```
