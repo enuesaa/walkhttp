@@ -14,55 +14,14 @@ walkin serve --config ./config.json
 ```
 
 ## Config file format
-### (a) only one config file.
-```json
-// like openapi
-{
-    "paths": {
-        "/": {
-            "Content-Type": "application/json"
-        },
-    },
-    "default": {
-        "respone": {
-            "headers": {
-                // this is optional setting to append content-type header to response.
-                "Content-Type": "application/json"
-            }
-        }
-    },
-    "rules": [
-        {
-            "if": {
-                "path": "/"
-            }
-        }
-    ]
-}
-```
+only one config file with multiple rules.
 
-### (b) multiple config files exists like file-based routing
-```json
-// /aaa/config.json match route `/aaa/`
-{
-    "request": {
-        "method": "POST"
-    },
-    "response": {
-        "headers": {
-            "Content-Type": "application/json"
-        }
-    }
-}
-```
-
-### (c) only one config file with multiple rules.
 ```json
 {
     "rules": [
         {
             "path": "/*",
-            "behavior": "passThrough",
+            "behavior": "readFiles",
             "accessWithoutExtention": true, // like `/users/aaa.json` or `/users/aaa/`
             "accessWithoutTrailingSlash": true, // like `/users/aaa.json` or `/users/aaa`. if accessWithoutExtention is false, this also do not work.
             "responseHeaders": {
@@ -75,11 +34,6 @@ walkin serve --config ./config.json
             "behavior": "listFiles",
             "listFilesDirectory": "./users",
             "accessWithoutTrailingSlash": true,
-            // todo re-consider
-            "listFilesBodyBase": {
-                "items": "LIST_FILES_ITEMS",
-                "page": 1
-            },
         },
         {
             "path": "/users-graph",
