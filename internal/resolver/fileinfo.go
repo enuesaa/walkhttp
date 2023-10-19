@@ -2,7 +2,7 @@ package resolver
 
 type FileinfoResolver struct {
 	// path string
-	name string
+	name        string
 	description string
 	// isdir bool
 	// created string

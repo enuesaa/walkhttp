@@ -15,7 +15,7 @@ type QueryRequestSchema struct {
 	Variables     map[string]interface{} `json:"variables"`
 }
 
-type QueryController struct {}
+type QueryController struct{}
 
 func (ctl *QueryController) Query(c *fiber.Ctx) error {
 	body := new(QueryRequestSchema)

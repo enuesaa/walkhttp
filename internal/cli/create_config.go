@@ -6,8 +6,8 @@ import (
 
 func CreateCreateConfigCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "create-config",
-		Short:   "create config file with prompt.",
+		Use:   "create-config",
+		Short: "create config file with prompt.",
 		Run: func(cmd *cobra.Command, args []string) {
 			// .walkin 配下に保存する
 		},

@@ -7,8 +7,8 @@ import (
 
 func CreateServeCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "serve",
-		Short:   "serve instant web server.",
+		Use:   "serve",
+		Short: "serve instant web server.",
 		Run: func(cmd *cobra.Command, args []string) {
 			// config, _ := cmd.Flags().GetString("config")
 			// handler.Handle(port)

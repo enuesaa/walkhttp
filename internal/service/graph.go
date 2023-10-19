@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 
-	"github.com/graph-gophers/graphql-go"
 	"github.com/enuesaa/walkin/internal/resolver"
+	"github.com/graph-gophers/graphql-go"
 )
 
 func ExecQuery(query string, operationName string, variables map[string]interface{}) (*graphql.Response, error) {

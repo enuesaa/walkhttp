@@ -14,13 +14,14 @@ import (
 type ErrorResponse struct {
 	Error string `json:"error"`
 }
+
 func errorHandler(ctx *fiber.Ctx, err error) error {
 	code := fiber.StatusInternalServerError
 	var e *fiber.Error
 	if errors.As(err, &e) {
 		code = e.Code
 	}
-	return ctx.Status(code).JSON(ErrorResponse { Error: "Internal Sever Error" })
+	return ctx.Status(code).JSON(ErrorResponse{Error: "Internal Sever Error"})
 }
 
 func Handle(port string) {
@@ -29,7 +30,7 @@ func Handle(port string) {
 		log.Fatal(err)
 	}
 	fmt.Printf("running on %s\n", workdir)
-		
+
 	app := fiber.New(fiber.Config{
 		ErrorHandler: errorHandler,
 	})

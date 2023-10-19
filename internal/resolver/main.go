@@ -15,16 +15,16 @@ var Schema = `
 	}
 `
 
-type Resolver struct {}
+type Resolver struct{}
 
 func (r *Resolver) Fileinfo(args struct{ Name string }) *FileinfoResolver {
 	// run os
 	if args.Name == "aa" {
-		return &FileinfoResolver{ name: "aa", description: "aa-description" }
+		return &FileinfoResolver{name: "aa", description: "aa-description"}
 	}
-	return &FileinfoResolver{ name: "aa", description: "aa-description" }
+	return &FileinfoResolver{name: "aa", description: "aa-description"}
 }
 
 func (r *Resolver) CreateFile(args struct{ Name string }) *FileinfoResolver {
-	return &FileinfoResolver{ name: "aa", description: "aa-description" }
+	return &FileinfoResolver{name: "aa", description: "aa-description"}
 }
