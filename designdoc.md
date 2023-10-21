@@ -11,40 +11,31 @@
 ## Commands
 ```bash
 walkin serve --config ./config.json
-walkin serve --type static --response-header "Content-Type: application/json"
-walkin serve --type restapi
-walkin serve --type graphql
 ```
 
 ## Config file format
 only one config file with multiple rules.
 
-長ったらしい config file はユースケースに合わないので、なんとかしたい。
-
 ```json
 {
-    "rules": [
-        {
-            "path": "/*",
-            "behavior": "readFiles",
+    "rules": {
+        "/*": {
+            "behavior": "passthrough",
             "accessWithoutExtention": true, // like `/users/aaa.json` or `/users/aaa/`
             "accessWithoutTrailingSlash": true, // like `/users/aaa.json` or `/users/aaa`. if accessWithoutExtention is false, this also do not work.
+        },
+        "/*.json": {
+            "behavior": "passthrough",
             "responseHeaders": {
                 "Content-Type": "application/json"
             },
-            "responseStatus": "200"
         },
-        {
-            "path": "/users",
-            "behavior": "listFiles",
-            "listFilesDirectory": "./users",
-            "accessWithoutTrailingSlash": true,
+        "/files": {
+            "behavior": "api"
         },
-        {
-            "path": "/users-graph",
-            "behavior": "graphFiles",
-            "graphFilesDirectory": "./users",
-        },
-    ]
+        "/graph": {
+            "behavior": "graphql"
+        }
+    }
 }
 ```
