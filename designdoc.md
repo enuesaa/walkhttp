@@ -11,10 +11,15 @@
 ## Commands
 ```bash
 walkin serve --config ./config.json
+walkin serve --type static --response-header "Content-Type: application/json"
+walkin serve --type restapi
+walkin serve --type graphql
 ```
 
 ## Config file format
 only one config file with multiple rules.
+
+長ったらしい config file はユースケースに合わないので、なんとかしたい。
 
 ```json
 {
