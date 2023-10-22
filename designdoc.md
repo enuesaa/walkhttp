@@ -2,11 +2,11 @@
 ## Features
 - instant web server
 - configure to serve files info with graohql or rest api
+- もう少しエディター寄りの開発用ツールにしたい
 
 ### Instant Web Server
 - ローカルにあるファイルを serve できる
 - 開発しているとウェブサーバーが欲しい時がある
-- api gateway ライクにレスポンスとか変えられる
 
 ## Commands
 ```bash
