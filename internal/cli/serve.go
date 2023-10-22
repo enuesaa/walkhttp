@@ -19,7 +19,7 @@ func CreateServeCmd() *cobra.Command {
 		
 			app := fiber.New()
 			app.Get("/*", func(c *fiber.Ctx) error {
-				path := c.OriginalURL() // like `/`
+				path := c.Path() // like `/`
 
 				f, err := os.Open(fmt.Sprintf(".%s", path))
 				if err != nil {
