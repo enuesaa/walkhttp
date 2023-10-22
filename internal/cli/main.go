@@ -14,6 +14,7 @@ func CreateApp() *cobra.Command {
 		},
 	}
 	cmd.AddCommand(CreateServeCmd())
+	cmd.AddCommand(CreateServemdCmd())
 	cmd.AddCommand(CreateCreateConfigCmd())
 
 	// disable default
