@@ -2,7 +2,7 @@
 ## Features
 - instant web server
 - configure to serve files info with graohql or rest api
-- もう少しエディター寄りの開発用ツールにしたい
+- 例えば markdown の frontmatter を parse して JSON 形式で serve したい
 
 ### Instant Web Server
 - ローカルにあるファイルを serve できる
@@ -20,12 +20,12 @@ only one config file with multiple rules.
 {
     "rules": {
         "/*": {
-            "behavior": "passthrough",
+            "behavior": "readfile",
             "accessWithoutExtention": true, // like `/users/aaa.json` or `/users/aaa/`
             "accessWithoutTrailingSlash": true, // like `/users/aaa.json` or `/users/aaa`. if accessWithoutExtention is false, this also do not work.
         },
         "/*.json": {
-            "behavior": "passthrough",
+            "behavior": "readfile",
             "responseHeaders": {
                 "Content-Type": "application/json"
             },
