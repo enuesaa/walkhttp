@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"net/http"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cobra"
@@ -12,16 +14,18 @@ import (
 func CreateServeCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "serve",
-		Short: "serve instant web server.",
-		Run: func(cmd *cobra.Command, args []string) {
-			workdir, _ := os.Getwd()
-			fmt.Printf("running on %s\n", workdir)
-		
+		Short: "serve static files",
+		Run: func(cmd *cobra.Command, args []string) {		
 			app := fiber.New()
 			app.Get("/*", func(c *fiber.Ctx) error {
-				path := c.Path() // like `/`
+				requestPath := c.Path() // like `/`
 
-				f, err := os.Open(fmt.Sprintf(".%s", path))
+				path := fmt.Sprintf(".%s", requestPath) // like `./`
+				if strings.HasSuffix(path, "/") {
+					path += "index.html"
+				}
+
+				f, err := os.Open(path)
 				if err != nil {
 					return err
 				}
@@ -31,14 +35,14 @@ func CreateServeCmd() *cobra.Command {
 				if err != nil {
 					return err
 				}
-				// c.Set(fiber.HeaderContentType, fiber.MIMETextHTML)
+				mimeType := http.DetectContentType(content)
+				c.Set(fiber.HeaderContentType, mimeType)
 
 				return c.SendString(string(content))
 			})
 			app.Listen(":3000")
 		},
 	}
-	cmd.Flags().String("config", "config.json", "config file path")
 
 	return cmd
 }
