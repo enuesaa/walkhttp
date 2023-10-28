@@ -18,7 +18,9 @@ func CreateServeCmd() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {	
 			port, _ := cmd.Flags().GetInt("port")
 	
-			app := fiber.New()
+			app := fiber.New(fiber.Config{
+				DisableStartupMessage: true,
+			})
 			app.Get("/*", func(c *fiber.Ctx) error {
 				requestPath := c.Path() // like `/`
 
@@ -45,6 +47,7 @@ func CreateServeCmd() *cobra.Command {
 			})
 
 			addr := fmt.Sprintf(":%d", port)
+			fmt.Printf("serve on http://localhost%s\n", addr)
 			app.Listen(addr)
 		},
 	}
