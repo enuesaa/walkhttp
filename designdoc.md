@@ -13,9 +13,7 @@
 walkin serve --config ./config.json
 ```
 
-## Config file format
-only one config file with multiple rules.
-
+## config
 ```json
 {
     "rules": {
@@ -39,3 +37,8 @@ only one config file with multiple rules.
     }
 }
 ```
+
+## Development plan
+- とりあえず上記仕様で実装する
+- おそらく汎用性がないので、様子を見て仕様変更する
+
