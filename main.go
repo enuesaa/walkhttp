@@ -15,6 +15,7 @@ func main() {
 		},
 	}
 	app.AddCommand(cli.CreateServeCmd())
+	app.AddCommand(cli.CreateServeApiCmd())
 	app.AddCommand(cli.CreateServemdCmd())
 
 	// disable default
