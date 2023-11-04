@@ -1,13 +1,7 @@
 package cli
 
 import (
-	"fmt"
-	"io"
-	"os"
-	"net/http"
-	"strings"
-
-	"github.com/gofiber/fiber/v2"
+	"github.com/enuesaa/walkin/internal/service"
 	"github.com/spf13/cobra"
 )
 
@@ -18,37 +12,10 @@ func CreateServeCmd() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {	
 			port, _ := cmd.Flags().GetInt("port")
 	
-			app := fiber.New(fiber.Config{
-				DisableStartupMessage: true,
-			})
-			app.Get("/*", func(c *fiber.Ctx) error {
-				requestPath := c.Path() // like `/`
-
-				path := fmt.Sprintf(".%s", requestPath) // like `./`
-				if strings.HasSuffix(path, "/") {
-					path += "index.html"
-				}
-
-				f, err := os.Open(path)
-				if err != nil {
-					return err
-				}
-				defer f.Close()
-
-				content, err := io.ReadAll(f)
-				if err != nil {
-					return err
-				}
-				mimeType := http.DetectContentType(content)
-				c.Set(fiber.HeaderContentType, mimeType)
-				fmt.Printf("%s is %s.", path, mimeType)
-
-				return c.SendString(string(content))
-			})
-
-			addr := fmt.Sprintf(":%d", port)
-			fmt.Printf("serve on http://localhost%s\n", addr)
-			app.Listen(addr)
+			webSrv := service.NewWebService()
+			webSrv.EnableStaticServe()
+			webSrv.SetPort(port)
+			webSrv.Serve()
 		},
 	}
 	cmd.Flags().Int("port", 3000, "port")
