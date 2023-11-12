@@ -15,9 +15,6 @@ func main() {
 		},
 	}
 	app.AddCommand(cli.CreateServeCmd())
-	app.AddCommand(cli.CreateServeApiCmd())
-	app.AddCommand(cli.CreateServemdCmd())
-	app.AddCommand(cli.CreateServeGraphqlCmd())
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
