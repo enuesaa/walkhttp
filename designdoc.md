@@ -11,29 +11,30 @@
 ## Commands
 ```bash
 walkin up
-walkin up --config walkin.json
+walkin up --config walkin.yaml
 ```
 
 ## Config
-```json
-{
-    "paths": {
-        "/*": {
-            "behavior": "readLocalFiles"
-        },
-        "/*.json": {
-            "behavior": "readLocalFiles",
-            "responseHeaders": {
-                "Content-Type": "application/json"
-            },
-        },
-        "/files": {
-            "behavior": "api"
-        },
-        "/something": {
-            "behavior": "proxy",
-            "url": "https://example.com"
-        }
-    }
-}
+```yaml
+paths:
+  - path: '/api/*'
+    behavior: proxy
+    proxyConfig:
+      url: https://localhost:3002/aaa/
+    responseHeaders:
+      Content-Type: application/json
+  - path: '/files/*'
+    behavior: readLocalFiles
+  - path: '/*'
+    behavior: proxy
+    proxyConfig:
+      url: https://localhost:3001
+
+onUp:
+  frontend:
+    - cd ./frontend
+    - pnpm dev --port 3001
+  backend:
+    - cd ./backend
+    - go run . --port 3002
 ```
