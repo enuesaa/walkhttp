@@ -1,7 +1,6 @@
 # designdoc
 ## Features
 - instant web server
-- configure to serve files info with graohql or rest api
 
 ### Instant Web Server
 - ローカルにあるファイルを serve できる
