@@ -2,28 +2,27 @@
 ## Features
 - instant web server
 - configure to serve files info with graohql or rest api
-- 例えば markdown の frontmatter を parse して JSON 形式で serve したい
 
 ### Instant Web Server
 - ローカルにあるファイルを serve できる
 - 開発しているとウェブサーバーが欲しい時がある
+- local api gateway みたいなイメージ
 
 ## Commands
 ```bash
-walkin serve --config ./config.json
+walkin up
+walkin up --config walkin.json
 ```
 
-## config
+## Config
 ```json
 {
-    "rules": {
+    "paths": {
         "/*": {
-            "behavior": "readfile",
-            "accessWithoutExtention": true, // like `/users/aaa.json` or `/users/aaa/`
-            "accessWithoutTrailingSlash": true, // like `/users/aaa.json` or `/users/aaa`. if accessWithoutExtention is false, this also do not work.
+            "behavior": "readLocalFiles"
         },
         "/*.json": {
-            "behavior": "readfile",
+            "behavior": "readLocalFiles",
             "responseHeaders": {
                 "Content-Type": "application/json"
             },
@@ -31,14 +30,10 @@ walkin serve --config ./config.json
         "/files": {
             "behavior": "api"
         },
-        "/graph": {
-            "behavior": "graphql"
+        "/something": {
+            "behavior": "proxy",
+            "url": "https://example.com"
         }
     }
 }
 ```
-
-## Development plan
-- とりあえず上記仕様で実装する
-- おそらく汎用性がないので、様子を見て仕様変更する
-
