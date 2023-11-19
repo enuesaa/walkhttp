@@ -25,13 +25,13 @@ func ParseKVFlagValue(value string) (map[string]string, error) {
 	return kvs, nil
 }
 
-func ParseFlagsToServeConfig(readLocalFilesFlag string, proxyFlag string) (web.ServeConfig, error) {
+func ParseFlagsToServeConfig(readLocalFilesFlag []string, proxyFlag []string) (web.ServeConfig, error) {
 	serveConfig := web.ServeConfig{
 		Paths: map[string]web.Behavior{},
 	}
 
-	if readLocalFilesFlag != "" {
-		localFilesKvs, err := ParseKVFlagValue(readLocalFilesFlag)
+	for _, value := range readLocalFilesFlag {
+		localFilesKvs, err := ParseKVFlagValue(value)
 		if err != nil {
 			return serveConfig, err
 		}
@@ -47,8 +47,8 @@ func ParseFlagsToServeConfig(readLocalFilesFlag string, proxyFlag string) (web.S
 		}
 	}
 
-	if proxyFlag != "" {
-		proxyKvs, err := ParseKVFlagValue(proxyFlag)
+	for _, value := range proxyFlag {
+		proxyKvs, err := ParseKVFlagValue(value)
 		if err != nil {
 			return serveConfig, err
 		}

@@ -30,13 +30,13 @@ func TestParseKVFlagValue(t *testing.T) {
 
 func TestParseFlagsToServeConfig(t *testing.T) {
 	cases := []struct {
-		readLocalFilesFlag string
-		proxyFlag          string
+		readLocalFilesFlag []string
+		proxyFlag          []string
 		expected           web.ServeConfig
 	}{
 		{
-			readLocalFilesFlag: "path=/*",
-			proxyFlag: "path=/aaa/*,url=https://example.com",
+			readLocalFilesFlag: []string{"path=/*"},
+			proxyFlag: []string{"path=/aaa/*,url=https://example.com"},
 			expected: web.ServeConfig{
 				Paths: map[string]web.Behavior{
 					"/*": {
@@ -46,6 +46,26 @@ func TestParseFlagsToServeConfig(t *testing.T) {
 						Behavior: web.Proxy,
 						ProxyConfig: web.ProxyConfig{
 							Url: "https://example.com",
+						},
+					},
+				},
+			},
+		},
+		{
+			readLocalFilesFlag: []string{},
+			proxyFlag: []string{"path=/*,url=https://example.com", "path=/aaa/*,url=https://example.com/aaa"},
+			expected: web.ServeConfig{
+				Paths: map[string]web.Behavior{
+					"/*": {
+						Behavior: web.Proxy,
+						ProxyConfig: web.ProxyConfig{
+							Url: "https://example.com",
+						},
+					},
+					"/aaa/*": {
+						Behavior: web.Proxy,
+						ProxyConfig: web.ProxyConfig{
+							Url: "https://example.com/aaa",
 						},
 					},
 				},
