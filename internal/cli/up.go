@@ -19,8 +19,8 @@ func CreateUpCmd() *cobra.Command {
 		},
 	}
 	cmd.Flags().Int("port", 3000, "port")
-	cmd.Flags().StringArray("proxy", []string{}, "serve reverse proxy on specific path")
-	cmd.Flags().StringArray("read-local-files", []string{}, "serve local files.")
+	cmd.Flags().String("proxy", "path=/*,url=https://example.com", "serve reverse proxy on specific path")
+	cmd.Flags().String("read-local-files", "", "serve local files")
 
 	return cmd
 }
