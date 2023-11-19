@@ -11,11 +11,11 @@ type ProxyConfig struct {
 	Url string
 }
 
-type Bahavior struct {
-	Bahavior BehaviorType
+type Behavior struct {
+	Behavior BehaviorType
 	ProxyConfig ProxyConfig 
 }
 
 type ServeConfig struct {
-	Paths map[string]Bahavior
+	Paths map[string]Behavior
 }

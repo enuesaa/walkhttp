@@ -12,17 +12,23 @@ import (
 type WebService struct {
 	repos repository.Repos
 	port int
+	serveConfig ServeConfig
 }
 
 func NewWebService(repos repository.Repos) WebService {
 	return WebService{
 		repos: repos,
 		port: 3000,
+		serveConfig: *new(ServeConfig),
 	}
 }
 
 func (srv *WebService) WithPort(port int) {
 	srv.port = port
+}
+
+func (srv *WebService) WithServeConfig(config ServeConfig) {
+	srv.serveConfig = config
 }
 
 func (srv *WebService) calcAddress() string {
