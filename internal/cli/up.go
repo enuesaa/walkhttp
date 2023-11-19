@@ -13,8 +13,7 @@ func CreateUpCmd() *cobra.Command {
 			port, _ := cmd.Flags().GetInt("port")
 	
 			webSrv := web.NewWebService()
-			webSrv.EnableStaticServe()
-			webSrv.SetPort(port)
+			webSrv.WithPort(port)
 			webSrv.Serve()
 		},
 	}
