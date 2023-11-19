@@ -44,12 +44,16 @@ func (srv *WebService) Serve() {
 
 	for path, behavior := range srv.serveConfig.Paths {
 		if behavior.Behavior == Proxy {
+			// TODO check
+			if path == "" {
+				continue
+			}
 			app.Get(path, proxy.Forward(behavior.ProxyConfig.Url))
+			fmt.Printf("[walkin] proxy on %s\n", path)
 		}
 		if behavior.Behavior == ReadLocalFiles {
-			fmt.Printf("path is %s%+v\n", path, behavior)
-
-			app.Get(path, createReadLocalFilesHandler(path))		
+			app.Get(path, createReadLocalFilesHandler(path))	
+			fmt.Printf("[walkin] readLocalFiles on %s\n", path)
 		}
 	}
 
