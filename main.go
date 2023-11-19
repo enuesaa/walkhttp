@@ -14,7 +14,7 @@ func main() {
 			cmd.Help()
 		},
 	}
-	app.AddCommand(cli.CreateServeCmd())
+	app.AddCommand(cli.CreateUpCmd())
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})

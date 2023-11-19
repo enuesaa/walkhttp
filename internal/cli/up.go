@@ -5,10 +5,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func CreateServeCmd() *cobra.Command {
+func CreateUpCmd() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "serve",
-		Short: "serve static files",
+		Use:   "up",
+		Short: "up web server",
 		Run: func(cmd *cobra.Command, args []string) {	
 			port, _ := cmd.Flags().GetInt("port")
 	
@@ -19,6 +19,8 @@ func CreateServeCmd() *cobra.Command {
 		},
 	}
 	cmd.Flags().Int("port", 3000, "port")
+	cmd.Flags().StringArray("proxy", []string{}, "serve reverse proxy on specific path")
+	cmd.Flags().StringArray("read-local-files", []string{}, "serve local files.")
 
 	return cmd
 }
