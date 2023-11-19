@@ -10,8 +10,7 @@
 ## Commands
 ```bash
 walkin up
-walkin up --path '/*:proxy:https://example.com'
-walkin up --proxy '/*' 'url=https://example.com' --read-local-files '/*'
+walkin up --proxy 'path=/*,url=https://example.com' --read-local-files 'path=/*'
 walkin up --config walkin.json
 ```
 
