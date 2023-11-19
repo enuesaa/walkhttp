@@ -1,7 +1,7 @@
 package cli
 
 import (
-	"github.com/enuesaa/walkin/internal/service"
+	"github.com/enuesaa/walkin/internal/web"
 	"github.com/spf13/cobra"
 )
 
@@ -12,7 +12,7 @@ func CreateUpCmd() *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {	
 			port, _ := cmd.Flags().GetInt("port")
 	
-			webSrv := service.NewWebService()
+			webSrv := web.NewWebService()
 			webSrv.EnableStaticServe()
 			webSrv.SetPort(port)
 			webSrv.Serve()
