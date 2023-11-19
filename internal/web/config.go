@@ -8,14 +8,14 @@ const (
 )
 
 type ProxyConfig struct {
-	Url string
+	Url string `json:"url"`
 }
 
 type Behavior struct {
-	Behavior BehaviorType
-	ProxyConfig ProxyConfig 
+	Behavior BehaviorType `json:"behavior"`
+	ProxyConfig ProxyConfig `json:"proxyConfig"`
 }
 
 type ServeConfig struct {
-	Paths map[string]Behavior
+	Paths map[string]Behavior `json:"paths"`
 }
