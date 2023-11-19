@@ -5,14 +5,17 @@ import (
 	"io"
 	"os"
 	"github.com/gofiber/fiber/v2"
+	"github.com/enuesaa/walkin/internal/repository"
 )
 
 type WebService struct {
+	repos repository.Repos
 	port int
 }
 
-func NewWebService() WebService {
+func NewWebService(repos repository.Repos) WebService {
 	return WebService{
+		repos: repos,
 		port: 3000,
 	}
 }

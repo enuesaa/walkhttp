@@ -2,10 +2,13 @@ package main
 
 import (
 	"github.com/enuesaa/walkin/internal/cli"
+	"github.com/enuesaa/walkin/internal/repository"
 	"github.com/spf13/cobra"
 )
 
 func main() {
+	repos := repository.NewRepos()
+
 	app := &cobra.Command{
 		Use:     "walkin",
 		Short:   "Instant web server.",
@@ -14,7 +17,7 @@ func main() {
 			cmd.Help()
 		},
 	}
-	app.AddCommand(cli.CreateUpCmd())
+	app.AddCommand(cli.CreateUpCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
