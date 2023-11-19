@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"github.com/gofiber/fiber/v2"
+    "github.com/gofiber/fiber/v2/middleware/proxy"
 	"github.com/enuesaa/walkin/internal/repository"
 )
 
@@ -37,25 +38,32 @@ func (srv *WebService) calcAddress() string {
 func (srv *WebService) Serve() {
 	app := fiber.New()
 
-	app.Get("/*", func(c *fiber.Ctx) error {
-		requestPath := c.Path() // like `/`
-
-		path := fmt.Sprintf(".%s", requestPath)
-		if path == "./" {
-			path = "./testdata/index.html" // TODO for dev.
+	for path, behavior := range srv.serveConfig.Paths {
+		if behavior.Behavior == Proxy {
+			app.Get(path, proxy.Forward(behavior.ProxyConfig.Url))
 		}
-		f, err := os.Open(path)
-		if err != nil {
-			return err
+		if behavior.Behavior == ReadLocalFiles {
+			app.Get(path, func(c *fiber.Ctx) error {
+				requestPath := c.Path() // like `/`
+		
+				path := fmt.Sprintf(".%s", requestPath)
+				if path == "./" {
+					path = "./index.html"
+				}
+				f, err := os.Open(path)
+				if err != nil {
+					return err
+				}
+				defer f.Close()
+		
+				content, err := io.ReadAll(f)
+				if err != nil {
+					return err
+				}
+				return c.SendString(string(content))
+			})		
 		}
-		defer f.Close()
-
-		content, err := io.ReadAll(f)
-		if err != nil {
-			return err
-		}
-		return c.SendString(string(content))
-	})
+	}
 
 	app.Listen(srv.calcAddress())
 }

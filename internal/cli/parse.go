@@ -31,7 +31,7 @@ func ParseFlagsToServeConfig(readLocalFilesFlag string, proxyFlag string) (web.S
 	}
 
 	if readLocalFilesFlag != "" {
-		localFilesKvs, err := ParseKVFlagValue(proxyFlag)
+		localFilesKvs, err := ParseKVFlagValue(readLocalFilesFlag)
 		if err != nil {
 			return serveConfig, err
 		}
