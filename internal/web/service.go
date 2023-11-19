@@ -48,19 +48,25 @@ func (srv *WebService) Serve() {
 			if path == "" {
 				continue
 			}
-			app.Get(path, proxy.Forward(behavior.ProxyConfig.Url))
-			fmt.Printf("[walkin] proxy on %s\n", path)
+			app.Get(path, createProxyHandler(path, behavior.ProxyConfig))
 		}
 		if behavior.Behavior == ReadLocalFiles {
 			app.Get(path, createReadLocalFilesHandler(path))	
-			fmt.Printf("[walkin] readLocalFiles on %s\n", path)
 		}
 	}
 
 	app.Listen(srv.calcAddress())
 }
 
+func createProxyHandler(path string, proxyConfig ProxyConfig) func(c *fiber.Ctx) error {
+	fmt.Printf("[walkin] %v\n", proxyConfig)
+	fmt.Printf("[walkin] proxy on %s%s\n", path, proxyConfig.Url)
+	return proxy.Forward(proxyConfig.Url)
+}
+
 func createReadLocalFilesHandler(path string) func(c *fiber.Ctx) error {
+	fmt.Printf("[walkin] readLocalFiles on %s\n", path)
+
 	handler := func(c *fiber.Ctx) error {
 		requestPath := c.Path() // like `/`
 
