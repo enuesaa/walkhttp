@@ -39,3 +39,8 @@ walkin up --config walkin.json
   }
 }
 ```
+
+## dev command
+```bash
+go run . up --proxy "path=/*,url=https://example.com" --read-local-files "path=/aaa/*"
+```

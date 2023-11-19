@@ -1,0 +1,32 @@
+name: release
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - run: echo "TAG_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+      - run: |
+          cat <<'EOF' | envsubst > release.md
+          # walkin ${TAG_NAME}
+          ## Installation
+          ```bash
+          git clone https://github.com/enuesaa/walkin.git -b ${TAG_NAME} --depth 1
+          cd walkin
+          go install
+          ```
+          EOF
+
+      - uses: softprops/action-gh-release@v1
+        with:
+          draft: true
+          body_path: release.md
