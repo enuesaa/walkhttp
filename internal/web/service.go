@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"github.com/gofiber/fiber/v2"
+	"os/signal"
 	"github.com/enuesaa/walkin/internal/repository"
 )
 
@@ -31,9 +32,23 @@ func (srv *WebService) calcAddress() string {
 func (srv *WebService) Serve() {
 	app := fiber.New()
 
+	// see https://github.com/gofiber/fiber/issues/899
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+	go func() {
+			_ = <-c
+			fmt.Println("Gracefully shutting down...")
+			_ = app.Shutdown()
+	}()
+
 	app.Get("/*", func(c *fiber.Ctx) error {
 		requestPath := c.Path() // like `/`
-		f, err := os.Open(fmt.Sprintf(".%s", requestPath))
+
+		path := fmt.Sprintf(".%s", requestPath)
+		if path == "./" {
+			path = "./testdata/index.html" // TODO for dev.
+		}
+		f, err := os.Open(path)
 		if err != nil {
 			return err
 		}
@@ -47,4 +62,5 @@ func (srv *WebService) Serve() {
 	})
 
 	app.Listen(srv.calcAddress())
+	fmt.Println("Running cleanup tasks...")
 }
