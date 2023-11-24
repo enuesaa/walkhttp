@@ -3,7 +3,9 @@ package web
 import (
 	"fmt"
 	"io"
+	"mime"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/enuesaa/walkin/internal/repository"
@@ -88,6 +90,10 @@ func createReadLocalFilesHandler(path string) func(c *fiber.Ctx) error {
 		if err != nil {
 			return err
 		}
+		fileExt := filepath.Ext(lookupPath)
+		mimeType := mime.TypeByExtension(fileExt)
+		c.Set(fiber.HeaderContentType, mimeType)
+
 		return c.SendString(string(content))
 	}
 
