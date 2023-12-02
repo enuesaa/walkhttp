@@ -13,11 +13,9 @@ func main() {
 		Use:     "walkin",
 		Short:   "Instant web server.",
 		Version: "0.0.1",
-		Run: func(cmd *cobra.Command, args []string) {
-			cmd.Help()
-		},
 	}
 	app.AddCommand(cli.CreateUpCmd(repos))
+	app.AddCommand(cli.CreateSearchCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
