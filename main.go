@@ -14,8 +14,7 @@ func main() {
 		Short:   "Instant web server.",
 		Version: "0.0.1",
 	}
-	app.AddCommand(cli.CreateUpCmd(repos))
-	app.AddCommand(cli.CreateSearchCmd(repos))
+	app.AddCommand(cli.CreateServeCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})

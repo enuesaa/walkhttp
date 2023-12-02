@@ -1,5 +1,4 @@
 # designdoc
-## Features
 - instant web server
 
 ### Instant Web Server
@@ -9,9 +8,7 @@
 
 ## Commands
 ```bash
-walkin up
-walkin up --proxy 'path=/*,url=https://example.com' --read-local-files 'path=/*'
-walkin up --config walkin.json
+walkin serve --proxy 'path=/*,url=https://example.com' --read-local-files 'path=/*'
 ```
 
 ## Config

@@ -8,17 +8,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func CreateUpCmd(repos repository.Repos) *cobra.Command {
+func CreateServeCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "up",
-		Short: "up web server",
+		Use:   "serve",
+		Short: "serve web server",
 		Run: func(cmd *cobra.Command, args []string) {	
 			portFlag, _ := cmd.Flags().GetInt("port")
 			proxyFlag, _ := cmd.Flags().GetStringArray("proxy")
-			readLocalFilesFlag, _ := cmd.Flags().GetStringArray("read-local-files")
-			// configFlag, _ := cmd.Flags().GetString("config")
+			localFilesFlag, _ := cmd.Flags().GetStringArray("local-files")
 
-			serveConfig, err := ParseFlagsToServeConfig(readLocalFilesFlag, proxyFlag)
+			serveConfig, err := ParseFlagsToServeConfig(localFilesFlag, proxyFlag)
 			if err != nil {
 				fmt.Printf("error: %s\n", err.Error())
 				return
@@ -32,8 +31,7 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 	}
 	cmd.Flags().Int("port", 3000, "port")
 	cmd.Flags().StringArray("proxy", []string{}, "serve reverse proxy on specific path like `path=/*,url=https://example.com`")
-	cmd.Flags().StringArray("read-local-files", []string{}, "serve local files like `path=/*`")
-	// cmd.Flags().String("config", "", "config file path")
+	cmd.Flags().StringArray("local-files", []string{}, "serve local files like `path=/*`")
 
 	return cmd
 }
