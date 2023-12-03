@@ -10,10 +10,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func CreateCallCmd(repos repository.Repos) *cobra.Command {
+func CreateInvokeCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "call",
-		Short: "call",
+		Use:   "invoke",
+		Short: "invoke",
 		Run: func(cmd *cobra.Command, args []string) {	
 			fmt.Println("a")
 
