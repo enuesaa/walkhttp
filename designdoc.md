@@ -50,6 +50,7 @@ go run . up --proxy "path=/*,url=https://example.com" --read-local-files "path=/
 - Step Functions のようなプロダクト向けではなく、あくまで開発用
 - convert to curl format.
 - どこまで usecase を絞るか
+- フローではなく observer pattern のように hook し続けるのもありかも
 
 ### usecase
 - API Test
@@ -59,20 +60,19 @@ go run . up --proxy "path=/*,url=https://example.com" --read-local-files "path=/
 ### Config
 ```json
 {
-  "steps": [
-    {
-      "url": "https://example.com",
-      "params": [
-        {"name": "Accept", "value": "application/json"}
-        // can use env var.
-      ],
-      "expect": {
-        "status": 200,
-        "json": {
-          "a": "b"
-        }
-      }
+  "call": {
+    "url": "https://example.com",
+    "params": [
+      {"name": "Accept", "value": "application/json"}
+      // can use env var.
+    ]
+  },
+  "expect": {
+    "status": 200,
+    "json": {
+      "a": "b"
     }
-  ]
+  }
+  // after call hook script here
 }
 ```
