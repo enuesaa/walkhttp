@@ -1,17 +1,8 @@
 # designdoc
-- instant web server
-- frontend と backend を仲介するものにしたい
-- 開発の途上で Web API を用意できないために mock server を立てる時があるが、それを容易にしたい
-- あと feature flag だとかで api を実際に呼ぶか mock を返すか切り替えられるようにしたい
-
-## Feature Plan: Instant Web Server
-- ローカルにあるファイルを serve できる
+- instant web server which deals with frontend and backend.
+- web api の mock を簡単に作れるもの
+- feature flag だとかで api を実際に呼ぶか mock を返すか切り替えられるようにしたい
 - local api gateway みたいなイメージ
-
-### Commands
-```bash
-walkin serve --proxy 'path=/*,url=https://example.com' --read-local-files 'path=/*'
-```
 
 ### Config
 ```json
