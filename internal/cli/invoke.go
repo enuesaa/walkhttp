@@ -15,8 +15,6 @@ func CreateInvokeCmd(repos repository.Repos) *cobra.Command {
 		Use:   "invoke",
 		Short: "invoke",
 		Run: func(cmd *cobra.Command, args []string) {	
-			fmt.Println("a")
-
 			req, err := http.NewRequest("GET", "https://example.com/", nil)
 			if err != nil {
 				log.Fatalf("error: %s", err.Error())
