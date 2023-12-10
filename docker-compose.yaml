@@ -4,6 +4,7 @@ services:
   jaeger:
     image: jaegertracing/all-in-one
     ports:
+      - 5775:5775
       - 16686:16686
       - 14268:14268
     environment:
