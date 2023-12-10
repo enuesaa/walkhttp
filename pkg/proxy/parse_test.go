@@ -3,7 +3,7 @@ package proxy
 import (
 	"testing"
 
-	"github.com/enuesaa/walkin/internal/web"
+	"github.com/enuesaa/walkin/pkg/web"
 	"github.com/stretchr/testify/assert"
 )
 

@@ -10,8 +10,8 @@ func NewRepos() Repos {
 	}
 }
 
-func NewMockRepos(fsmock FsMockRepository) Repos {
-	return Repos{
-		Fs:     &fsmock,
-	}
-}
+// func NewMockRepos(fsmock FsMockRepository) Repos {
+// 	return Repos{
+// 		Fs:     &fsmock,
+// 	}
+// }

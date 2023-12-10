@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/enuesaa/walkin/internal/repository"
+	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/spf13/cobra"
 )
 

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/enuesaa/walkin/internal/web"
+	"github.com/enuesaa/walkin/pkg/web"
 )
 
 func ParseKVFlagValue(value string) (map[string]string, error) {

@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/enuesaa/walkin/internal/repository"
+	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cobra"
 )
