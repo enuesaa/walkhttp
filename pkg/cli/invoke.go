@@ -1,67 +1,80 @@
 package cli
 
 import (
+	"context"
+	"fmt"
+	"io"
 	"log"
-	"time"
+	"net/http"
 
 	"github.com/enuesaa/walkin/pkg/repository"
-	"github.com/opentracing/opentracing-go"
 	"github.com/spf13/cobra"
-	"github.com/uber/jaeger-client-go"
-	jaegerConfig "github.com/uber/jaeger-client-go/config"
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/jaeger"
+	"go.opentelemetry.io/otel/sdk/resource"
+	st "go.opentelemetry.io/otel/sdk/trace"
+	"go.opentelemetry.io/otel/semconv/v1.4.0"
+	"go.opentelemetry.io/otel/trace"
 )
+
+var tracer trace.Tracer
 
 func CreateInvokeCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "invoke",
 		Short: "invoke",
-		Run: func(cmd *cobra.Command, args []string) {	
-			// url, _ := cmd.Flags().GetString("url")
+		Run: func(cmd *cobra.Command, args []string) {
+			url, _ := cmd.Flags().GetString("url")
 
-			// res, err := http.Get(url)
-			// if err != nil {
-			// 	log.Fatalf("Error: %s\n", err)
-			// }
-			// defer res.Body.Close()
-
-			// resbodybytes, err := io.ReadAll(res.Body)
-			// if err != nil {
-			// 	log.Fatalf("Error: %s\n", err)
-			// }
-			// resbody := string(resbodybytes)
-			// fmt.Printf("%s\n", resbody)
-
-			// see https://qiita.com/ike_dai/items/f7d95852a86a46e1f19d
-
-			cfg := jaegerConfig.Configuration{
-				Sampler: &jaegerConfig.SamplerConfig{
-					Type:  "const",
-					Param: 1,
-				},
-				Reporter: &jaegerConfig.ReporterConfig{
-					LogSpans:            true,
-					BufferFlushInterval: 1 * time.Second,
-					LocalAgentHostPort:  "127.0.0.1:5775",
-				},
-			}
-			tracer, closer, err := cfg.New(
-				"sample",
-				jaegerConfig.Logger(jaeger.StdLogger),
-			)
+			tp, err := NewTracerProvider()
 			if err != nil {
-				log.Fatalf("Erraor: %s\n", err.Error())
+				log.Fatalf("Error: %s\n", err.Error())
 			}
-			opentracing.SetGlobalTracer(tracer)
-			defer closer.Close()
+			tracer = otel.Tracer("aaaaa")
+		
+			hc := http.Client{
+				Transport: otelhttp.NewTransport(http.DefaultTransport),
+			}
+			res, err := hc.Get(url)
+			if err != nil {
+				log.Fatalf("Error: %s\n", err)
+			}
+			defer res.Body.Close()
+			resbodybytes, err := io.ReadAll(res.Body)
+			if err != nil {
+				log.Fatalf("Error: %s\n", err)
+			}
+			fmt.Printf("%s\n", string(resbodybytes))
 
-			parent := opentracing.GlobalTracer().StartSpan("hello")
-			defer parent.Finish()
-			child := opentracing.GlobalTracer().StartSpan(
-			"world", opentracing.ChildOf(parent.Context()))
-			defer child.Finish()
+			if err := tp.ForceFlush(context.Background()); err != nil {
+				log.Fatalf("Error: %s\n", err.Error())
+			}
 		},
 	}
-	// cmd.Flags().String("url", "https://example.com", "invoke url")
+	cmd.Flags().String("url", "https://example.com", "invoke url")
 
 	return cmd
 }
+
+func NewTracerProvider() (*st.TracerProvider, error) {
+	endpoint := "http://localhost:14268/api/traces"
+	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(endpoint)))
+	if err != nil {
+		return nil, err
+	}
+
+	rsrc := resource.NewWithAttributes(
+		semconv.SchemaURL,
+		semconv.ServiceNameKey.String("ddd"),
+	)
+	tp := st.NewTracerProvider(
+		st.WithBatcher(exporter),
+		st.WithResource(rsrc),
+		st.WithSampler(st.AlwaysSample()),
+	)
+
+	otel.SetTracerProvider(tp)
+	return tp, nil
+}
+
