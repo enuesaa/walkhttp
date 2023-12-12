@@ -8,17 +8,14 @@ import (
 	"net/http"
 
 	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/enuesaa/walkin/pkg/trace"
 	"github.com/spf13/cobra"
 	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/jaeger"
-	"go.opentelemetry.io/otel/sdk/resource"
-	st "go.opentelemetry.io/otel/sdk/trace"
-	"go.opentelemetry.io/otel/semconv/v1.4.0"
-	"go.opentelemetry.io/otel/trace"
+	oteltrace "go.opentelemetry.io/otel/trace"
 )
 
-var tracer trace.Tracer
+var tracer oteltrace.Tracer
 
 func CreateInvokeCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
@@ -27,7 +24,7 @@ func CreateInvokeCmd(repos repository.Repos) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			url, _ := cmd.Flags().GetString("url")
 
-			tp, err := NewTracerProvider()
+			tp, err := trace.NewTracerProvider()
 			if err != nil {
 				log.Fatalf("Error: %s\n", err.Error())
 			}
@@ -56,25 +53,3 @@ func CreateInvokeCmd(repos repository.Repos) *cobra.Command {
 
 	return cmd
 }
-
-func NewTracerProvider() (*st.TracerProvider, error) {
-	endpoint := "http://localhost:14268/api/traces"
-	exporter, err := jaeger.New(jaeger.WithCollectorEndpoint(jaeger.WithEndpoint(endpoint)))
-	if err != nil {
-		return nil, err
-	}
-
-	rsrc := resource.NewWithAttributes(
-		semconv.SchemaURL,
-		semconv.ServiceNameKey.String("ddd"),
-	)
-	tp := st.NewTracerProvider(
-		st.WithBatcher(exporter),
-		st.WithResource(rsrc),
-		st.WithSampler(st.AlwaysSample()),
-	)
-
-	otel.SetTracerProvider(tp)
-	return tp, nil
-}
-
