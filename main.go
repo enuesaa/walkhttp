@@ -14,6 +14,7 @@ func main() {
 	}
 
 	repos := repository.NewRepos()
+	app.AddCommand(cli.CreateConfigCmd(repos))
 	app.AddCommand(cli.CreateMockCmd(repos))
 	app.AddCommand(cli.CreateInvokeCmd(repos))
 
