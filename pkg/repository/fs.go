@@ -9,8 +9,8 @@ import (
 type FsRepositoryInterface interface {
 	IsExist(path string) bool
 	IsDir(path string) (bool, error)
-	IsBrokenSymlink(path string) (bool, error)
 	CreateDir(path string) error
+	Create(path string, body []byte) error
 	HomeDir() (string, error)
 	WorkDir() (string, error)
 	Remove(path string) error
@@ -34,25 +34,20 @@ func (repo *FsRepository) IsDir(path string) (bool, error) {
 	return f.IsDir(), nil
 }
 
-func (repo *FsRepository) IsBrokenSymlink(path string) (bool, error) {
-	f, err := os.Lstat(path)
-	if err != nil {
-		return false, err
-	}
-
-	// bitwise AND
-	if f.Mode()&os.ModeSymlink != os.ModeSymlink {
-		// Not a symlink
-		return false, nil
-	}
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		return true, nil
-	}
-	return false, nil
-}
-
 func (repo *FsRepository) CreateDir(path string) error {
 	return os.MkdirAll(path, os.ModePerm)
+}
+
+func (repo *FsRepository) Create(path string, body []byte) error {
+	file, err := os.Create(path)
+	if err != nil {
+		return err
+	}
+	defer file.Close()
+	if _, err := file.Write(body); err != nil {
+		return err
+	}
+	return nil
 }
 
 func (repo *FsRepository) HomeDir() (string, error) {
