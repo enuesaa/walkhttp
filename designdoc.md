@@ -1,9 +1,8 @@
 # designdoc
-- web api の mock を簡単に作れるもの
-- feature flag だとかで api を実際に呼ぶか mock を返すか切り替えられるようにしたい
-- local api gateway みたいなイメージ
+- local api gateway
+- 簡単なパスの変換だとかできる (BFFライクな)
+- Web API ではリクエストボディが大きく呼ぶのが大変な時があるが、これを変数だとかテンプレートだとかで簡略化できる
 - cache & queue
-- serve, invalidate
 
 ## development plan
 - [http] invoke http url with command line
