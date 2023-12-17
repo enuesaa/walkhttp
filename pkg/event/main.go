@@ -1,6 +1,7 @@
 package event
 
 type Event struct {
+	Method string
 	Url string // include queries
 	Request EventRequest
 	Response EventResponse
