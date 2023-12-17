@@ -14,7 +14,7 @@ type FsRepositoryInterface interface {
 	HomeDir() (string, error)
 	WorkDir() (string, error)
 	Remove(path string) error
-	CopyFile(srcPath string, dstPath string) error
+	Read(path string) ([]byte, error)
 	ListFiles(path string) ([]string, error)
 }
 type FsRepository struct{}
@@ -62,21 +62,13 @@ func (repo *FsRepository) Remove(path string) error {
 	return os.RemoveAll(path)
 }
 
-func (repo *FsRepository) CopyFile(srcPath string, dstPath string) error {
-	srcF, err := os.Open(srcPath)
+func (repo *FsRepository) Read(path string) ([]byte, error) {
+	f, err := os.Open(path)
 	if err != nil {
-		return err
+		return make([]byte, 0), err
 	}
-	defer srcF.Close()
-
-	dstF, err := os.Create(dstPath)
-	if err != nil {
-		return err
-	}
-	defer dstF.Close()
-
-	_, err = io.Copy(dstF, srcF)
-	return err
+	defer f.Close()
+	return io.ReadAll(f)
 }
 
 func (repo *FsRepository) ListFiles(path string) ([]string, error) {

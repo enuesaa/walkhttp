@@ -67,9 +67,8 @@ func (repo *FsMockRepository) Remove(path string) error {
 	return nil
 }
 
-func (repo *FsMockRepository) CopyFile(srcPath string, dstPath string) error {
-	repo.Files = append(repo.Files, dstPath)
-	return nil
+func (repo *FsMockRepository) Read(path string) ([]byte, error) {
+	return make([]byte, 0), nil
 }
 
 func (repo *FsMockRepository) ListFiles(path string) ([]string, error) {

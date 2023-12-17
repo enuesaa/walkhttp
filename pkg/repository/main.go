@@ -11,3 +11,10 @@ func NewRepos() Repos {
 		Prompt: &Prompt{},
 	}
 }
+
+func NewMockRepos() Repos {
+	return Repos{
+		Fs: &FsMockRepository{},
+		Prompt: &Prompt{},
+	}
+}
