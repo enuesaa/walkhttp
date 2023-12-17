@@ -1,5 +1,5 @@
 # designdoc
-- local api gateway
+- A CLI Tool to debug web api.
 - 簡単なパスの変換だとかできる (BFFライクな)
 - Web API ではリクエストボディが大きく呼ぶのが大変な時があるが、これを変数だとかテンプレートだとかで簡略化できる
 - cache & queue
