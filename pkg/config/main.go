@@ -15,7 +15,7 @@ type ConfigFile struct {
 }
 
 func WriteConfig(repos repository.Repos, config ConfigFile) error {
-	fbyte, err := json.Marshal(config)
+	fbyte, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
 		return err
 	}
