@@ -3,6 +3,7 @@
 - 簡単なパスの変換だとかできる (BFFライクな)
 - Web API ではリクエストボディが大きく呼ぶのが大変な時があるが、これを変数だとかテンプレートだとかで簡略化できる
 - cache & queue
+- wrokflow
 
 ## development plan
 - [http] invoke http url with command line
