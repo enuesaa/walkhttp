@@ -1,9 +1,9 @@
 package cli
 
 import (
-	"encoding/json"
 	"log"
 
+	"github.com/enuesaa/walkin/pkg/config"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/spf13/cobra"
 )
@@ -21,12 +21,9 @@ func CreateConfigInitCmd(repos repository.Repos) *cobra.Command {
 		Use:   "init",
 		Short: "create config file with prompt",
 		Run: func(cmd *cobra.Command, args []string) {
-			config := ConfigFile{}
-			fbyte, err := json.Marshal(config)
-			if err != nil {
+			if err := config.WriteConfig(repos, config.ConfigFile{}); err != nil {
 				log.Fatalf("Error: %s\n", err.Error())
 			}
-			repos.Fs.Create("config.json", fbyte)
 		},
 	}
 
