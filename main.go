@@ -16,6 +16,7 @@ func main() {
 	repos := repository.NewRepos()
 	app.AddCommand(cli.CreateConfigCmd(repos))
 	app.AddCommand(cli.CreateInvokeCmd(repos))
+	app.AddCommand(cli.CreatePocCallCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
