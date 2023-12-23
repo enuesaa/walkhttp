@@ -3,11 +3,10 @@ package cli
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
-	"net/http"
 	"os/exec"
 
+	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cobra"
@@ -33,24 +32,12 @@ func CreateServeCmd(repos repository.Repos) *cobra.Command {
 				var message TriggerResult
 				json.Unmarshal(result, &message)
 
-				client := &http.Client{}
-
-				req, err := http.NewRequest("GET", "http://example.com", nil)
-				if err != nil {
-					return err
-				}
-				req.Header.Add("X-Message", message.Message)
-			
-				res, err := client.Do(req)
+				invokeSrv := invoke.NewInvokeSrv(repos)
+				res, err := invokeSrv.Invoke("GET", "http://example.com")
 				if err != nil {
 					log.Fatalf("Error: %s\n", err)
 				}
-				defer res.Body.Close()
-				resbodybytes, err := io.ReadAll(res.Body)
-				if err != nil {
-					log.Fatalf("Error: %s\n", err)
-				}
-				fmt.Printf("%s\n", string(resbodybytes))
+				fmt.Printf("%s\n", string(res))
 				return nil
 			})
 			if err := app.Listen(":3000"); err != nil {
