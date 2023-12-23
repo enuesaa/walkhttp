@@ -16,9 +16,6 @@ func CreatePocCallCmd(repos repository.Repos) *cobra.Command {
 		Short: "poccall",
 		Run: func(cmd *cobra.Command, args []string) {
 
-			type TriggerResult struct {
-				Message string `json:"message"`
-			}
 			app := fiber.New()
 			app.Post("/api/trigger", func(c *fiber.Ctx) error {
 				// invoke command on handler
