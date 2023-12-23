@@ -1,0 +1,9 @@
+{
+  "url": "https://example.com/weather",
+  "response": {
+    "body": {
+      "transform": "pick",
+      "pickItems": ["date","weather"]
+    }
+  }
+}
