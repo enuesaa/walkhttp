@@ -23,7 +23,7 @@ func CreatePocCallCmd(repos repository.Repos) *cobra.Command {
 			app.Post("/api/trigger", func(c *fiber.Ctx) error {
 				// invoke command on handler
 
-				command := exec.Command("echo", `{"message": "hello"}`)
+				command := exec.Command("printf", `{"message": "%s"}`, "hello")
 				result, err := command.Output()
 				if err != nil {
 					return err
