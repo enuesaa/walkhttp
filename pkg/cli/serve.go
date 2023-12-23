@@ -21,6 +21,8 @@ func CreateServeCmd(repos repository.Repos) *cobra.Command {
 		Use:   "serve",
 		Short: "serve",
 		Run: func(cmd *cobra.Command, args []string) {
+			// read config file
+			// read pages dir
 
 			app := fiber.New()
 			app.Post("/api/trigger", func(c *fiber.Ctx) error {
@@ -33,11 +35,15 @@ func CreateServeCmd(repos repository.Repos) *cobra.Command {
 				json.Unmarshal(result, &message)
 
 				invokeSrv := invoke.NewInvokeSrv(repos)
-				res, err := invokeSrv.Invoke("GET", "http://example.com")
+				req := invoke.Request{
+					Method: "GET",
+					Url: "http://example.com",
+				}
+				res, err := invokeSrv.Invoke(req)
 				if err != nil {
 					log.Fatalf("Error: %s\n", err)
 				}
-				fmt.Printf("%s\n", string(res))
+				fmt.Printf("%+v\n", res)
 				return nil
 			})
 			if err := app.Listen(":3000"); err != nil {
