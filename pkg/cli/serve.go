@@ -7,6 +7,7 @@ import (
 	"os/exec"
 
 	"github.com/enuesaa/walkin/pkg/invoke"
+	"github.com/enuesaa/walkin/pkg/pages"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cobra"
@@ -21,9 +22,16 @@ func CreateServeCmd(repos repository.Repos) *cobra.Command {
 		Use:   "serve",
 		Short: "serve",
 		Run: func(cmd *cobra.Command, args []string) {
-			// read config file
-			// read pages dir
+			workdir, _ := cmd.Flags().GetString("workdir")
 
+			pagesSrv := pages.NewPagesSrv(repos, workdir)
+			pages, err := pagesSrv.ListPages()
+			if err != nil {
+				log.Fatalf("Error: %s\n", err.Error())
+			}
+			for _, page := range pages {
+				fmt.Printf("found: %s\n", page)
+			}
 			app := fiber.New()
 			app.Post("/api/trigger", func(c *fiber.Ctx) error {
 				command := exec.Command("printf", `{"message": "%s"}`, "hello")
@@ -51,6 +59,7 @@ func CreateServeCmd(repos repository.Repos) *cobra.Command {
 			}
 		},
 	}
+	cmd.Flags().String("workdir", ".", "workdir")
 
 	return cmd
 }
