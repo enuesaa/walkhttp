@@ -14,7 +14,6 @@ func main() {
 	}
 
 	repos := repository.NewRepos()
-	app.AddCommand(cli.CreateConfigCmd(repos))
 	app.AddCommand(cli.CreateServeCmd(repos))
 
 	// disable default
