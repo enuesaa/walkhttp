@@ -6,7 +6,7 @@ import (
 	"strings"
 )
 
-func (srv *PagesSrv) ListPages() ([]string, error) {
+func (srv *PagesSrv) ListPageFilenames() ([]string, error) {
 	var list []string
 
 	pagesDir := filepath.Join(srv.workdir, "pages")

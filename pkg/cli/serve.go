@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/enuesaa/walkin/pkg/invoke"
-	"github.com/enuesaa/walkin/pkg/pages"
 	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/enuesaa/walkin/pkg/usecase"
 	"github.com/gofiber/fiber/v2"
 	"github.com/spf13/cobra"
 )
@@ -22,8 +22,7 @@ func CreateServeCmd(repos repository.Repos) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			workdir, _ := cmd.Flags().GetString("workdir")
 
-			pagesSrv := pages.NewPagesSrv(repos, workdir)
-			pages, err := pagesSrv.ListPages()
+			pages, err := usecase.ListPages(repos, workdir)
 			if err != nil {
 				log.Fatalf("Error: %s\n", err.Error())
 			}
@@ -31,14 +30,14 @@ func CreateServeCmd(repos repository.Repos) *cobra.Command {
 			app := fiber.New()
 
 			for _, page := range pages {
-				fmt.Printf("found: %s\n", page)
+				fmt.Printf("found: %s\n", page.Filename)
 
-				route := fmt.Sprintf("/%s", page)
+				route := fmt.Sprintf("/%s", page.Filename)
 				app.Get(route, func(c *fiber.Ctx) error {
 					invokeSrv := invoke.NewInvokeSrv(repos)
 					req := invoke.Request{
-						Method: "GET",
-						Url: "http://example.com",
+						Method: page.Method,
+						Url: page.Url,
 					}
 					res, err := invokeSrv.Invoke(req)
 					if err != nil {
