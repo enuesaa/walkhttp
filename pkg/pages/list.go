@@ -27,3 +27,22 @@ func (srv *PagesSrv) ListPageFilenames() ([]string, error) {
 
 	return list, err
 }
+
+func (srv *PagesSrv) ListPages() ([]Page, error) {
+	list := make([]Page, 0)
+
+	filenames, err := srv.ListPageFilenames()
+	if err != nil {
+		return list, err
+	}
+
+	for _, filename := range filenames {
+		page, err := srv.ReadPage(filename)
+		if err != nil {
+			return list, err
+		}
+		list = append(list, page)
+	}
+
+	return list, err
+}

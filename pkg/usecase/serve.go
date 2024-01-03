@@ -4,12 +4,16 @@ import (
 	"fmt"
 
 	"github.com/enuesaa/walkin/pkg/invoke"
+	"github.com/enuesaa/walkin/pkg/pages"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/gofiber/fiber/v2"
 )
 
 func Serve(repos repository.Repos, workdir string) error {
-	pages, err := ListPages(repos, workdir)
+	pagesSrv := pages.NewPagesSrv(repos)
+	pagesSrv.SetWorkdir(workdir)
+
+	pages, err := pagesSrv.ListPages()
 	if err != nil {
 		return err
 	}

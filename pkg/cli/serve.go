@@ -8,10 +8,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type TriggerResult struct {
-	Message string `json:"message"`
-}
-
 func CreateServeCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "serve",
@@ -20,7 +16,7 @@ func CreateServeCmd(repos repository.Repos) *cobra.Command {
 			workdir, _ := cmd.Flags().GetString("workdir")
 
 			if err := usecase.Serve(repos, workdir); err != nil {
-				log.Fatalf("Error: %s\n", err.Error())
+				log.Fatalf("Error: %s", err.Error())
 			}
 		},
 	}

@@ -23,5 +23,6 @@ func main() {
 	app.PersistentFlags().SortFlags = false
 	app.PersistentFlags().BoolP("help", "", false, "Show help information")
 	app.PersistentFlags().BoolP("version", "", false, "Show version")
+
 	app.Execute()
 }
