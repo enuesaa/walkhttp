@@ -10,6 +10,7 @@ type ConfigFile struct {
 type Endpoint struct {
 	Url string `json:"url"`
 	RequestHeaders map[string]string `json:"requestHeaders"`
+	RequestBody map[string]string `json:"requestBody"`
 }
 
 func (srv *EndpointSrv) GetConfigFilename() string {

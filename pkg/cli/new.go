@@ -18,16 +18,11 @@ func CreateNewCmd(repos repository.Repos) *cobra.Command {
 				log.Fatalf("Error: failed to create config file")
 			}
 
-			value, err := repos.Prompt.Ask("Aaa: ", "")
+			endpointDef, err := usecase.DefineEndpointWithPrompt(repos)
 			if err != nil {
-				log.Fatalf("Error: %s", err.Error())
+				log.Fatalf("Error: failed to run prompt.")
 			}
-			fmt.Printf("%s\n", value)
-			choice, err := repos.Prompt.Select("Aaa: ", []string{"header", "body", "query"})
-			if err != nil {
-				log.Fatalf("Error: %s", err.Error())
-			}
-			fmt.Printf("%s\n", choice)
+			fmt.Printf("%+v\n", endpointDef)
 		},
 	}
 
