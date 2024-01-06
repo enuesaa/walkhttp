@@ -2,7 +2,9 @@ package cli
 
 import (
 	"fmt"
+	"log"
 
+	"github.com/enuesaa/walkin/pkg/config"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/spf13/cobra"
 )
@@ -17,6 +19,31 @@ func CreatePathsAddOriginRequestHeaderCmd(repos repository.Repos) *cobra.Command
 			value, _ := cmd.Flags().GetString("value")
 
 			fmt.Printf("%s: %s, %s\n", path, name, value)
+
+			configSrv := config.NewConfigSrv(repos)
+			configjson, err := configSrv.Read()
+			if err != nil {
+				log.Fatalf("Error: config file does not exist.")
+			}
+
+			paths := make([]config.ConfigPath, 0)
+			for _, configpath := range configjson.Paths {
+				if configpath.Path == path {
+					headers := configpath.OriginRequestHeaders
+					headers[name] = value
+					paths = append(paths, config.ConfigPath{
+						Path: path,
+						Url: configpath.Url,
+						OriginRequestHeaders: headers,
+					})
+				} else {
+					paths = append(paths, configpath)
+				}
+			}
+
+			if err := configSrv.Write(configjson); err != nil {
+				log.Fatalf("Error: %s", err.Error())
+			}
 		},
 	}
 	cmd.Flags().String("path", "/", "proxy path")
