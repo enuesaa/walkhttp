@@ -4,13 +4,16 @@
 - Web API ではリクエストボディが大きく呼ぶのが大変な時があるが、これを変数だとかテンプレートだとかで簡略化できる
 
 ## development plan
-- [cli] add command `paths add`
-- [cli] add command `paths list`
+- [cli] add command `add <name> -i` ... configure url params, headers, body and finally save as template.
+- [cli] add command `list` ... list templates. 
+- [cli] add command `invoke`
+- [cli] add command `setvar $.var.name <value>`
+- [cli] add `--var $.var.name` flag to comamnd `invoke`.
+- [cli] add command `transform-request <name> -i --map $.req.header.Content-Type $.var.aa`
+
 - [cli] add command `serve`
-- [cli] add command `paths transform-request --path /aa`
-- [cli] add command `paths transform-response --path /bb`
-- [http] use go-plugin to customize request header dynamically. this is useful for auth headers.
 - [db] save to sqlite3
+- [http] use go-plugin to customize request header dynamically. this is useful for auth headers.
 
 ## how to call these web apis... 
 ### openai api
