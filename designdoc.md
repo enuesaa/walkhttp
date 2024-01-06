@@ -4,12 +4,10 @@
 - Web API ではリクエストボディが大きく呼ぶのが大変な時があるが、これを変数だとかテンプレートだとかで簡略化できる
 
 ## development plan
-- [cli] add command `add --name <name>` ... configure url params, headers, body and finally save as template.
+- [cli] add command `new` ... configure url params, headers, body and finally save as template.
 - [cli] add command `list` ... list templates. 
-- [cli] add command `invoke`
-- [cli] add command `setvar $.var.name <value>`
-- [cli] add `--var $.var.name` flag to comamnd `invoke`.
-- [cli] add command `transform-request <name> -i --map $.req.header.Content-Type $.var.aa`
+- [cli] add command `invoke <name> --aa bb`
+- [cli] add command `transform-request <name> --set-header Content-Type 'application/json' --remove-header Aaa --set-header Accept $.var.aa`
 
 - [cli] add command `serve`
 - [db] save to sqlite3
