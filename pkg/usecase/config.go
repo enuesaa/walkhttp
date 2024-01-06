@@ -60,7 +60,9 @@ func DefineEndpointWithPrompt(repos repository.Repos) (endpoint.Endpoint, error)
 				return def, err
 			}
 			def.RequestBody[bodyPath] = bodyValue
-		case "end":
+		}
+
+		if choice == "end" {
 			break
 		}
 	}
