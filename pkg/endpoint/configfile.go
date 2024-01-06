@@ -5,9 +5,10 @@ import (
 )
 
 type ConfigFile struct {
-	Endpoints map[string]Endpoint `json:"endpoints"`
+	Endpoints []Endpoint `json:"endpoints"`
 }
 type Endpoint struct {
+	Name string `json:"name"`
 	Url string `json:"url"`
 	RequestHeaders map[string]string `json:"requestHeaders"`
 	RequestBody map[string]string `json:"requestBody"`

@@ -1,7 +1,6 @@
 package cli
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/enuesaa/walkin/pkg/repository"
@@ -22,7 +21,10 @@ func CreateNewCmd(repos repository.Repos) *cobra.Command {
 			if err != nil {
 				log.Fatalf("Error: failed to run prompt.")
 			}
-			fmt.Printf("%+v\n", endpointDef)
+
+			if err := usecase.AddEndpoint(repos, endpointDef); err != nil {
+				log.Fatalf("Error: %s", err.Error())
+			}
 		},
 	}
 

@@ -14,9 +14,25 @@ func CreateConfigFileIfNotExist(repos repository.Repos) error {
 	}
 
 	configfile := endpoint.ConfigFile{
-		Endpoints: make(map[string]endpoint.Endpoint, 0),
+		Endpoints: make([]endpoint.Endpoint, 0),
 	}
 	return endpointSrv.WriteConfig(configfile)
+}
+
+func AddEndpoint(repos repository.Repos, endpointdef endpoint.Endpoint) error {
+	endpointSrv := endpoint.New(repos)
+	if !endpointSrv.IsConfigFileExist() {
+		return fmt.Errorf("config file does not exist")
+	}
+	configfile, err := endpointSrv.ReadConfig()
+	if err != nil {
+		return fmt.Errorf("failed to read config file")
+	}
+	configfile.Endpoints = append(configfile.Endpoints, endpointdef)
+	if err := endpointSrv.WriteConfig(configfile); err != nil {
+		return fmt.Errorf("failed to write config file")
+	}
+	return nil
 }
 
 func DefineEndpointWithPrompt(repos repository.Repos) (endpoint.Endpoint, error) {
@@ -25,6 +41,11 @@ func DefineEndpointWithPrompt(repos repository.Repos) (endpoint.Endpoint, error)
 		RequestBody: make(map[string]string, 0),
 	}
 	
+	name, err := repos.Prompt.Ask("name: ", "aa")
+	if err != nil {
+		return def, err
+	}
+	def.Name = name
 	url, err := repos.Prompt.Ask("url: ", "https://example.com/")
 	if err != nil {
 		return def, err
