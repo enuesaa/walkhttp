@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/enuesaa/walkin/pkg/config"
+	"github.com/enuesaa/walkin/pkg/endpoint"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/spf13/cobra"
 )
 
-func CreatePathsAddOriginRequestHeaderCmd(repos repository.Repos) *cobra.Command {
+func CreateTransformRequestCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "add-origin-request-header",
-		Short: "add header of origin request",
+		Use:   "transform-request",
+		Short: "transform reuqest",
 		Run: func(cmd *cobra.Command, args []string) {
 			path, _ := cmd.Flags().GetString("path")
 			name, _ := cmd.Flags().GetString("name")
@@ -20,18 +20,18 @@ func CreatePathsAddOriginRequestHeaderCmd(repos repository.Repos) *cobra.Command
 
 			fmt.Printf("%s: %s, %s\n", path, name, value)
 
-			configSrv := config.NewConfigSrv(repos)
+			configSrv := endpoint.NewConfigSrv(repos)
 			configjson, err := configSrv.Read()
 			if err != nil {
 				log.Fatalf("Error: config file does not exist.")
 			}
 
-			paths := make([]config.ConfigPath, 0)
+			paths := make([]endpoint.ConfigPath, 0)
 			for _, configpath := range configjson.Paths {
 				if configpath.Path == path {
 					headers := configpath.OriginRequestHeaders
 					headers[name] = value
-					paths = append(paths, config.ConfigPath{
+					paths = append(paths, endpoint.ConfigPath{
 						Path: path,
 						Url: configpath.Url,
 						OriginRequestHeaders: headers,

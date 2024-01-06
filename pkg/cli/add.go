@@ -1,29 +1,33 @@
 package cli
 
 import (
+	"fmt"
 	"log"
 
-	"github.com/enuesaa/walkin/pkg/config"
+	"github.com/enuesaa/walkin/pkg/endpoint"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/spf13/cobra"
 )
 
-func CreatePathsAddCmd(repos repository.Repos) *cobra.Command {
+func CreateAddCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "add",
 		Short: "add",
 		Run: func(cmd *cobra.Command, args []string) {
+			name, _ := cmd.Flags().GetString("name")
+			fmt.Printf("%s\n", name)
+
 			path, _ := cmd.Flags().GetString("path")
 			url, _ := cmd.Flags().GetString("url")
 
-			configSrv := config.NewConfigSrv(repos)
+			configSrv := endpoint.NewConfigSrv(repos)
 			configjson, err := configSrv.Read()
 			if err != nil {
-				configjson = config.Config{
-					Paths: make([]config.ConfigPath, 0),
+				configjson = endpoint.Config{
+					Paths: make([]endpoint.ConfigPath, 0),
 				}
 			}
-			configjson.Paths = append(configjson.Paths, config.ConfigPath{
+			configjson.Paths = append(configjson.Paths, endpoint.ConfigPath{
 				Path: path,
 				Url: url,
 			})
@@ -33,12 +37,13 @@ func CreatePathsAddCmd(repos repository.Repos) *cobra.Command {
 			}
 		},
 	}
+	cmd.Flags().String("name", "", "name")
 	cmd.Flags().String("path", "/", "proxy path")
 	cmd.Flags().String("url", "https://example.com/", "proxy url")
 
+	cmd.MarkFlagRequired("name")
 	cmd.MarkFlagRequired("path")
 	cmd.MarkFlagRequired("url")
 
 	return cmd
 }
-

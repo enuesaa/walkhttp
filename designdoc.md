@@ -4,7 +4,7 @@
 - Web API ではリクエストボディが大きく呼ぶのが大変な時があるが、これを変数だとかテンプレートだとかで簡略化できる
 
 ## development plan
-- [cli] add command `add <name> -i` ... configure url params, headers, body and finally save as template.
+- [cli] add command `add --name <name>` ... configure url params, headers, body and finally save as template.
 - [cli] add command `list` ... list templates. 
 - [cli] add command `invoke`
 - [cli] add command `setvar $.var.name <value>`

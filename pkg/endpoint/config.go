@@ -1,4 +1,4 @@
-package config
+package endpoint
 
 type Config struct {
 	Paths []ConfigPath `json:"paths"`
