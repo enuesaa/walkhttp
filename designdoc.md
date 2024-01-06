@@ -1,17 +1,14 @@
 # designdoc
-- instant proxy server for web api to transform request and response.
-- BFFライク(簡単なパスの変換をできる)
-- Web API ではリクエストボディが大きく呼ぶのが大変な時があるが、これを変数だとかテンプレートだとかで簡略化できる
+- batch manager
+- statemachine 風味に http request をしたりコマンドを実行できる
+- config ファイルに定義した順番で実行する
+- 途中で何か失敗したらそのログなどトレースできるようにしたい
 
 ## development plan
-- [cli] add command `new` ... configure url params, headers, body and finally save as template.
-- [cli] add command `list` ... list templates. 
-- [cli] add command `invoke <name> --aa bb`
-- [cli] add command `transform-request <name> --set-header Content-Type 'application/json' --remove-header Aaa --set-header Accept $.var.aa`
-
-- [cli] add command `serve`
-- [db] save to sqlite3
-- [http] use go-plugin to customize request header dynamically. this is useful for auth headers.
+- [cli] add command `validate`
+- [cli] add command `plan`
+- [cli] add command `run --log trace.log`
+- [cli] add command `trace`
 
 ## how to call these web apis... 
 ### openai api
