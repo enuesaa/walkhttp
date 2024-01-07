@@ -31,8 +31,9 @@ func Invoke(repos repository.Repos) error {
 		if err != nil {
 			return fmt.Errorf("failed to invoke because `%s`", err.Error())
 		}
-		fmt.Printf("status: %d\n", response.Status)
-		fmt.Printf("body: %s\n", response.Body)
+
+		repos.Log.Printf("status: %d\n", response.Status)
+		repos.Log.Printf("body: %s\n", response.Body)
 	}
 
 	return nil

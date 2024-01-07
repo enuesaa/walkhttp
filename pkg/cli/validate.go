@@ -1,11 +1,8 @@
 package cli
 
 import (
-	"log"
-
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/enuesaa/walkin/pkg/usecase"
-	"github.com/k0kubun/pp/v3"
 	"github.com/spf13/cobra"
 )
 
@@ -16,9 +13,9 @@ func CreateValidateCmd(repos repository.Repos) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			taskfile, err := usecase.ParseTaskfile(repos)
 			if err != nil {
-				log.Fatalf("Error: %s", err.Error())
+				repos.Log.Fatalf("Error: %s", err.Error())
 			}
-			pp.Print(taskfile)
+			repos.Log.Printf("parsed: %+v", taskfile)
 		},
 	}
 

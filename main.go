@@ -1,16 +1,10 @@
 package main
 
 import (
-	"log"
-
 	"github.com/enuesaa/walkin/pkg/cli"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/spf13/cobra"
 )
-
-func init() {
-	log.SetFlags(0)
-}
 
 func main() {
 	app := &cobra.Command{
