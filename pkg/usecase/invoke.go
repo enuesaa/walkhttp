@@ -16,7 +16,11 @@ func Invoke(repos repository.Repos) error {
 	}
 
 	invokeSrv := invoke.NewInvokeSrv(repos)
-	for _, invokeConfig := range taskfile.Task.TaskInvoke {
+	for _, task := range taskfile.Batch.Tasks {
+		if len(task.TaskInvoke) == 0 {
+			continue
+		}
+		invokeConfig := task.TaskInvoke[0]
 		request := invoke.Request{
 			Method: "GET",
 			Url: invokeConfig.Url,

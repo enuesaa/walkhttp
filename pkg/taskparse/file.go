@@ -5,20 +5,22 @@ import (
 )
 
 type Taskfile struct {
-    Task Task `hcl:"task,block"`
+	Batch Batch `hcl:"batch,block"`
+}
+type Batch struct {
+	Name    string `hcl:"name"`
+    Comment string `hcl:"comment"`
+	Tasks   []Task `hcl:"task,block"`
 }
 type Task struct {
-    Name    string `hcl:"name"`
-    Comment string `hcl:"comment"`
-	TaskRunCommands []TaskRunCommand `hcl:"run_command,block"`
-	TaskInvoke []TaskInvoke `hcl:"invoke,block"`
+    Name       string      `hcl:"name,label"`
+    TaskRun    []TaskRun    `hcl:"run,block"`
+    TaskInvoke []TaskInvoke `hcl:"invoke,block"`
 }
-type TaskRunCommand struct {
-	Name string      `hcl:"name,label"`
+type TaskRun struct {
 	Command []string `hcl:"command"`
 }
 type TaskInvoke struct {
-	Name string `hcl:"name,label"`
 	Url string `hcl:"url"`
 }
 

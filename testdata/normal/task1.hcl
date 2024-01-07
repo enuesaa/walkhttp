@@ -1,19 +1,25 @@
-task {
+batch {
     name = "task 1"
     comment = "simple task"
 
-    run_command "echo1" {
-        command = ["echo", "aaa"]
+    task "echo1" {
+        run {
+            command = ["echo", "aaa"]
+        }
     }
 
-    run_command "echo2" {
-        command = ["echo", "bbb"]
+    task "echo2" {
+        run {
+            command = ["echo", "bbb"]
+        }
     }
     
-    invoke "example" {
-        url = "https://example.com"
-        // request_headers = {
-        //     "Content-Type" = "application/json"
-        // }
+    task "example" {
+        invoke {
+            url = "https://example.com"
+            // request_headers = {
+            //     "Content-Type" = "application/json"
+            // }
+        }
     }
 }
