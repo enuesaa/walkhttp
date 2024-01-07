@@ -6,7 +6,6 @@ require (
 	github.com/erikgeiser/promptkit v0.9.0
 	github.com/gofiber/fiber/v2 v2.51.0
 	github.com/hashicorp/hcl/v2 v2.19.1
-	github.com/k0kubun/pp/v3 v3.2.0
 	github.com/spf13/cobra v1.7.0
 )
 

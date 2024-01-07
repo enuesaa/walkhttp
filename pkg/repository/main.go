@@ -1,23 +1,23 @@
 package repository
 
 type Repos struct {
-	Fs FsRepositoryInterface
+	Fs     FsRepositoryInterface
 	Prompt PromptInterface
-	Log LogRepositoryInterface
+	Log    LogRepositoryInterface
 }
 
 func NewRepos() Repos {
 	return Repos{
-		Fs: &FsRepository{},
+		Fs:     &FsRepository{},
 		Prompt: &Prompt{},
-		Log: &LogRepository{},
+		Log:    &LogRepository{},
 	}
 }
 
 func NewMockRepos() Repos {
 	return Repos{
-		Fs: &FsMockRepository{},
+		Fs:     &FsMockRepository{},
 		Prompt: &Prompt{},
-		Log: &LogMockRepository{},
+		Log:    &LogMockRepository{},
 	}
 }

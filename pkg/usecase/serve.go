@@ -25,7 +25,7 @@ func Serve(repos repository.Repos, workdir string) error {
 			invokeSrv := invoke.NewInvokeSrv(repos)
 			req := invoke.Request{
 				Method: page.Method,
-				Url: page.Url,
+				Url:    page.Url,
 			}
 			res, err := invokeSrv.Invoke(req)
 			if err != nil {

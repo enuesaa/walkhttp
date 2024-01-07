@@ -5,7 +5,7 @@ import (
 	"github.com/enuesaa/walkin/pkg/taskparse"
 )
 
-func ParseTaskfile(repos repository.Repos) (taskparse.Taskfile, error) {
+func ParseTaskfile(repos repository.Repos, filename string) (taskparse.Taskfile, error) {
 	parser := taskparse.New(repos)
-	return parser.Read()
+	return parser.Read(filename)
 }

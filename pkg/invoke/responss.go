@@ -1,12 +1,12 @@
 package invoke
 
 type ResponseHeader struct {
-	Key string
+	Key   string
 	Value string
 }
 
 type Response struct {
-	Status int
+	Status  int
 	Headers []ResponseHeader
-	Body []byte
+	Body    []byte
 }

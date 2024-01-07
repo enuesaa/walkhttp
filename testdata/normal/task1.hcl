@@ -1,25 +1,22 @@
 batch {
-    name = "task 1"
-    comment = "simple task"
+    name = "task1"
+    comment = "taskfile for test"
 
-    task "echo1" {
+    task "start" {
         run {
-            command = ["echo", "aaa"]
-        }
-    }
-
-    task "echo2" {
-        run {
-            command = ["echo", "bbb"]
+            command = ["echo", "start"]
         }
     }
     
     task "example" {
         invoke {
             url = "https://example.com"
-            // request_headers = {
-            //     "Content-Type" = "application/json"
-            // }
+        }
+    }
+
+    task "end" {
+        run {
+            command = ["echo", "end"]
         }
     }
 }

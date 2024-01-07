@@ -9,13 +9,13 @@ type Taskfile struct {
 }
 type Batch struct {
 	Name    string `hcl:"name"`
-    Comment string `hcl:"comment"`
+	Comment string `hcl:"comment"`
 	Tasks   []Task `hcl:"task,block"`
 }
 type Task struct {
-    Name       string      `hcl:"name,label"`
-    TaskRun    []TaskRun    `hcl:"run,block"`
-    TaskInvoke []TaskInvoke `hcl:"invoke,block"`
+	Name       string       `hcl:"name,label"`
+	TaskRun    []TaskRun    `hcl:"run,block"`
+	TaskInvoke []TaskInvoke `hcl:"invoke,block"`
 }
 type TaskRun struct {
 	Command []string `hcl:"command"`
@@ -24,13 +24,13 @@ type TaskInvoke struct {
 	Url string `hcl:"url"`
 }
 
-func (srv *TaskParser) Read() (Taskfile, error) {
+func (srv *TaskParser) Read(filename string) (Taskfile, error) {
 	var taskfile Taskfile
-	fbytes, err := srv.repos.Fs.Read("testdata/normal/task1.hcl")
+	fbytes, err := srv.repos.Fs.Read(filename)
 	if err != nil {
 		return taskfile, err
 	}
-	if err := hclsimple.Decode("task1.hcl", fbytes, nil, &taskfile); err != nil {
+	if err := hclsimple.Decode(filename, fbytes, nil, &taskfile); err != nil {
 		return taskfile, err
 	}
 	return taskfile, nil

@@ -30,7 +30,7 @@ func (srv *InvokeSrv) Invoke(request Request) (Response, error) {
 			return response, fmt.Errorf("failed to map response header because there is no value supplied.")
 		}
 		response.Headers = append(response.Headers, ResponseHeader{
-			Key: key,
+			Key:   key,
 			Value: value[0],
 		})
 	}

@@ -11,15 +11,22 @@ func CreateRunCmd(repos repository.Repos) *cobra.Command {
 		Use:   "run",
 		Short: "run",
 		Run: func(cmd *cobra.Command, args []string) {
-			if err := usecase.Invoke(repos); err != nil {
+			filename, _ := cmd.Flags().GetString("file")
+
+			taskfile, err := usecase.ParseTaskfile(repos, filename)
+			if err != nil {
+				repos.Log.Fatalf("Error: %s", err.Error())
+			}
+			if err := usecase.Invoke(repos, taskfile); err != nil {
 				repos.Log.Fatalf("Error: %s", err.Error())
 			}
 
-			logs := repos.Log.GetAll()
-			repos.Fs.Create("log.log", []byte(logs))
+			if err := usecase.FlushLog(repos, taskfile); err != nil {
+				repos.Log.Fatalf("Error: %s", err.Error())
+			}
 		},
 	}
+	cmd.Flags().String("file", "task.hcl", "taskfile name")
 
 	return cmd
 }
-

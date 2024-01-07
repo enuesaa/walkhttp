@@ -11,14 +11,16 @@ func CreateValidateCmd(repos repository.Repos) *cobra.Command {
 		Use:   "validate",
 		Short: "validate config files.",
 		Run: func(cmd *cobra.Command, args []string) {
-			taskfile, err := usecase.ParseTaskfile(repos)
+			filename, _ := cmd.Flags().GetString("file")
+
+			taskfile, err := usecase.ParseTaskfile(repos, filename)
 			if err != nil {
 				repos.Log.Fatalf("Error: %s", err.Error())
 			}
-			repos.Log.Printf("parsed: %+v", taskfile)
+			repos.Log.Printf("name: %s\n", taskfile.Batch.Name)
 		},
 	}
+	cmd.Flags().String("file", "task.hcl", "taskfile name")
 
 	return cmd
 }
-

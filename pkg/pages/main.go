@@ -4,13 +4,13 @@ import "github.com/enuesaa/walkin/pkg/repository"
 
 func NewPagesSrv(repos repository.Repos) PagesSrv {
 	return PagesSrv{
-		repos: repos,
+		repos:   repos,
 		workdir: ".",
 	}
 }
 
 type PagesSrv struct {
-	repos repository.Repos
+	repos   repository.Repos
 	workdir string
 }
 
