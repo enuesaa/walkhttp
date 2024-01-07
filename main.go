@@ -9,8 +9,8 @@ import (
 func main() {
 	app := &cobra.Command{
 		Use:     "walkin",
-		Short:   "A CLI Tool to debug web api",
-		Version: "0.0.2",
+		Short:   "batch manager",
+		Version: "0.0.1",
 	}
 
 	repos := repository.NewRepos()
