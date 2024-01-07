@@ -21,10 +21,7 @@ func main() {
 
 	repos := repository.NewRepos()
 	app.AddCommand(cli.CreateValidateCmd(repos))
-	app.AddCommand(cli.CreateTransformRequestCmd(repos))
-	app.AddCommand(cli.CreateInvokeCmd(repos))
-	app.AddCommand(cli.CreateServeCmd(repos))
-	app.AddCommand(cli.CreateNewCmd(repos))
+	app.AddCommand(cli.CreateRunCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})

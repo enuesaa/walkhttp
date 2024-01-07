@@ -1,6 +1,6 @@
 task {
     name = "task 1"
-    comment = "simple task to run commands"
+    comment = "simple task"
 
     run_command "echo1" {
         command = ["echo", "aaa"]
@@ -8,5 +8,12 @@ task {
 
     run_command "echo2" {
         command = ["echo", "bbb"]
+    }
+    
+    invoke "example" {
+        url = "https://example.com"
+        // request_headers = {
+        //     "Content-Type" = "application/json"
+        // }
     }
 }

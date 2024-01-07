@@ -8,8 +8,8 @@ task {
     
     invoke "example" {
         url = "https://example.com"
-        request_headers = {
-            "Content-Type" = "application/json"
-        }
+        // request_headers = {
+        //     "Content-Type" = "application/json"
+        // }
     }
 }
