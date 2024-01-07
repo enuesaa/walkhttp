@@ -20,7 +20,7 @@ func main() {
 	}
 
 	repos := repository.NewRepos()
-	app.AddCommand(cli.CreateListCmd(repos))
+	app.AddCommand(cli.CreateValidateCmd(repos))
 	app.AddCommand(cli.CreateTransformRequestCmd(repos))
 	app.AddCommand(cli.CreateInvokeCmd(repos))
 	app.AddCommand(cli.CreateServeCmd(repos))
