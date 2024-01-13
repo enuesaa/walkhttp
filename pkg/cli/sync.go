@@ -34,7 +34,7 @@ func CreateSyncCmd(repos repository.Repos) *cobra.Command {
 					}
 					return c.JSON(res)
 				})
-				if err := app.Listen("localhost:3001"); err != nil {
+				if err := app.Listen(":3001"); err != nil {
 					log.Fatalf("Error: %s", err.Error())
 				}
 				return
