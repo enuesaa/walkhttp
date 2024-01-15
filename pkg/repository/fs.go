@@ -15,6 +15,7 @@ type FsRepositoryInterface interface {
 	WorkDir() (string, error)
 	Remove(path string) error
 	Read(path string) ([]byte, error)
+	ListDirs(path string) ([]string, error)
 	ListFiles(path string) ([]string, error)
 }
 type FsRepository struct{}
@@ -71,17 +72,31 @@ func (repo *FsRepository) Read(path string) ([]byte, error) {
 	return io.ReadAll(f)
 }
 
-func (repo *FsRepository) ListFiles(path string) ([]string, error) {
-	entries, err := os.ReadDir(path)
-	if err != nil {
-		return []string{}, err
-	}
-	filenames := make([]string, 0)
-	for _, entry := range entries {
-		if entry.Name() == ".git" {
-			continue
+func (repo *FsRepository) ListDirs(path string) ([]string, error) {
+	list := make([]string, 0)
+	err := filepath.Walk(path, func(fpath string, file os.FileInfo, err error) error {
+		if err != nil {
+			return err
 		}
-		filenames = append(filenames, filepath.Join(path, entry.Name()))
-	}
-	return filenames, nil
+		if file.IsDir() {
+			list = append(list, fpath)
+		}
+		return nil
+	})
+	return list, err
+}
+
+func (repo *FsRepository) ListFiles(path string) ([]string, error) {
+	list := make([]string, 0)
+	err := filepath.Walk(path, func(fpath string, file os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if file.IsDir() {
+			return nil
+		}
+		list = append(list, fpath)
+		return nil
+	})
+	return list, err
 }

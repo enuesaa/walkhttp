@@ -71,6 +71,10 @@ func (repo *FsMockRepository) Read(path string) ([]byte, error) {
 	return make([]byte, 0), nil
 }
 
+func (repo *FsMockRepository) ListDirs(path string) ([]string, error) {
+	return make([]string, 0), fmt.Errorf("not implemented")
+}
+
 func (repo *FsMockRepository) ListFiles(path string) ([]string, error) {
 	list := make([]string, 0)
 	for _, filepath := range repo.Files {

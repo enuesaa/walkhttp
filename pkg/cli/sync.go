@@ -5,11 +5,22 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/monitor"
 	"github.com/spf13/cobra"
 )
+
+type SyncFileList struct {
+	Items []SyncFile `json:"items"`
+}
+type SyncFile struct {
+	IsDir bool `json:"isDir"`
+	Path string `json:"path"`
+}
 
 func CreateSyncCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
@@ -18,30 +29,62 @@ func CreateSyncCmd(repos repository.Repos) *cobra.Command {
 		Run: func(cmd *cobra.Command, args []string) {
 			isServe, _ := cmd.Flags().GetBool("serve")
 			isClient, _ := cmd.Flags().GetBool("client")
-			url, _ := cmd.Flags().GetString("url")
-
-			type Aaa struct {
-				Name string `json:"name"`
-				Content string `json:"content"`
-			}
+			host, _ := cmd.Flags().GetString("host")
 
 			if isServe {
 				app := fiber.New()
-				app.Get("/aaa", func(c *fiber.Ctx) error {
-					res := Aaa {
-						Name: "hey",
-						Content: "hello",
+				app.Use(logger.New())
+				app.Get("/metrics", monitor.New())
+				app.Get("/files", func(c *fiber.Ctx) error {
+					res := SyncFileList {
+						Items: make([]SyncFile, 0),
+					}
+					dirs, err := repos.Fs.ListDirs("testdata")
+					if err != nil {
+						return err
+					}
+					for _, dir := range dirs {
+						res.Items = append(res.Items, SyncFile{
+							IsDir: true,
+							Path: dir,
+						})
+					}
+					files, err := repos.Fs.ListFiles("testdata")
+					if err != nil {
+						return err
+					}
+					for _, file := range files {
+						res.Items = append(res.Items, SyncFile{
+							IsDir: false,
+							Path: file,
+						})
 					}
 					return c.JSON(res)
 				})
-				if err := app.Listen(":3001"); err != nil {
+				app.Get("/files/*", func(c *fiber.Ctx) error {
+					path := c.Path()
+					requestedPath := strings.TrimPrefix(path, "/files/")
+					isDir, err := repos.Fs.IsDir(requestedPath)
+					if err != nil {
+						return err
+					}
+					if isDir {
+						return nil
+					}
+					fbytes, err := repos.Fs.Read(requestedPath)
+					if err != nil {
+						return err
+					}
+					return c.SendString(string(fbytes))
+				})
+				if err := app.Listen(host); err != nil {
 					log.Fatalf("Error: %s", err.Error())
 				}
 				return
 			}
 
 			if isClient {
-				res, err := http.Get(url)
+				res, err := http.Get(host)
 				if err != nil {
 					log.Fatalf("Error: %s", err.Error())
 				}
@@ -58,7 +101,7 @@ func CreateSyncCmd(repos repository.Repos) *cobra.Command {
 	}
 	cmd.Flags().Bool("serve", false, "serve")
 	cmd.Flags().Bool("client", false, "client")
-	cmd.Flags().String("url", "", "url")
+	cmd.Flags().String("host", "localhost:3001", "host")
 
 	return cmd
 }
