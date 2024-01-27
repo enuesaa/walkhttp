@@ -1,5 +1,5 @@
 # designdoc
-- batch manager
+- http client
 - statemachine 風味に http request をしたりコマンドを実行できる
 - 途中で何か失敗したらそのログなどトレースできるようにしたい
 
