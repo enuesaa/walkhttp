@@ -2,12 +2,13 @@ package cli
 
 import (
 	"log"
-	"strings"
 
+	"github.com/enuesaa/walkin/controlweb"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
+	"github.com/gofiber/fiber/v2/middleware/requestid"
 	"github.com/spf13/cobra"
 )
 
@@ -28,49 +29,10 @@ func CreateControlCmd(repos repository.Repos) *cobra.Command {
 
 			app := fiber.New()
 			app.Use(logger.New())
+			app.Use(requestid.New())
 			app.Get("/metrics", monitor.New())
-			app.Get("/files", func(c *fiber.Ctx) error {
-				res := SyncFileList {
-					Items: make([]SyncFile, 0),
-				}
-				dirs, err := repos.Fs.ListDirs("testdata")
-				if err != nil {
-					return err
-				}
-				for _, dir := range dirs {
-					res.Items = append(res.Items, SyncFile{
-						IsDir: true,
-						Path: dir,
-					})
-				}
-				files, err := repos.Fs.ListFiles("testdata")
-				if err != nil {
-					return err
-				}
-				for _, file := range files {
-					res.Items = append(res.Items, SyncFile{
-						IsDir: false,
-						Path: file,
-					})
-				}
-				return c.JSON(res)
-			})
-			app.Get("/files/*", func(c *fiber.Ctx) error {
-				path := c.Path()
-				requestedPath := strings.TrimPrefix(path, "/files/")
-				isDir, err := repos.Fs.IsDir(requestedPath)
-				if err != nil {
-					return err
-				}
-				if isDir {
-					return nil
-				}
-				fbytes, err := repos.Fs.Read(requestedPath)
-				if err != nil {
-					return err
-				}
-				return c.SendString(string(fbytes))
-			})
+			app.Get("/*", controlweb.Serve)
+
 			if err := app.Listen(host); err != nil {
 				log.Fatalf("Error: %s", err.Error())
 			}

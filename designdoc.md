@@ -5,5 +5,4 @@
 - http request がコアでミニマムの実行単位. api gateway に登録すれば再利用でき、また state machine 風味にロジックを入れられる
 
 ## development plan
-- [cli] add command `serve`
 - [db] ~/.walkin/logs にログファイルを置く
