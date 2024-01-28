@@ -42,7 +42,7 @@ func CreateControlCmd(repos repository.Repos) *cobra.Command {
 			}
 		},
 	}
-	cmd.Flags().String("host", "localhost:3001", "host")
+	cmd.Flags().String("host", "localhost:3000", "host")
 
 	return cmd
 }

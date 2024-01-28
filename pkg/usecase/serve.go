@@ -12,6 +12,7 @@ type ServeCreateResponse struct {
 	Id uint `json:"id"`
 }
 type ServeDeleteResponse struct {}
+type ServeEmptyResponse struct {}
 
 
 func NewServeCtl() ServeCtl {
