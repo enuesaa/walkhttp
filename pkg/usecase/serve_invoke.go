@@ -3,6 +3,7 @@ package usecase
 import (
 	"fmt"
 
+	"github.com/go-playground/validator/v10"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/gofiber/fiber/v2"
 )
@@ -10,8 +11,8 @@ import (
 type CreateInvokeResponseData struct {}
 
 type CreateInvokeRequest struct {
-	Method string `json:"method"`
-	Url string `json:"url"`
+	Method string `json:"method" validate:"required,oneof=GET POST PUT DELETE OPTIONS"`
+	Url string `json:"url" validate:"required,url"`
 	Body string `json:"body"`
 }
 func (ctl *ServeCtl) CreateInvoke(c *fiber.Ctx) error {
@@ -19,6 +20,9 @@ func (ctl *ServeCtl) CreateInvoke(c *fiber.Ctx) error {
     if err := c.BodyParser(&req); err != nil {
         return err
     }
+	if err := validator.New().Struct(req); err != nil {
+		return err
+	}
 
 	invocation := invoke.Invocation {
 		Method: req.Method,
