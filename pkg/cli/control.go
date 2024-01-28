@@ -5,6 +5,7 @@ import (
 
 	"github.com/enuesaa/walkin/controlweb"
 	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/enuesaa/walkin/pkg/usecase"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/gofiber/fiber/v2/middleware/monitor"
@@ -31,6 +32,9 @@ func CreateControlCmd(repos repository.Repos) *cobra.Command {
 			app.Use(logger.New())
 			app.Use(requestid.New())
 			app.Get("/metrics", monitor.New())
+
+			serveCtl := usecase.NewServeCtl()
+			app.Post("/api/invoke", serveCtl.CreateInvoke)
 			app.Get("/*", controlweb.Serve)
 
 			if err := app.Listen(host); err != nil {
