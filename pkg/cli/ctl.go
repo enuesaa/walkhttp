@@ -21,10 +21,10 @@ type SyncFile struct {
 	Path string `json:"path"`
 }
 
-func CreateControlCmd(repos repository.Repos) *cobra.Command {
+func CreateCtlCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "control",
-		Short: "control",
+		Use:   "ctl",
+		Short: "serve admin console",
 		Run: func(cmd *cobra.Command, args []string) {
 			host, _ := cmd.Flags().GetString("host")
 
