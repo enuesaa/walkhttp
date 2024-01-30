@@ -1,5 +1,5 @@
 //go:build !dev
 
-package controlweb
+package ctlweb
 
 var Serve = ServeDist

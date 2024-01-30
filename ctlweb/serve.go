@@ -1,4 +1,4 @@
-package controlweb
+package ctlweb
 
 import (
 	"embed"
@@ -22,7 +22,7 @@ var dist embed.FS
 
 func RunDevCmd() {
 	cmd := exec.Command("pnpm", "dev")
-	cmd.Dir = "./controlweb"
+	cmd.Dir = "./ctlweb"
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
 

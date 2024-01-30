@@ -1,6 +1,6 @@
 //go:build dev
 
-package controlweb
+package ctlweb
 
 func init() {
 	go RunDevCmd()
