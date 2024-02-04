@@ -8,6 +8,9 @@ export const RequestBox = () => {
   const form = useForm<InvokeReq>()
 
   const hanldeSubmit = form.handleSubmit(async (data) => {
+    if (data.method === undefined) {
+      data.method = 'GET'
+    }
     await invoke.mutateAsync(data)
     form.reset()
   })
@@ -18,7 +21,11 @@ export const RequestBox = () => {
       <form onSubmit={hanldeSubmit}>
         <label>
           <Text as='div' size='2' mb='1' weight='bold'>Method</Text>
-          <Select.Root defaultValue='GET' {...form.register('method')}>
+          <Select.Root defaultValue='GET'
+            {...form.register('method')}
+            // https://stackoverflow.com/questions/75815473/
+            onValueChange={value => form.setValue('method', value)}
+          >
             <Select.Trigger />
             <Select.Content>
               <Select.Item value='GET'>GET</Select.Item>
@@ -30,7 +37,7 @@ export const RequestBox = () => {
         </label>
         <label>
           <Text as='div' size='2' mb='1' weight='bold'>Url</Text>
-          <TextField.Input {...form.register('url')} />
+          <TextField.Input type='url' {...form.register('url')} />
         </label>
         <label>
           <Text as='div' size='2' mb='1' weight='bold'>Body</Text>
