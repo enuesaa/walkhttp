@@ -25,6 +25,7 @@ export const useInvoke = () => useMutation({
       },
       body: JSON.stringify(req),
     })
-    console.log(res)
+    const body = await res.json()
+    return body
   },
 })
