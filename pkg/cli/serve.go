@@ -5,6 +5,7 @@ import (
 	"mime"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/gofiber/fiber/v2"
@@ -20,8 +21,17 @@ func CreateServeCmd(repos repository.Repos) *cobra.Command {
 
 			app.Get("/*", func(c *fiber.Ctx) error {
 				path := c.Path() // like `/`
-				path = filepath.Join("./", path, "index.html")
-				fmt.Printf("%s", path)
+				if strings.HasSuffix(path, "/") {
+					path = filepath.Join(path, "index.html")					
+				}
+				if !strings.Contains(path, ".") {
+					path = path + ".html"
+				}
+				// TODO remove
+				path = strings.ReplaceAll(path, "%5B", "[")
+				path = strings.ReplaceAll(path, "%5D", "]")
+				path = "." + path 
+				fmt.Printf("%s\n", path)
 
 				f, err := os.ReadFile(path)
 				if err != nil {
