@@ -9,13 +9,19 @@ import (
 func main() {
 	app := &cobra.Command{
 		Use:     "walkin",
-		Short:   "batch manager",
+		Short:   "http utility tool",
 		Version: "0.0.1",
 	}
 
 	repos := repository.NewRepos()
-	app.AddCommand(cli.CreateCtlCmd(repos))
 	app.AddCommand(cli.CreateServeCmd(repos))
+	app.AddCommand(cli.CreateCtlCmd(repos))
+	app.AddCommand(cli.CreateHistoryCmd(repos))
+	app.AddCommand(cli.CreateGetCmd(repos))
+	app.AddCommand(cli.CreatePostCmd(repos))
+	app.AddCommand(cli.CreatePutCmd(repos))
+	app.AddCommand(cli.CreateDeleteCmd(repos))
+	app.AddCommand(cli.CreateOptionsCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})

@@ -13,14 +13,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type SyncFileList struct {
-	Items []SyncFile `json:"items"`
-}
-type SyncFile struct {
-	IsDir bool `json:"isDir"`
-	Path string `json:"path"`
-}
-
 func CreateCtlCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "ctl",
@@ -42,7 +34,7 @@ func CreateCtlCmd(repos repository.Repos) *cobra.Command {
 			}
 		},
 	}
-	cmd.Flags().String("host", "localhost:3000", "host")
+	cmd.Flags().String("port", "3000", "admin console port")
 
 	return cmd
 }
