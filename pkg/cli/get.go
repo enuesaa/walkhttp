@@ -39,7 +39,8 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 				}
 			}
 
-			a:
+			headers := map[string]string{}
+
 			for {
 				task := ""
 				taskPrompt := huh.NewSelect[string]().
@@ -53,13 +54,12 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 					return err
 				}
 
-				switch task {
-				case "call":
-					break a
-				case "header":
+				if task == "call" {
+					break
+				}
+				if task == "header" {
 					headerName := ""
 					headerValue := ""
-	
 					headerPrompt := huh.NewForm(
 						huh.NewGroup(
 							huh.NewInput().
@@ -74,6 +74,7 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 					if err := headerPrompt.WithKeyMap(keymap).Run(); err != nil {
 						return err
 					}
+					headers[headerName] = headerValue
 				}
 			}
 
