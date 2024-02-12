@@ -6,3 +6,4 @@
 
 ## development plan
 - [db] ~/.walkin/logs にログファイルを置く
+- [cli] reuse with history
