@@ -2,7 +2,6 @@ package cli
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/charmbracelet/bubbles/key"
 	"github.com/charmbracelet/huh"
@@ -10,63 +9,58 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var (
-    burger string
-    toppings []string
-    sauceLevel int
-    name string
-    instructions string
-    discount bool
-)
-
 func CreatePostCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "post",
 		Short: "post request",
-		Run: func(cmd *cobra.Command, args []string) {
-			form := huh.NewForm(
-				huh.NewGroup(
-					huh.NewSelect[string]().
-						Title("Choose your burger").
-						Options(
-							huh.NewOption("Charmburger Classic", "classic"),
-							huh.NewOption("Chickwich", "chickwich"),
-						).
-						Value(&burger),
-					huh.NewMultiSelect[string]().
-						Title("Toppings").
-						Options(
-							huh.NewOption("Lettuce", "lettuce").Selected(true),
-							huh.NewOption("Jalapeños", "jalapeños"),
-							huh.NewOption("Cheese", "cheese"),
-						).
-						Limit(2).
-						Value(&toppings),
-				),
-
-				huh.NewGroup(
-					huh.NewInput().
-						Title("What's your name?").
-						Suggestions([]string{"hey", "hello"}).
-						Value(&name),
-					huh.NewText().
-						Title("Special Instructions").
-						CharLimit(400).
-						Value(&instructions),
-					huh.NewConfirm().
-						Title("Would you like 15% off?").
-						Value(&discount),
-				),
+		RunE: func(cmd *cobra.Command, args []string) error {
+			keymap := huh.NewDefaultKeyMap()
+			keymap.Input.AcceptSuggestion = key.NewBinding(
+				key.WithKeys("tab"),
+			)
+			keymap.Input.Prev = key.NewBinding(
+				key.WithKeys("up"),
+				key.WithHelp("up", "back"),
+			)
+			keymap.Input.Next = key.NewBinding(
+				key.WithKeys("enter"),
+			)
+			keymap.Input.Submit = key.NewBinding(
+				key.WithKeys("enter"),
 			)
 
-			keymap := huh.NewDefaultKeyMap()
-			keymap.Input.AcceptSuggestion = key.NewBinding(key.WithKeys("tab"), key.WithHelp("tab", "complete"))
-			form.WithKeyMap(keymap)
-
-			if err := form.Run(); err != nil {
-				log.Fatalf("Error: %s", err.Error())
+			url := ""
+			urlPrompt := huh.NewInput().Title("Url").Value(&url).WithKeyMap(keymap)
+			if err := urlPrompt.Run(); err != nil {
+				return err
 			}
-			fmt.Printf("name: %s\n", name)
+
+			for {
+				headerName := ""
+				headerValue := ""
+
+				headerPrompt := huh.NewForm(
+					huh.NewGroup(
+						huh.NewInput().
+							Title("Header name").
+							Suggestions([]string{"content-type", "accept"}).
+							Value(&headerName),
+						huh.NewInput().
+							Title("Header value").
+							Value(&headerValue),
+					),
+				)
+				headerPrompt.WithKeyMap(keymap)
+
+				if err := headerPrompt.Run(); err != nil {
+					return err
+				}
+
+				break
+			}
+			fmt.Printf("url: %s\n", url)
+
+			return nil
 		},
 	}
 
