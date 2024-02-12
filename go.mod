@@ -5,7 +5,6 @@ go 1.21.0
 require (
 	github.com/charmbracelet/bubbles v0.17.2-0.20240108170749-ec883029c8e6
 	github.com/charmbracelet/huh v0.3.0
-	github.com/erikgeiser/promptkit v0.9.0
 	github.com/go-playground/validator/v10 v10.17.0
 	github.com/gofiber/fiber/v2 v2.52.0
 	github.com/spf13/cobra v1.7.0

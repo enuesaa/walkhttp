@@ -33,8 +33,7 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 			)
 
 			if url == "" {
-				urlPrompt := huh.NewInput().Title("Url").Value(&url)
-				if err := urlPrompt.Run(); err != nil {
+				if err := repos.Prompt.Ask("Url", &url); err != nil {
 					return err
 				}
 			}
@@ -43,17 +42,9 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 
 			for {
 				task := ""
-				taskPrompt := huh.NewSelect[string]().
-					Title("Choose your burger").
-					Options(
-						huh.NewOption[string]("Call", "call"),
-						huh.NewOption[string]("Header", "header"),
-					).
-					Value(&task)
-				if err := taskPrompt.Run(); err != nil {
+				if err := repos.Prompt.Select("Next", []string{"call", "header"}, &task); err != nil {
 					return err
 				}
-
 				if task == "call" {
 					break
 				}

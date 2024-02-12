@@ -1,26 +1,27 @@
 package repository
 
 import (
-	"github.com/erikgeiser/promptkit/selection"
-	"github.com/erikgeiser/promptkit/textinput"
+	"github.com/charmbracelet/huh"
 )
 
 type PromptInterface interface {
-	Ask(message string, defaultValue string) (string, error)
-	Select(message string, choices []string) (string, error)
+	Ask(message string, value *string) error
+	Select(message string, choices []string, value *string) error
 }
 type Prompt struct{}
 
-func (prompt *Prompt) Ask(message string, defaultValue string) (string, error) {
-	input := textinput.New(message)
-	input.InitialValue = defaultValue
-
-	return input.RunPrompt()
+func (prompt *Prompt) Ask(message string, value *string) error {
+	p := huh.NewInput().Title(message).Value(value)
+	return p.Run()
 }
 
-func (promp *Prompt) Select(message string, choices []string) (string, error) {
-	sp := selection.New(message, choices)
-	sp.Filter = nil
+func (promp *Prompt) Select(message string, choices []string, value *string) error {
+	options := make([]huh.Option[string], 0)
+	for _, choice := range choices {
+		options = append(options, huh.NewOption[string](choice, choice))
+	}
 
-	return sp.RunPrompt()
+	p := huh.NewSelect[string]().Title(message).Options(options...).Value(value)
+
+	return p.Run()
 }
