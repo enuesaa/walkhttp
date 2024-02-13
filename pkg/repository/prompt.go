@@ -11,7 +11,7 @@ type PromptInterface interface {
 type Prompt struct{}
 
 func (prompt *Prompt) Ask(message string, value *string) error {
-	p := huh.NewInput().Title(message).Value(value)
+	p := huh.NewInput().Title(message + " ").Value(value).Inline(true)
 	return p.Run()
 }
 

@@ -33,40 +33,46 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 			)
 
 			if url == "" {
-				if err := repos.Prompt.Ask("Url", &url); err != nil {
+				url = "https://" // default value
+				urlPrompt := huh.NewInput().
+					Title("Url ").
+					Value(&url).
+					Inline(true)
+				if err := urlPrompt.Run(); err != nil {
 					return err
 				}
 			}
+			fmt.Printf("GET %s\n", url)
 
 			headers := map[string]string{}
 
 			for {
-				task := ""
-				if err := repos.Prompt.Select("Next", []string{"call", "header"}, &task); err != nil {
+				headerName := ""				
+				headerNamePrompt := huh.NewForm(huh.NewGroup(
+					huh.NewInput().
+						Title("Header Name").
+						Description(" (skip if empty) ").
+						Suggestions([]string{"content-type", "accept"}).
+						Value(&headerName).
+						Inline(true),
+				)).WithKeyMap(keymap)
+
+				if err := headerNamePrompt.Run(); err != nil {
 					return err
 				}
-				if task == "call" {
+				if headerName == "" {
 					break
 				}
-				if task == "header" {
-					headerName := ""
-					headerValue := ""
-					headerPrompt := huh.NewForm(
-						huh.NewGroup(
-							huh.NewInput().
-								Title("Header name").
-								Suggestions([]string{"content-type", "accept"}).
-								Value(&headerName),
-							huh.NewInput().
-								Title("Header value").
-								Value(&headerValue),
-						),
-					)
-					if err := headerPrompt.WithKeyMap(keymap).Run(); err != nil {
-						return err
-					}
-					headers[headerName] = headerValue
+				headerValue := ""
+				headerValuePrompt := huh.NewInput().
+					Title(fmt.Sprintf("Header Value %s", headerName)).
+					Value(&headerValue).
+					Inline(true).
+					WithKeyMap(keymap)
+				if err := headerValuePrompt.Run(); err != nil {
+					return err
 				}
+				headers[headerName] = headerValue
 			}
 
 			invocation := invoke.Invocation {
