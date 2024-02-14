@@ -37,7 +37,8 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 				urlPrompt := huh.NewInput().
 					Title("Url ").
 					Value(&url).
-					Inline(true)
+					Inline(true).
+					WithTheme(huh.ThemeDracula())
 				if err := urlPrompt.Run(); err != nil {
 					return err
 				}
@@ -50,12 +51,12 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 				headerName := ""				
 				headerNamePrompt := huh.NewForm(huh.NewGroup(
 					huh.NewInput().
-						Title("Header Name").
-						Description(" (skip if empty) ").
+						Title(" Header Name ").
 						Suggestions([]string{"content-type", "accept"}).
+						Placeholder("skip if empty").
 						Value(&headerName).
 						Inline(true),
-				)).WithKeyMap(keymap)
+				)).WithKeyMap(keymap).WithTheme(huh.ThemeDracula())
 
 				if err := headerNamePrompt.Run(); err != nil {
 					return err
@@ -64,14 +65,17 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 					break
 				}
 				headerValue := ""
-				headerValuePrompt := huh.NewInput().
-					Title(fmt.Sprintf("Header Value %s", headerName)).
-					Value(&headerValue).
-					Inline(true).
-					WithKeyMap(keymap)
+				headerValuePrompt := huh.NewForm(huh.NewGroup(
+					huh.NewInput().
+						Title(fmt.Sprintf(" Header Value [%s] ", headerName)).
+						Value(&headerValue).
+						Inline(true),
+				)).WithKeyMap(keymap).WithTheme(huh.ThemeDracula())
+
 				if err := headerValuePrompt.Run(); err != nil {
 					return err
 				}
+				fmt.Printf("%s: %s\n", headerName, headerValue)
 				headers[headerName] = headerValue
 			}
 
