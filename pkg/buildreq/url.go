@@ -4,10 +4,12 @@ func (b *Buildreq) IsUrlEmpty() bool {
 	return b.Invocation.Url == ""
 }
 
-func (b *Buildreq) AskUrl() (string, error) {
+func (b *Buildreq) AskUrl() error {
 	url := "https://"
 	if err := b.repos.Prompt.Ask("Url", "", &url); err != nil {
-		return "", err
+		return err
 	}
-	return url, nil
+	b.Invocation.Url = url
+
+	return nil
 }

@@ -9,32 +9,29 @@ import (
 )
 
 func PromptGet(repos repository.Repos, url string) (invoke.Invocation, error) {
-	builder := buildreq.New(repos)
-	builder.Invocation.Method = "GET"
-	builder.Invocation.Url = url
+	builder := buildreq.New(repos, "GET", url)
+	builder.Debug = true
 
 	if builder.IsUrlEmpty() {
-		url, err := builder.AskUrl()
-		if err != nil {
+		if err := builder.AskUrl(); err != nil {
 			return builder.Invocation, err
 		}
-		builder.Invocation.Url = url
 	}
 	fmt.Printf("***\n")
-	fmt.Printf("* GET %s\n", url)
+	fmt.Printf("* GET %s\n", builder.Invocation.Url)
 	fmt.Printf("*\n")
 	fmt.Printf("* [Headers]\n")
 
 	for {
-		header, err := builder.AskHeader()
+		skipped, err := builder.AskHeader()
 		if err != nil {
 			return builder.Invocation, err
-		} 
-		if header.Key == "" {
+		}
+		if skipped {
 			break
 		}
-		builder.Invocation.RequestHeaders = append(builder.Invocation.RequestHeaders, header)
-		fmt.Printf("* %s: %s\n", header.Key, header.Value)
+		lastHeader := builder.GetLastHeader()
+		fmt.Printf("* %s: %s\n", lastHeader.Key, lastHeader.Value)
 	}
 	fmt.Printf("***\n")
 

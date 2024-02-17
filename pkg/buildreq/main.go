@@ -5,12 +5,13 @@ import (
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
-func New(repos repository.Repos) Buildreq {
+func New(repos repository.Repos, method string, url string) Buildreq {
 	return Buildreq{
 		repos: repos,
+		Debug: false,
 		Invocation: invoke.Invocation {
-			Method: "",
-			Url: "",
+			Method: method,
+			Url: url,
 			RequestHeaders: make([]invoke.Header, 0),
 		},
 	}
@@ -18,5 +19,6 @@ func New(repos repository.Repos) Buildreq {
 
 type Buildreq struct {
 	repos repository.Repos
+	Debug bool
 	Invocation invoke.Invocation
 }
