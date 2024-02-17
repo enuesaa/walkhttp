@@ -1,5 +1,7 @@
 package buildreq
 
+import "fmt"
+
 func (b *Buildreq) IsUrlEmpty() bool {
 	return b.Invocation.Url == ""
 }
@@ -12,4 +14,8 @@ func (b *Buildreq) AskUrl() error {
 	b.Invocation.Url = url
 
 	return nil
+}
+
+func (b *Buildreq) Endpoint() string {
+	return fmt.Sprintf("%s %s", b.Invocation.Method, b.Invocation.Url)
 }

@@ -8,8 +8,8 @@ import (
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
-func PromptGet(repos repository.Repos, url string) (invoke.Invocation, error) {
-	builder := buildreq.New(repos, "GET", url)
+func PromptPut(repos repository.Repos, url string) (invoke.Invocation, error) {
+	builder := buildreq.New(repos, "PUT", url)
 
 	fmt.Printf("***\n")
 	if builder.IsUrlEmpty() {
@@ -31,6 +31,13 @@ func PromptGet(repos repository.Repos, url string) (invoke.Invocation, error) {
 		lastHeader := builder.GetLastHeader()
 		fmt.Printf("* %s: %s\n", lastHeader.Key, lastHeader.Value)
 	}
+	fmt.Printf("*\n")
+
+	if err := builder.AskBody(); err != nil {
+		return builder.Invocation, err
+	}
+	fmt.Printf("* [Body]\n")
+	fmt.Printf("* %s\n", builder.Invocation.RequestBody)
 	fmt.Printf("***\n")
 
 	return builder.Invocation, nil

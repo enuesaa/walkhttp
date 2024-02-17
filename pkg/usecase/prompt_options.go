@@ -1,5 +1,6 @@
 package usecase
 
+
 import (
 	"fmt"
 
@@ -8,8 +9,8 @@ import (
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
-func PromptGet(repos repository.Repos, url string) (invoke.Invocation, error) {
-	builder := buildreq.New(repos, "GET", url)
+func PromptOptions(repos repository.Repos, url string) (invoke.Invocation, error) {
+	builder := buildreq.New(repos, "OPTIONS", url)
 
 	fmt.Printf("***\n")
 	if builder.IsUrlEmpty() {

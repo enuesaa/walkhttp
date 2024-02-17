@@ -8,8 +8,8 @@ import (
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
-func PromptGet(repos repository.Repos, url string) (invoke.Invocation, error) {
-	builder := buildreq.New(repos, "GET", url)
+func PromptDelete(repos repository.Repos, url string) (invoke.Invocation, error) {
+	builder := buildreq.New(repos, "DELETE", url)
 
 	fmt.Printf("***\n")
 	if builder.IsUrlEmpty() {

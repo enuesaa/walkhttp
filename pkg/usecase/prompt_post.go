@@ -17,7 +17,7 @@ func PromptPost(repos repository.Repos, url string) (invoke.Invocation, error) {
 			return builder.Invocation, err
 		}
 	}
-	fmt.Printf("* GET %s\n", builder.Invocation.Url)
+	fmt.Printf("* %s\n", builder.Endpoint())
 	fmt.Printf("*\n")
 	fmt.Printf("* [Headers]\n")
 
@@ -31,11 +31,11 @@ func PromptPost(repos repository.Repos, url string) (invoke.Invocation, error) {
 		lastHeader := builder.GetLastHeader()
 		fmt.Printf("* %s: %s\n", lastHeader.Key, lastHeader.Value)
 	}
+	fmt.Printf("*\n")
 
 	if err := builder.AskBody(); err != nil {
 		return builder.Invocation, err
 	}
-	fmt.Printf("*\n")
 	fmt.Printf("* [Body]\n")
 	fmt.Printf("* %s\n", builder.Invocation.RequestBody)
 	fmt.Printf("***\n")
