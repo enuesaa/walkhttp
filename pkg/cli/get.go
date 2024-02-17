@@ -44,25 +44,36 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 				}
 			}
 			fmt.Printf("GET %s\n", url)
-
 			headers := map[string]string{}
 
 			for {
+				addHeader := false
+				choicePrompt :=  huh.NewForm(huh.NewGroup(
+					huh.NewConfirm().
+						Title("Would you like to add Request Header ?").
+						Affirmative("Add").
+						Negative("Skip").
+						Value(&addHeader).
+						Inline(true),
+					)).WithTheme(huh.ThemeDracula())
+				if err := choicePrompt.Run(); err != nil {
+					return err
+				}
+				if !addHeader {
+					break
+				}
+	
 				headerName := ""				
 				headerNamePrompt := huh.NewForm(huh.NewGroup(
 					huh.NewInput().
 						Title(" Header Name ").
 						Suggestions([]string{"content-type", "accept"}).
-						Placeholder("skip if empty").
 						Value(&headerName).
 						Inline(true),
 				)).WithKeyMap(keymap).WithTheme(huh.ThemeDracula())
 
 				if err := headerNamePrompt.Run(); err != nil {
 					return err
-				}
-				if headerName == "" {
-					break
 				}
 				headerValue := ""
 				headerValuePrompt := huh.NewForm(huh.NewGroup(
