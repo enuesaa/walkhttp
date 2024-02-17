@@ -3,46 +3,40 @@ package usecase
 import (
 	"fmt"
 
+	"github.com/enuesaa/walkin/pkg/buildreq"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
 func PromptGet(repos repository.Repos, url string) (invoke.Invocation, error) {
-	invocation := invoke.Invocation {
-		Method: "GET",
-		Url: url,
-		RequestHeaders: make([]invoke.Header, 0),
-	}
+	builder := buildreq.New(repos)
+	builder.Invocation.Method = "GET"
+	builder.Invocation.Url = url
 
-	if url == "" {
-		url = "https://"
-		if err := repos.Prompt.Ask("Url", "", &url); err != nil {
-			return invocation, err
+	if builder.IsUrlEmpty() {
+		url, err := builder.AskUrl()
+		if err != nil {
+			return builder.Invocation, err
 		}
+		builder.Invocation.Url = url
 	}
-	fmt.Printf("GET %s\n", url)
+	fmt.Printf("***\n")
+	fmt.Printf("* GET %s\n", url)
+	fmt.Printf("*\n")
+	fmt.Printf("* [Headers]\n")
 
 	for {
-		headerName := ""
-		suggestion := []string{"content-type", "accept"}
-		if err := repos.Prompt.AskSuggest("Header Name",  "(To skip, click enter)", suggestion, &headerName); err != nil {
-			return invocation, err
-		}
-		if headerName == "" {
+		header, err := builder.AskHeader()
+		if err != nil {
+			return builder.Invocation, err
+		} 
+		if header.Key == "" {
 			break
 		}
-
-		headerValue := ""
-		notice := fmt.Sprintf(" (%s) ", headerName)
-		if err := repos.Prompt.Ask("Header Value",  notice, &headerValue); err != nil {
-			return invocation, err
-		}
-		invocation.RequestHeaders = append(invocation.RequestHeaders, invoke.Header{
-			Key: headerName,
-			Value: headerValue,
-		})
-		fmt.Printf("%s: %s\n", headerName, headerValue)
+		builder.Invocation.RequestHeaders = append(builder.Invocation.RequestHeaders, header)
+		fmt.Printf("* %s: %s\n", header.Key, header.Value)
 	}
+	fmt.Printf("***\n")
 
-	return invocation, nil
+	return builder.Invocation, nil
 }
