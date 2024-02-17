@@ -24,7 +24,6 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 				return err
 			}
 			fmt.Printf("status: %d\n", invocation.Status)
-			fmt.Printf("body: %s\n", string(invocation.ResponseBody))
 
 			return nil
 		},

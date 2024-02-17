@@ -10,6 +10,7 @@ import (
 type PromptInterface interface {
 	Ask(message string, notice string, value *string) error
 	AskSuggest(message string, notice string, suggestion []string, value *string) error
+	Text(message string, notice string, value *string) error
 }
 type Prompt struct{}
 
@@ -48,6 +49,26 @@ func (prompt *Prompt) AskSuggest(message string, notice string, suggestion []str
 				Suggestions(suggestion).
 				Value(value).
 				Inline(true),
+		),
+	)
+	form.WithKeyMap(prompt.keymap())
+	form.WithTheme(huh.ThemeDracula())
+
+	return form.Run()
+}
+
+func (prompt *Prompt) Text(message string, notice string, value *string) error {
+	description := " "
+	if notice != "" {
+		description = fmt.Sprintf(" %s ", notice)
+	}
+	form := huh.NewForm(
+		huh.NewGroup(
+			huh.NewNote(),
+			huh.NewText().
+				Title(message).
+				Description(description).
+				Value(value),
 		),
 	)
 	form.WithKeyMap(prompt.keymap())
