@@ -33,15 +33,8 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 			)
 
 			if url == "" {
-				url = "https://" // default value
-				urlPrompt := huh.NewForm(huh.NewGroup(
-					huh.NewNote(),
-					huh.NewInput().
-						Title("Url ").
-						Value(&url).
-						Inline(true),
-				)).WithKeyMap(keymap).WithTheme(huh.ThemeDracula())
-				if err := urlPrompt.Run(); err != nil {
+				url = "https://"
+				if err := repos.Prompt.Ask("Url", "", &url); err != nil {
 					return err
 				}
 			}
@@ -50,33 +43,17 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 
 			for {
 				headerName := ""
-				headerNamePrompt := huh.NewForm(huh.NewGroup(
-					huh.NewNote(),
-					huh.NewInput().
-						Title("Header Name").
-						Description(" (To skip, click enter) ").
-						Suggestions([]string{"content-type", "accept"}).
-						Value(&headerName).Inline(true),
-				)).WithKeyMap(keymap).WithTheme(huh.ThemeDracula())
-
-				if err := headerNamePrompt.Run(); err != nil {
+				suggestion := []string{"content-type", "accept"}
+				if err := repos.Prompt.AskSuggest("Header Name",  "(To skip, click enter)", suggestion, &headerName); err != nil {
 					return err
 				}
-
 				if headerName == "" {
 					break
 				}
 
 				headerValue := ""
-				headerValuePrompt := huh.NewForm(huh.NewGroup(
-					huh.NewNote(),
-					huh.NewInput().
-						Title("Header Value").
-						Description(fmt.Sprintf(" (%s) ", headerName)).
-						Value(&headerValue).Inline(true),
-				)).WithKeyMap(keymap).WithTheme(huh.ThemeDracula())
-
-				if err := headerValuePrompt.Run(); err != nil {
+				notice := fmt.Sprintf(" (%s) ", headerName)
+				if err := repos.Prompt.Ask("Header Value",  notice, &headerValue); err != nil {
 					return err
 				}
 				fmt.Printf("%s: %s\n", headerName, headerValue)
