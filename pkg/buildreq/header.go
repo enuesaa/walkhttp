@@ -1,25 +1,29 @@
 package buildreq
 
 import (
+	"errors"
 	"fmt"
 
 	"github.com/enuesaa/walkin/pkg/invoke"
 )
 
-func (b *Buildreq) AskHeader() (bool, error) {
+// almost same purpose as io.EOF
+var SKIP_HEADER = errors.New("SKIP_HEADER")
+
+func (b *Buildreq) AskHeader() error {
 	headerName := ""
 	suggestion := []string{"content-type", "accept"}
 	if err := b.repos.Prompt.AskSuggest("Header Name",  "(To skip, click enter)", suggestion, &headerName); err != nil {
-		return false, err
+		return err
 	}
 	if headerName == "" {
-		return true, nil
+		return SKIP_HEADER
 	}
 
 	headerValue := ""
 	notice := fmt.Sprintf(" (%s) ", headerName)
 	if err := b.repos.Prompt.Ask("Header Value",  notice, &headerValue); err != nil {
-		return false, err
+		return err
 	}
 	header := invoke.Header{
 		Key: headerName,
@@ -27,7 +31,7 @@ func (b *Buildreq) AskHeader() (bool, error) {
 	}
 	b.Invocation.RequestHeaders = append(b.Invocation.RequestHeaders, header)
 
-	return false, nil
+	return nil
 }
 
 func (b *Buildreq) GetLastHeader() invoke.Header {

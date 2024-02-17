@@ -8,7 +8,6 @@ import (
 func New(repos repository.Repos, method string, url string) Buildreq {
 	return Buildreq{
 		repos: repos,
-		Debug: false,
 		Invocation: invoke.Invocation {
 			Method: method,
 			Url: url,
@@ -19,6 +18,5 @@ func New(repos repository.Repos, method string, url string) Buildreq {
 
 type Buildreq struct {
 	repos repository.Repos
-	Debug bool
 	Invocation invoke.Invocation
 }

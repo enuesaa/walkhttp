@@ -10,25 +10,23 @@ import (
 
 func PromptPost(repos repository.Repos, url string) (invoke.Invocation, error) {
 	builder := buildreq.New(repos, "POST", url)
-	builder.Debug = true
 
+	fmt.Printf("***\n")
 	if builder.IsUrlEmpty() {
 		if err := builder.AskUrl(); err != nil {
 			return builder.Invocation, err
 		}
 	}
-	fmt.Printf("***\n")
 	fmt.Printf("* GET %s\n", builder.Invocation.Url)
 	fmt.Printf("*\n")
 	fmt.Printf("* [Headers]\n")
 
 	for {
-		skipped, err := builder.AskHeader()
-		if err != nil {
+		if err := builder.AskHeader(); err != nil {
+			if err == buildreq.SKIP_HEADER {
+				break
+			}
 			return builder.Invocation, err
-		}
-		if skipped {
-			break
 		}
 		lastHeader := builder.GetLastHeader()
 		fmt.Printf("* %s: %s\n", lastHeader.Key, lastHeader.Value)
