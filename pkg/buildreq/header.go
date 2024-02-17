@@ -13,7 +13,7 @@ func (b *Buildreq) AskHeader() (bool, error) {
 		return false, err
 	}
 	if headerName == "" {
-		return false, nil
+		return true, nil
 	}
 
 	headerValue := ""

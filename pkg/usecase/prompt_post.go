@@ -37,7 +37,9 @@ func PromptPost(repos repository.Repos, url string) (invoke.Invocation, error) {
 	if err := builder.AskBody(); err != nil {
 		return builder.Invocation, err
 	}
-
+	fmt.Printf("*\n")
+	fmt.Printf("* [Body]\n")
+	fmt.Printf("* %s\n", builder.Invocation.RequestBody)
 	fmt.Printf("***\n")
 
 	return builder.Invocation, nil
