@@ -14,6 +14,7 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 		Short: "get request",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			url, _ := cmd.Flags().GetString("url")
+			verbose, _ := cmd.Flags().GetBool("verbose")
 
 			invocation, err := usecase.PromptGet(repos, url)
 			if err != nil {
@@ -24,11 +25,15 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 				return err
 			}
 			fmt.Printf("status: %d\n", invocation.Status)
+			if verbose {
+				fmt.Printf("body: %s\n", invocation.ResponseBody)				
+			}
 
 			return nil
 		},
 	}
 	cmd.Flags().String("url", "", "url")
+	cmd.Flags().BoolP("verbose", "v", false, "verbose")
 
 	return cmd
 }
