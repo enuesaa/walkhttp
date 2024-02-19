@@ -12,21 +12,22 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
-      - run: echo "TAG_NAME=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
-      - run: |
-          cat <<'EOF' | envsubst > release.md
-          # walkin ${TAG_NAME}
-          ## Installation
-          ```bash
-          git clone https://github.com/enuesaa/walkin.git -b ${TAG_NAME} --depth 1
-          cd walkin
-          go install
-          ```
-          EOF
-
-      - uses: softprops/action-gh-release@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
         with:
-          draft: true
-          body_path: release.md
+          go-version: '1.21'
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: '8'
+
+      - run: go generate ./...
+      - run: go install
+      - uses: goreleaser/goreleaser-action@v5
+        with:
+          version: latest
+          args: release --clean
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

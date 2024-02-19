@@ -18,7 +18,7 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 			if err != nil {
 				return err
 			}
-			if err := usecase.Invoke(repos, &invocation, verbose); err != nil {
+			if err := usecase.Invoke(repos, &invocation, !verbose); err != nil {
 				return err
 			}
 			return nil
