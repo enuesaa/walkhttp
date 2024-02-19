@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/enuesaa/walkin/pkg/usecase"
 	"github.com/spf13/cobra"
@@ -14,8 +15,8 @@ func CreateOptionsCmd(repos repository.Repos) *cobra.Command {
 			url, _ := cmd.Flags().GetString("url")
 			verbose, _ := cmd.Flags().GetBool("verbose")
 
-			invocation, err := usecase.PromptReq(repos, "OPTIONS", url)
-			if err != nil {
+			invocation := invoke.NewInvocation("OPTIONS", url)
+			if err := usecase.PromptReq(repos, &invocation); err != nil {
 				return err
 			}
 			if err := usecase.Invoke(repos, &invocation, !verbose); err != nil {

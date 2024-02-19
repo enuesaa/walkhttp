@@ -23,6 +23,15 @@ type Header struct {
 	Value string `json:"value"`
 }
 
+func NewInvocation(method string, url string) Invocation {
+	return Invocation {
+		Method: method,
+		Url: url,
+		RequestHeaders: []Header{},
+		ResponseHeaders: []Header{},
+	}
+}
+
 func (invocation *Invocation) GetOperationName() (string, error) {
 	u, err := url.Parse(invocation.Url)
 	if err != nil {

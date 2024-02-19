@@ -30,6 +30,10 @@ func CreateReuseCmd(repos repository.Repos) *cobra.Command {
 				return err
 			}
 
+			if err := usecase.PromptReqConfirmOnly(repos, &invocation); err != nil {
+				return err
+			}
+
 			if err := usecase.Invoke(repos, &invocation, !verbose); err != nil {
 				return err
 			}

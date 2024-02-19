@@ -9,35 +9,20 @@ import (
 )
 
 
-func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
+func PromptReqConfirmOnly(repos repository.Repos, invocation *invoke.Invocation) error {
 	builder := buildreq.New(repos, invocation)
 
 	fmt.Printf("***\n")
-	if builder.IsUrlEmpty() {
-		if err := builder.AskUrl(); err != nil {
-			return err
-		}
-	}
 	fmt.Printf("* %s\n", builder.Endpoint())
 	fmt.Printf("*\n")
 	fmt.Printf("* [Headers]\n")
 
-	for {
-		if err := builder.AskHeader(); err != nil {
-			if err == buildreq.SKIP_HEADER {
-				break
-			}
-			return err
-		}
-		lastHeader := builder.GetLastHeader()
-		fmt.Printf("* %s: %s\n", lastHeader.Key, lastHeader.Value)
+	for _, header := range invocation.RequestHeaders {
+		fmt.Printf("* %s: %s\n", header.Key, header.Value)
 	}
+
 	if invocation.Method == "POST" || invocation.Method == "PUT" {
 		fmt.Printf("*\n")
-
-		if err := builder.AskBody(); err != nil {
-			return err
-		}
 		fmt.Printf("* [Body]\n")
 		fmt.Printf("* %s\n", invocation.RequestBody)
 	}
