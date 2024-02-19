@@ -11,12 +11,12 @@ import (
 func CreateGetCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "get",
-		Short: "get request",
+		Short: "make a get request",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			url, _ := cmd.Flags().GetString("url")
 			verbose, _ := cmd.Flags().GetBool("verbose")
 
-			invocation, err := usecase.PromptGet(repos, url)
+			invocation, err := usecase.PromptReq(repos, "GET", url)
 			if err != nil {
 				return err
 			}

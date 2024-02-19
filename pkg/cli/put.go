@@ -11,11 +11,11 @@ import (
 func CreatePutCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "put",
-		Short: "put request",
+		Short: "make a put request",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			url, _ := cmd.Flags().GetString("url")
 
-			invocation, err := usecase.PromptPut(repos, url)
+			invocation, err := usecase.PromptReq(repos, "PUT", url)
 			if err != nil {
 				return err
 			}

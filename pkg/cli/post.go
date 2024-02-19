@@ -11,11 +11,11 @@ import (
 func CreatePostCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "post",
-		Short: "post request",
+		Short: "make a post request",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			url, _ := cmd.Flags().GetString("url")
 
-			invocation, err := usecase.PromptPost(repos, url)
+			invocation, err := usecase.PromptReq(repos, "POST", url)
 			if err != nil {
 				return err
 			}

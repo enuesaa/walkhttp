@@ -11,11 +11,11 @@ import (
 func CreateOptionsCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "options",
-		Short: "options request",
+		Short: "make a options request",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			url, _ := cmd.Flags().GetString("url")
 
-			invocation, err := usecase.PromptOptions(repos, url)
+			invocation, err := usecase.PromptReq(repos, "OPTIONS", url)
 			if err != nil {
 				return err
 			}
