@@ -28,6 +28,9 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 			if verbose {
 				fmt.Printf("body: %s\n", invocation.ResponseBody)				
 			}
+			if err := usecase.SaveInvocation(repos, invocation); err != nil {
+				return err
+			}
 
 			return nil
 		},
