@@ -1,6 +1,7 @@
 package cli
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/enuesaa/walkin/pkg/invoke"
@@ -15,20 +16,20 @@ func CreateReuseCmd(repos repository.Repos) *cobra.Command {
 		Short: "reuse old request",
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
+			filename := args[0]
 			verbose, _ := cmd.Flags().GetBool("verbose")
 
-			filename := args[0]
-			fmt.Printf("file: %s\n", filename)
-
-			// reuse old invocations
-
-			// mock
-			invocation := invoke.Invocation {
-				Method: "GET",
-				Url: "https://example.com",
-				RequestHeaders: make([]invoke.Header, 0),
-				ResponseHeaders: make([]invoke.Header, 0),
+			data, err := repos.Fs.Read(filename)
+			if err != nil {
+				return err
 			}
+			fmt.Printf("found: %s\n", filename)
+
+			var invocation invoke.Invocation
+			if err := json.Unmarshal(data, &invocation); err != nil {
+				return err
+			}
+
 			if err := usecase.Invoke(repos, &invocation, !verbose); err != nil {
 				return err
 			}

@@ -16,13 +16,13 @@ func main() {
 	repos := repository.NewRepos()
 	// app.AddCommand(cli.CreateServeCmd(repos))
 	// app.AddCommand(cli.CreateCtlCmd(repos))
-	app.AddCommand(cli.CreateHistoryCmd(repos))
+	// app.AddCommand(cli.CreateHistoryCmd(repos))
 	app.AddCommand(cli.CreateGetCmd(repos))
 	app.AddCommand(cli.CreatePostCmd(repos))
 	app.AddCommand(cli.CreatePutCmd(repos))
 	app.AddCommand(cli.CreateDeleteCmd(repos))
 	app.AddCommand(cli.CreateOptionsCmd(repos))
-	// app.AddCommand(cli.CreateReuseCmd(repos))
+	app.AddCommand(cli.CreateReuseCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
