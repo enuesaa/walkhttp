@@ -10,7 +10,7 @@ func main() {
 	app := &cobra.Command{
 		Use:     "walkin",
 		Short:   "http utility tool",
-		Version: "0.0.1",
+		Version: "0.0.2",
 	}
 
 	repos := repository.NewRepos()
