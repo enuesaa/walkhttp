@@ -13,16 +13,18 @@ func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 	builder := buildreq.New(repos, invocation)
 
 	fmt.Printf("***\n")
-	if builder.IsUrlEmpty() {
-		if err := builder.AskUrl(); err != nil {
+	if invocation.Url == "" {
+		invocation.Url = "https://"
+		if err := repos.Prompt.Ask("Url", "", &invocation.Url); err != nil {
 			return err
 		}
 	}
-	fmt.Printf("* %s\n", builder.Endpoint())
+	fmt.Printf("* %s %s\n", invocation.Method, invocation.Url)
 	fmt.Printf("*\n")
 	fmt.Printf("* [Headers]\n")
 
 	for {
+		// TODO: remove builder
 		if err := builder.AskHeader(); err != nil {
 			if err == buildreq.SKIP_HEADER {
 				break
@@ -35,9 +37,12 @@ func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 	if invocation.Method == "POST" || invocation.Method == "PUT" {
 		fmt.Printf("*\n")
 
-		if err := builder.AskBody(); err != nil {
+		body := ""
+		if err := repos.Prompt.Text("Body", "", &body); err != nil {
 			return err
 		}
+		invocation.RequestBody = []byte(body)
+
 		fmt.Printf("* [Body]\n")
 		fmt.Printf("* %s\n", invocation.RequestBody)
 	}

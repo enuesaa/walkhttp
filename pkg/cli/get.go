@@ -1,6 +1,8 @@
 package cli
 
 import (
+	"fmt"
+
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/enuesaa/walkin/pkg/usecase"
@@ -25,6 +27,7 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 			if err := usecase.PromptReq(repos, &invocation); err != nil {
 				return err
 			}
+			fmt.Printf("%+v", invocation)
 			if err := usecase.Invoke(repos, &invocation, !verbose); err != nil {
 				return err
 			}
