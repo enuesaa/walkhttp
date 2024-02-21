@@ -14,7 +14,6 @@ func main() {
 	}
 
 	repos := repository.NewRepos()
-	// app.AddCommand(cli.CreateServeCmd(repos))
 	// app.AddCommand(cli.CreateHistoryCmd(repos))
 	app.AddCommand(cli.CreateGetCmd(repos))
 	app.AddCommand(cli.CreatePostCmd(repos))
