@@ -12,9 +12,9 @@ type Invocation struct {
 	Url string `json:"url"`
 
 	RequestHeaders []Header `json:"requestHeaders"`
-	RequestBody []byte `json:"requestBody"`
+	RequestBody string `json:"requestBody"`
 
-	ResponseBody []byte `json:"responseBody"`
+	ResponseBody string `json:"responseBody"`
 	ResponseHeaders []Header `json:"responseHeaders"`
 }
 

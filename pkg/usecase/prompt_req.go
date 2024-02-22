@@ -3,15 +3,11 @@ package usecase
 import (
 	"fmt"
 
-	"github.com/enuesaa/walkin/pkg/buildreq"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
-
 func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
-	builder := buildreq.New(repos, invocation)
-
 	fmt.Printf("***\n")
 	if invocation.Url == "" {
 		invocation.Url = "https://"
@@ -24,25 +20,27 @@ func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 	fmt.Printf("* [Headers]\n")
 
 	for {
-		// TODO: remove builder
-		if err := builder.AskHeader(); err != nil {
-			if err == buildreq.SKIP_HEADER {
-				break
-			}
+		header := invoke.Header{}
+		suggestion := []string{"content-type", "accept"}
+		if err := repos.Prompt.AskSuggest("Header Name",  "(To skip, click enter)", suggestion, &header.Key); err != nil {
 			return err
 		}
-		lastHeader := builder.GetLastHeader()
-		fmt.Printf("* %s: %s\n", lastHeader.Key, lastHeader.Value)
+		if header.Key == "" {
+			break
+		}
+
+		if err := repos.Prompt.Ask("Header Value",  fmt.Sprintf(" (%s) ", header.Key), &header.Value); err != nil {
+			return err
+		}
+		invocation.RequestHeaders = append(invocation.RequestHeaders, header)
+		fmt.Printf("* %s: %s\n", header.Key, header.Value)
 	}
-	if invocation.Method == "POST" || invocation.Method == "PUT" {
-		fmt.Printf("*\n")
 
-		body := ""
-		if err := repos.Prompt.Text("Body", "", &body); err != nil {
+	if invocation.Method == "POST" || invocation.Method == "PUT" {
+		if err := repos.Prompt.Text("Body", "", &invocation.RequestBody); err != nil {
 			return err
 		}
-		invocation.RequestBody = []byte(body)
-
+		fmt.Printf("*\n")
 		fmt.Printf("* [Body]\n")
 		fmt.Printf("* %s\n", invocation.RequestBody)
 	}

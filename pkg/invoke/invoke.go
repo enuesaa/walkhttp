@@ -38,7 +38,7 @@ func Invoke(invocation *Invocation) error {
 	if err != nil {
 		return err
 	}
-	invocation.ResponseBody = resbody
+	invocation.ResponseBody = string(resbody)
 
 	return nil
 }

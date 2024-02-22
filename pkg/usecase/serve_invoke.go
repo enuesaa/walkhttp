@@ -27,7 +27,7 @@ func (ctl *ServeCtl) CreateInvoke(c *fiber.Ctx) error {
 	invocation := invoke.Invocation {
 		Method: req.Method,
 		Url: req.Url,
-		RequestBody: []byte(req.Body),
+		RequestBody: req.Body,
 	}
 	if err := invoke.Invoke(&invocation); err != nil {
 		return err
