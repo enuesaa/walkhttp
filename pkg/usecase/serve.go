@@ -1,21 +1,14 @@
 package usecase
 
-func NewServeListResponse[T interface{}]() ServeListResponse[T] {
-	return ServeListResponse[T]{
-		Items: make([]T, 0),
+import (
+	"github.com/enuesaa/walkin/pkg/servectl"
+)
+
+func Serve() error {
+	ctl := servectl.New()
+	
+	if err := ctl.Run(); err != nil {
+		return err
 	}
+	return nil
 }
-type ServeListResponse[T interface{}] struct {
-	Items []T `json:"items"`
-}
-type ServeCreateResponse struct {
-	Id uint `json:"id"`
-}
-type ServeDeleteResponse struct {}
-type ServeEmptyResponse struct {}
-
-
-func NewServeCtl() ServeCtl {
-	return ServeCtl{}
-}
-type ServeCtl struct {}

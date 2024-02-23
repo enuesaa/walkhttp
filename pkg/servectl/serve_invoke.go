@@ -1,4 +1,4 @@
-package usecase
+package servectl
 
 import (
 	"fmt"
@@ -34,5 +34,5 @@ func (ctl *ServeCtl) CreateInvoke(c *fiber.Ctx) error {
 	}
 	fmt.Printf("invoke: %d\n", invocation.Status)
 
-	return c.JSON(ServeEmptyResponse{})
+	return c.JSON(struct{}{})
 }

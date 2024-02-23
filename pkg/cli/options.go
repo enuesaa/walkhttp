@@ -14,6 +14,12 @@ func CreateOptionsCmd(repos repository.Repos) *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			url, _ := cmd.Flags().GetString("url")
 			verbose, _ := cmd.Flags().GetBool("verbose")
+			browser, _ := cmd.Flags().GetBool("browser")
+
+			if browser {
+				// TODO set url, method here.
+				return usecase.Serve()
+			}
 
 			invocation := invoke.NewInvocation("OPTIONS", url)
 			if err := usecase.PromptReq(repos, &invocation); err != nil {
@@ -27,6 +33,7 @@ func CreateOptionsCmd(repos repository.Repos) *cobra.Command {
 	}
 	cmd.Flags().String("url", "", "url")
 	cmd.Flags().BoolP("verbose", "v", false, "verbose")
+	cmd.Flags().Bool("browser", false, "serve web console to request in a browser")
 
 	return cmd
 }

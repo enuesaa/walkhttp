@@ -1,4 +1,4 @@
-package usecase
+package servectl
 
 import (
 	"github.com/enuesaa/walkin/ctlweb"
@@ -6,16 +6,17 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-func Serve() error {
+func New() ServeCtl {
+	return ServeCtl{}
+}
+type ServeCtl struct {}
+
+func (srv *ServeCtl) Run() error {
 	app := fiber.New()
 	app.Use(logger.New())
 
-	serveCtl := NewServeCtl()
-	app.Post("/api/invoke", serveCtl.CreateInvoke)
+	app.Post("/api/invoke", srv.CreateInvoke)
 	app.Get("/*", ctlweb.Serve)
 
-	if err := app.Listen(":3000"); err != nil {
-		return err
-	}
-	return nil
+	return app.Listen(":3000")
 }
