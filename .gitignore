@@ -4,3 +4,4 @@
 # app
 *.log
 walkin-*.json
+.walkin
