@@ -3,6 +3,7 @@ package usecase
 import (
 	"fmt"
 
+	"github.com/enuesaa/walkin/pkg/conf"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 )
@@ -10,7 +11,7 @@ import (
 func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 	fmt.Printf("***\n")
 	if invocation.Url == "" {
-		conf, err := LoadConfig(repos)
+		conf, err := conf.Read(repos)
 		if err != nil {
 			return err
 		}
