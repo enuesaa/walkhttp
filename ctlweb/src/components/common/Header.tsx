@@ -13,7 +13,9 @@ export const Header = () => {
             </Link>
           </Box>
 
-          {/* <Link href='/setting' className={styles.setting}></Link> */}
+          <Link href='/invoke' className={styles.invoke}>
+            invoke
+          </Link>
         </Flex>
       </Container>
     </header>

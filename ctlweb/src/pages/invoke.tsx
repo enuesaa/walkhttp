@@ -1,13 +1,13 @@
 import { Header } from '@/components/common/Header'
 import { Main } from '@/components/common/Main'
-import { Box, Flex } from '@radix-ui/themes'
+import { Invocations } from '@/components/invocation/Invocations'
 
-export default function TopPage() {
+export default function Page() {
   return (
     <>
       <Header />
       <Main>
-        histories
+        <Invocations />
       </Main>
     </>
   )

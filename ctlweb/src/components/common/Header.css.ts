@@ -19,9 +19,10 @@ export default {
     margin: '0 10px',
     textDecoration: 'none',
   }),
-  setting: style({
+  invoke: style({
     display: 'block',
     width: '100px',
+    fontSize: '16px',
     color: 'white',
     textDecoration: 'none',
   }),
