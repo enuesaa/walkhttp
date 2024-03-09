@@ -9,18 +9,22 @@ import (
 func main() {
 	app := &cobra.Command{
 		Use:     "walkin",
-		Short:   "http utility tool",
+		Short:   "A CLI tool to serve local api gateway",
 		Version: "0.0.2",
 	}
 
 	repos := repository.NewRepos()
 	app.AddCommand(cli.CreateInitCmd(repos))
+
+	// http commands
+	// read port from config file
+	// call http api from browser or server (golang)
 	app.AddCommand(cli.CreateGetCmd(repos))
 	app.AddCommand(cli.CreatePostCmd(repos))
 	app.AddCommand(cli.CreatePutCmd(repos))
 	app.AddCommand(cli.CreateDeleteCmd(repos))
 	app.AddCommand(cli.CreateOptionsCmd(repos))
-	app.AddCommand(cli.CreateServeCmd(repos))
+	app.AddCommand(cli.CreateUpCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})

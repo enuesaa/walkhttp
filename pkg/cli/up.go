@@ -11,10 +11,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func CreateServeCmd(repos repository.Repos) *cobra.Command {
+func CreateUpCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "serve",
-		Short: "serve",
+		Use:   "up",
+		Short: "up",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			config, err := conf.Read(repos)
 			if err != nil {
