@@ -3,15 +3,11 @@ package ctlweb
 import (
 	"embed"
 	"fmt"
-	"log"
 	"mime"
-	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/proxy"
 )
 
 //go:generate pnpm install
@@ -20,30 +16,6 @@ import (
 //go:embed all:dist/*
 var dist embed.FS
 
-// ファイルが変更されたタイミングで pnpm build するのがシンプルなんじゃないか
-// loadii run main.go up
-
-// dev server を go から立ち上げる必要はない
-func RunDevCmd() {
-	cmd := exec.Command("pnpm", "dev")
-	cmd.Dir = "./ctlweb"
-	cmd.Stdout = os.Stdout
-	cmd.Stderr = os.Stderr
-
-	err := cmd.Run()
-	if err != nil {
-		log.Fatalf("Error: %s\n", err)
-	}
-}
-
-// 毎回 pnpm build するなら不要
-func ServeDev(c *fiber.Ctx) error {
-	path := c.Path() // like `/`
-	url := "http://localhost:3001" + path
-	return proxy.Forward(url)(c)
-}
-
-// これもライブラリにしたいが..
 func ServeDist(c *fiber.Ctx) error {
 	path := c.Path() // like `/`
 	path = fmt.Sprintf("dist%s", path)
