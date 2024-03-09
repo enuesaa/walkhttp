@@ -20,6 +20,10 @@ import (
 //go:embed all:dist/*
 var dist embed.FS
 
+// ファイルが変更されたタイミングで pnpm build するのがシンプルなんじゃないか
+// loadii run main.go up
+
+// dev server を go から立ち上げる必要はない
 func RunDevCmd() {
 	cmd := exec.Command("pnpm", "dev")
 	cmd.Dir = "./ctlweb"
@@ -32,12 +36,14 @@ func RunDevCmd() {
 	}
 }
 
+// 毎回 pnpm build するなら不要
 func ServeDev(c *fiber.Ctx) error {
 	path := c.Path() // like `/`
 	url := "http://localhost:3001" + path
 	return proxy.Forward(url)(c)
 }
 
+// これもライブラリにしたいが..
 func ServeDist(c *fiber.Ctx) error {
 	path := c.Path() // like `/`
 	path = fmt.Sprintf("dist%s", path)
