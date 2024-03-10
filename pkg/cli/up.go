@@ -3,7 +3,6 @@ package cli
 import (
 	"fmt"
 	"log"
-	"time"
 
 	"github.com/enuesaa/walkin/ctlweb"
 	"github.com/enuesaa/walkin/pkg/conf"
@@ -15,26 +14,10 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func NewMessages() Messages {
-	return Messages{
-		items: make([]string, 0),
-	}
-}
+// see https://github.com/jos-/gofiber-websocket-chat-example/blob/master/main.go
 
-type Messages struct {
-	items []string
-}
-func (m *Messages) Add(item string) {
-	m.items = append(m.items, item)
-}
-func (m *Messages) First() ([]byte, error) {
-	if len(m.items) > 0 {
-		item := m.items[0]
-		m.items = m.items[1:]
-		return []byte(item), nil
-	}
-	return make([]byte, 0), fmt.Errorf("no item")
-}
+var wsconn *websocket.Conn
+var broadcast = make(chan string)
 
 func CreateUpCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
@@ -49,25 +32,43 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 			app := fiber.New()
 			app.Use(logger.New())
 
-			messages := NewMessages()
-			app.Get("/ws", websocket.New(func(c *websocket.Conn) {
-				defer func ()  {
-					c.Close()
-					log.Println("closed")					
-				}()
-
+			go func ()  {
 				for {
-					time.Sleep(2 * time.Second)
-					item, err := messages.First()
-					if err != nil {
-						continue
+					message, ok := <-broadcast
+					if !ok {
+						return
 					}
-					c.WriteMessage(websocket.TextMessage, item)
-				}
+					log.Printf("a: %s\n", message)
+					if wsconn == nil {
+						return
+					}
+					log.Printf("b: %s\n", message)
+
+					if err := wsconn.WriteMessage(websocket.TextMessage, []byte(message)); err != nil {
+						wsconn.Close()
+						wsconn = nil
+						log.Printf("closed: %s\n", err.Error())
+					}
+					log.Printf("c: %s\n", message)
+					return
+				}	
+			}()
+
+			app.Get("/ws", websocket.New(func(c *websocket.Conn) {
+				// defer func() {
+				// 	log.Printf("close\n")
+				// 	c.Close()
+				// 	wsconn = nil
+				// }()
+				wsconn = c
 			}))
 			app.All("/api/*", func(c *fiber.Ctx) error {
 				path := fmt.Sprintf("%s%s", config.BaseUrl, c.OriginalURL())
-				messages.Add(path)
+				log.Println(path)
+				go func ()  {
+					broadcast <- path					
+				}()
+				log.Println(path)
 				return proxy.Do(c, path)
 			})
 			app.All("/*", ctlweb.Serve)
