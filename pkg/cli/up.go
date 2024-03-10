@@ -2,6 +2,7 @@ package cli
 
 import (
 	"log"
+	"time"
 
 	"github.com/enuesaa/walkin/ctlweb"
 	"github.com/enuesaa/walkin/pkg/repository"
@@ -10,6 +11,10 @@ import (
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/spf13/cobra"
 )
+
+type Messages struct {
+	Items []string
+}
 
 func CreateUpCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
@@ -24,24 +29,31 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 			app := fiber.New()
 			app.Use(logger.New())
 
-			// see: https://note.com/twsnmp/n/ne64357e08038
-			// 記事にある通り hub の方が良さそう
+			messages := Messages{
+				Items: make([]string, 0),
+			}
+
 			app.Get("/ws", websocket.New(func(c *websocket.Conn) {
-				// これ要は開きっぱなしで占有している
-				for {
-					mtype, msg, err := c.ReadMessage()
-					if err != nil {
-						break
-					}
-					log.Printf("Read: %s", msg)
-					err = c.WriteMessage(mtype, msg)
-					if err != nil {
-						log.Println(err)
-						break
+				defer func ()  {
+					c.Close()
+					log.Println("closed")					
+				}()
+
+				for range 10 {
+					time.Sleep(2 * time.Second)
+					if len(messages.Items) > 0 {
+						c.WriteMessage(websocket.TextMessage, []byte(messages.Items[0]))
+						messages.Items = messages.Items[1:]
 					}
 				}
-				log.Println("closed")
 			}))
+
+			go func ()  {
+				for range 100 {
+					time.Sleep(1 * time.Second)
+					messages.Items = append(messages.Items, "aaaaa")
+				}
+			}()
 
 			app.All("/*", ctlweb.Serve)
 	
