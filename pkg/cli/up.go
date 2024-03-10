@@ -33,13 +33,6 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 				Items: make([]string, 0),
 			}
 
-			app.Get("/ws", func(c *fiber.Ctx) error {
-				if websocket.IsWebSocketUpgrade(c) {
-					c.Locals("allowed", true)
-					return c.Next()
-				}
-				return fiber.ErrUpgradeRequired
-			})
 			app.Get("/ws", websocket.New(func(c *websocket.Conn) {
 				defer func ()  {
 					c.Close()
@@ -55,12 +48,10 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 				}
 			}))
 
-			go func ()  {
-				for range 100 {
-					time.Sleep(1 * time.Second)
-					messages.Items = append(messages.Items, "aaaaa")
-				}
-			}()
+			app.All("/api/*", func(c *fiber.Ctx) error {
+				messages.Items = append(messages.Items, c.Path())
+				return nil
+			})
 
 			app.All("/*", ctlweb.Serve)
 	
