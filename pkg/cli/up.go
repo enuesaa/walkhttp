@@ -16,7 +16,6 @@ import (
 
 // see https://github.com/jos-/gofiber-websocket-chat-example/blob/master/main.go
 
-var wsconn *websocket.Conn
 var broadcast = make(chan string)
 
 func CreateUpCmd(repos repository.Repos) *cobra.Command {
@@ -32,42 +31,39 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 			app := fiber.New()
 			app.Use(logger.New())
 
-			go func ()  {
-				for {
-					message, ok := <-broadcast
-					if !ok {
-						return
-					}
-					log.Printf("a: %s\n", message)
-					if wsconn == nil {
-						return
-					}
-					log.Printf("b: %s\n", message)
-
-					if err := wsconn.WriteMessage(websocket.TextMessage, []byte(message)); err != nil {
-						wsconn.Close()
-						wsconn = nil
-						log.Printf("closed: %s\n", err.Error())
-					}
-					log.Printf("c: %s\n", message)
-					return
-				}	
-			}()
-
 			app.Get("/ws", websocket.New(func(c *websocket.Conn) {
-				// defer func() {
-				// 	log.Printf("close\n")
-				// 	c.Close()
-				// 	wsconn = nil
-				// }()
-				wsconn = c
+				defer func() {
+					log.Printf("close\n")
+					c.Close()
+				}()
+
+				go func ()  {
+					for {
+						message, ok := <-broadcast
+						if !ok {
+							return
+						}
+						log.Printf("a: %s\n", message)
+						if err := c.WriteMessage(websocket.TextMessage, []byte(message)); err != nil {
+							log.Printf("err: %s\n", err.Error())
+						}
+					}	
+				}()
+				for {
+					messageType, _, err := c.ReadMessage()
+					if err != nil {
+						log.Printf("err: %s\n", err.Error())
+						break
+					}
+					if messageType == websocket.CloseGoingAway {
+						log.Printf("closed\n")
+					}
+				}
 			}))
 			app.All("/api/*", func(c *fiber.Ctx) error {
 				path := fmt.Sprintf("%s%s", config.BaseUrl, c.OriginalURL())
 				log.Println(path)
-				go func ()  {
-					broadcast <- path					
-				}()
+				broadcast <- path					
 				log.Println(path)
 				return proxy.Do(c, path)
 			})
