@@ -2,7 +2,6 @@ package cli
 
 import (
 	"fmt"
-	"log"
 
 	"github.com/enuesaa/walkin/ctlweb"
 	"github.com/enuesaa/walkin/pkg/conf"
@@ -15,8 +14,31 @@ import (
 )
 
 // see https://github.com/jos-/gofiber-websocket-chat-example/blob/master/main.go
-
-var broadcast = make(chan string)
+func NewWsConn() WsConn {
+	return WsConn {
+		conns: make(map[*websocket.Conn]int),
+		message: "",
+	}
+}
+type WsConn struct {
+	conns map[*websocket.Conn]int
+	message string
+}
+func (w *WsConn) Add(conn *websocket.Conn) {
+	w.conns[conn] = 0
+}
+func (w *WsConn) Remove(conn *websocket.Conn) {
+	delete(w.conns, conn)
+	conn.Close()
+}
+func (w *WsConn) WithMessage(message string) {
+	w.message = message
+}
+func (w *WsConn) Send() {
+	for conn, _ := range w.conns {
+		conn.WriteMessage(websocket.TextMessage, []byte(w.message))
+	}
+}
 
 func CreateUpCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
@@ -28,43 +50,40 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 				return err
 			}
 
+			wsconn := NewWsConn()
+			broadcast := make(chan WsConn)
+
 			app := fiber.New()
 			app.Use(logger.New())
 
-			app.Get("/ws", websocket.New(func(c *websocket.Conn) {
-				defer func() {
-					log.Printf("close\n")
-					c.Close()
-				}()
+			go func ()  {
+				for {
+					wsconn, ok := <-broadcast
+					if !ok {
+						return
+					}
+					wsconn.Send()
+				}	
+			}()
 
-				go func ()  {
-					for {
-						message, ok := <-broadcast
-						if !ok {
-							return
-						}
-						log.Printf("a: %s\n", message)
-						if err := c.WriteMessage(websocket.TextMessage, []byte(message)); err != nil {
-							log.Printf("err: %s\n", err.Error())
-						}
-					}	
-				}()
+			app.Get("/ws", websocket.New(func(c *websocket.Conn) {
+				defer wsconn.Remove(c)
+				wsconn.Add(c)
+
 				for {
 					messageType, _, err := c.ReadMessage()
 					if err != nil {
-						log.Printf("err: %s\n", err.Error())
 						break
 					}
 					if messageType == websocket.CloseGoingAway {
-						log.Printf("closed\n")
+						break
 					}
 				}
 			}))
 			app.All("/api/*", func(c *fiber.Ctx) error {
 				path := fmt.Sprintf("%s%s", config.BaseUrl, c.OriginalURL())
-				log.Println(path)
-				broadcast <- path					
-				log.Println(path)
+				wsconn.WithMessage(path)
+				broadcast <- wsconn
 				return proxy.Do(c, path)
 			})
 			app.All("/*", ctlweb.Serve)
