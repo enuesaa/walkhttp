@@ -1,4 +1,4 @@
-package servectl
+package serve
 
 import (
 	"github.com/gofiber/contrib/websocket"
@@ -7,8 +7,8 @@ import (
 
 func (s *Servectl) createHandleWs() func(*fiber.Ctx) error {
 	handler := websocket.New(func(c *websocket.Conn) {
-		defer s.Wsconns.Remove(c)
-		s.Wsconns.Add(c)
+		defer s.rmConn(c)
+		s.addConn(c)
 	
 		for {
 			messageType, _, err := c.ReadMessage()

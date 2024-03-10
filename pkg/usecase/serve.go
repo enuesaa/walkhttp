@@ -1,13 +1,12 @@
 package usecase
 
 import (
-	"github.com/enuesaa/walkin/pkg/servectl"
+	"github.com/enuesaa/walkin/pkg/serve"
 )
 
 func Serve(port int) error {
-	server := servectl.Servectl{
-		Wsconns: servectl.NewWsConns(),
-	}
+	servectl := serve.New()
+	servectl.Port = port
 
-	return server.Listen(port)
+	return servectl.Listen()
 }
