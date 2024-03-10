@@ -33,6 +33,13 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 				Items: make([]string, 0),
 			}
 
+			app.Get("/ws", func(c *fiber.Ctx) error {
+				if websocket.IsWebSocketUpgrade(c) {
+					c.Locals("allowed", true)
+					return c.Next()
+				}
+				return fiber.ErrUpgradeRequired
+			})
 			app.Get("/ws", websocket.New(func(c *websocket.Conn) {
 				defer func ()  {
 					c.Close()
