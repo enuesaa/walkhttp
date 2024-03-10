@@ -16,7 +16,7 @@ import (
 //go:embed all:dist/*
 var dist embed.FS
 
-func ServeDist(c *fiber.Ctx) error {
+func Serve(c *fiber.Ctx) error {
 	path := c.Path() // like `/`
 	path = fmt.Sprintf("dist%s", path)
 	if strings.HasSuffix(path, "/") {

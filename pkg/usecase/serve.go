@@ -4,11 +4,10 @@ import (
 	"github.com/enuesaa/walkin/pkg/servectl"
 )
 
-func Serve() error {
-	ctl := servectl.New()
-	
-	if err := ctl.Run(); err != nil {
-		return err
+func Serve(port int) error {
+	server := servectl.Servectl{
+		Wsconns: servectl.NewWsConns(),
 	}
-	return nil
+
+	return server.Listen(port)
 }

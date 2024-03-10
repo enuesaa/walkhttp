@@ -1,22 +1,38 @@
 package servectl
 
 import (
+	"fmt"
+
 	"github.com/enuesaa/walkin/ctlweb"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-func New() ServeCtl {
-	return ServeCtl{}
-}
-type ServeCtl struct {}
+var broadcast = make(chan MessageBox)
 
-func (srv *ServeCtl) Run() error {
+//TODO: refactor
+type Servectl struct {
+	Wsconns WsConns
+}
+
+func (s *Servectl) Listen(port int) error {
 	app := fiber.New()
 	app.Use(logger.New())
 
-	app.Post("/api/invoke", srv.CreateInvoke)
-	app.Get("/*", ctlweb.Serve)
+	go func ()  {
+		for {
+			messagebox, ok := <-broadcast
+			if !ok {
+				return
+			}
+			messagebox.Send()
+		}	
+	}()
 
-	return app.Listen(":3000")
+	app.Get("/ws", s.createHandleWs())
+	app.All("/api/*", s.createHandleApi())
+	app.All("/*", ctlweb.Serve)
+
+	addr := fmt.Sprintf(":%d", port)
+	return app.Listen(addr)
 }
