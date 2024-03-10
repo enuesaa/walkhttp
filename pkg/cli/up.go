@@ -14,29 +14,43 @@ import (
 )
 
 // see https://github.com/jos-/gofiber-websocket-chat-example/blob/master/main.go
-func NewWsConn() WsConn {
-	return WsConn {
+func NewWsConns() WsConns {
+	return WsConns {
 		conns: make(map[*websocket.Conn]int),
-		message: "",
 	}
 }
-type WsConn struct {
+type WsConns struct {
 	conns map[*websocket.Conn]int
-	message string
 }
-func (w *WsConn) Add(conn *websocket.Conn) {
+func (w *WsConns) Add(conn *websocket.Conn) {
 	w.conns[conn] = 0
 }
-func (w *WsConn) Remove(conn *websocket.Conn) {
+func (w *WsConns) Remove(conn *websocket.Conn) {
 	delete(w.conns, conn)
 	conn.Close()
 }
-func (w *WsConn) WithMessage(message string) {
-	w.message = message
-}
-func (w *WsConn) Send() {
+func (w *WsConns) List() []*websocket.Conn {
+	list := make([]*websocket.Conn, 0)
 	for conn, _ := range w.conns {
-		conn.WriteMessage(websocket.TextMessage, []byte(w.message))
+		list = append(list, conn)
+	}
+	return list
+}
+
+func NewMessageBox(message string, wsconns WsConns) MessageBox {
+	return MessageBox{
+		message: message,
+		wsconns: wsconns,
+	}
+}
+
+type MessageBox struct {
+	message string
+	wsconns WsConns
+}
+func (m *MessageBox) Send() {
+	for _, conn := range m.wsconns.List() {
+		conn.WriteMessage(websocket.TextMessage, []byte(m.message))
 	}
 }
 
@@ -50,25 +64,25 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 				return err
 			}
 
-			wsconn := NewWsConn()
-			broadcast := make(chan WsConn)
+			wsconns := NewWsConns()
+			broadcast := make(chan MessageBox)
 
 			app := fiber.New()
 			app.Use(logger.New())
 
 			go func ()  {
 				for {
-					wsconn, ok := <-broadcast
+					messagebox, ok := <-broadcast
 					if !ok {
 						return
 					}
-					wsconn.Send()
+					messagebox.Send()
 				}	
 			}()
 
 			app.Get("/ws", websocket.New(func(c *websocket.Conn) {
-				defer wsconn.Remove(c)
-				wsconn.Add(c)
+				defer wsconns.Remove(c)
+				wsconns.Add(c)
 
 				for {
 					messageType, _, err := c.ReadMessage()
@@ -82,8 +96,7 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 			}))
 			app.All("/api/*", func(c *fiber.Ctx) error {
 				path := fmt.Sprintf("%s%s", config.BaseUrl, c.OriginalURL())
-				wsconn.WithMessage(path)
-				broadcast <- wsconn
+				broadcast <- NewMessageBox(path, wsconns)
 				return proxy.Do(c, path)
 			})
 			app.All("/*", ctlweb.Serve)
