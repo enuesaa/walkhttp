@@ -7,14 +7,14 @@ import (
 )
 
 type Invocation struct {
-	Status int `json:"status"`
+	Status int    `json:"status"`
 	Method string `json:"method"`
-	Url string `json:"url"`
+	Url    string `json:"url"`
 
 	RequestHeaders []Header `json:"requestHeaders"`
-	RequestBody string `json:"requestBody"`
+	RequestBody    string   `json:"requestBody"`
 
-	ResponseBody string `json:"responseBody"`
+	ResponseBody    string   `json:"responseBody"`
 	ResponseHeaders []Header `json:"responseHeaders"`
 }
 
@@ -24,10 +24,10 @@ type Header struct {
 }
 
 func NewInvocation(method string, url string) Invocation {
-	return Invocation {
-		Method: method,
-		Url: url,
-		RequestHeaders: []Header{},
+	return Invocation{
+		Method:          method,
+		Url:             url,
+		RequestHeaders:  []Header{},
 		ResponseHeaders: []Header{},
 	}
 }

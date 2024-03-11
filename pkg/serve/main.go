@@ -12,15 +12,15 @@ import (
 func New() Servectl {
 	return Servectl{
 		wsconns: make(map[*websocket.Conn]int),
-		wssend: make(chan []byte),
-		Port: 3000,
+		wssend:  make(chan []byte),
+		Port:    3000,
 	}
 }
 
 type Servectl struct {
 	wsconns map[*websocket.Conn]int
-	wssend chan []byte
-	Port int
+	wssend  chan []byte
+	Port    int
 }
 
 func (s *Servectl) Addr() string {

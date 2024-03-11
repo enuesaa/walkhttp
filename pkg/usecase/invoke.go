@@ -26,7 +26,7 @@ func Invoke(repos repository.Repos, invocation *invoke.Invocation, truncate bool
 	// TODO
 	// if truncate is true, truncate response body with 100 letters.
 	if !truncate {
-		fmt.Printf("body: %s\n", invocation.ResponseBody)				
+		fmt.Printf("body: %s\n", invocation.ResponseBody)
 	}
 
 	filename := fmt.Sprintf("walkin-%s.json", operationName)

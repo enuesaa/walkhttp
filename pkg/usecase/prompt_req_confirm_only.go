@@ -7,7 +7,6 @@ import (
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
-
 func PromptReqConfirmOnly(repos repository.Repos, invocation *invoke.Invocation) error {
 	fmt.Printf("***\n")
 	fmt.Printf("* %s %s\n", invocation.Method, invocation.Url)

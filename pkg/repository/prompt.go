@@ -109,4 +109,3 @@ func (prompt *Prompt) keymap() *huh.KeyMap {
 	)
 	return keymap
 }
-

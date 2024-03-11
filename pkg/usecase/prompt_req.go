@@ -27,14 +27,14 @@ func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 	for {
 		header := invoke.Header{}
 		suggestion := []string{"content-type", "accept"}
-		if err := repos.Prompt.AskSuggest("Header Name",  "(To skip, click enter)", suggestion, &header.Key); err != nil {
+		if err := repos.Prompt.AskSuggest("Header Name", "(To skip, click enter)", suggestion, &header.Key); err != nil {
 			return err
 		}
 		if header.Key == "" {
 			break
 		}
 
-		if err := repos.Prompt.Ask("Header Value",  fmt.Sprintf(" (%s) ", header.Key), &header.Value); err != nil {
+		if err := repos.Prompt.Ask("Header Value", fmt.Sprintf(" (%s) ", header.Key), &header.Value); err != nil {
 			return err
 		}
 		invocation.RequestHeaders = append(invocation.RequestHeaders, header)
