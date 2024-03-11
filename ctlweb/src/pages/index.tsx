@@ -11,7 +11,7 @@ export default function TopPage() {
       <Main>
         histories
 
-        {messages.map((v, i) => <div key={i}>{v}</div>)}
+        {messages.map((v, i) => <div key={i}>{v.method} {v.url}</div>)}
       </Main>
     </>
   )
