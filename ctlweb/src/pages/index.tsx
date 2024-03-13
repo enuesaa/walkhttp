@@ -1,6 +1,7 @@
 import { Header } from '@/components/common/Header'
 import { Main } from '@/components/common/Main'
 import { useMessgaes } from '@/lib/ws'
+import { HistoriesTable } from '@/components/invocation/Histories'
 
 export default function TopPage() {
   const messages = useMessgaes()
@@ -11,7 +12,7 @@ export default function TopPage() {
       <Main>
         histories
 
-        {messages.map((v, i) => <div key={i}>{v.method} {v.url}</div>)}
+        <HistoriesTable messages={messages} />
       </Main>
     </>
   )
