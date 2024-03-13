@@ -9,24 +9,24 @@ import (
 
 func CreateOptionsCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "options",
+		Use:   "options <path>",
 		Short: "make a options request",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			url, _ := cmd.Flags().GetString("url")
-			verbose, _ := cmd.Flags().GetBool("verbose")
+			path := ""
+			if len(args) > 0 {
+				path = args[0]
+			}
 
-			invocation := invoke.NewInvocation("OPTIONS", url)
+			invocation := invoke.NewInvocation("OPTIONS", path)
 			if err := usecase.PromptReq(repos, &invocation); err != nil {
 				return err
 			}
-			if err := usecase.Invoke(repos, &invocation, !verbose); err != nil {
+			if err := usecase.Invoke(repos, &invocation, false); err != nil {
 				return err
 			}
 			return nil
 		},
 	}
-	cmd.Flags().String("url", "", "url")
-	cmd.Flags().BoolP("verbose", "v", false, "verbose")
 
 	return cmd
 }
