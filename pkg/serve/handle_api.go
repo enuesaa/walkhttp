@@ -4,13 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/enuesaa/walkin/pkg/conf"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/gofiber/fiber/v2"
 )
 
 func (s *Servectl) handleApi(c *fiber.Ctx) error {
-	config, err := conf.Read(s.repos)
+	config, err := s.repos.Conf.Read()
 	if err != nil {
 		return err
 	}
