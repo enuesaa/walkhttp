@@ -9,7 +9,10 @@ func CreateConfig(repos repository.Repos) error {
 		return err
 	}
 
-	config := repos.Conf.NewConfig()
+	config, err := repos.Conf.Read()
+	if err != nil {
+		config = repos.Conf.NewConfig()
+	}
 	if err := repos.Prompt.Ask("BaseUrl", "", &config.BaseUrl); err != nil {
 		return err
 	}

@@ -5,7 +5,7 @@ import (
 )
 
 type Config struct {
-	BaseUrl string `json:"baseUrl"`
+	BaseUrl string `json:"baseUrl"` // example: https://example.com
 }
 
 type ConfRepositoryInterface interface {
@@ -25,7 +25,7 @@ func (repo *ConfRepository) NewConfig() Config {
 }
 
 func (repo *ConfRepository) Write(config Config) error {
-	data, err := json.Marshal(config)
+	data, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
 		return err
 	}
