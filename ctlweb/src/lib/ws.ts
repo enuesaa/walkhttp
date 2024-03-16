@@ -1,28 +1,21 @@
-import { atom, useAtomValue, useSetAtom } from 'jotai'
+import { atom, useAtomValue } from 'jotai'
 import { Invocation } from './api'
+
+const wsEndpoint = 'ws://localhost:3000/ws'
 
 const messages = atom<Invocation[]>([])
 messages.onMount = (setMessages) => {
-  const ws = new WebSocket('ws://localhost:3000/ws')
-  const onMessage = (event: MessageEvent<string>) => {
-    console.log(event.data)
+  const ws = new WebSocket(wsEndpoint)
+  ws.addEventListener('message', (event: MessageEvent<string>) => {
     try {
       const invocation = JSON.parse(event.data) as Invocation
-      setMessages(values => [...values, invocation])
+      setMessages(values => [invocation, ...values])
     } catch (e) {
-      console.log(`parse error: ${e}`)
+      console.error('failed to parse', e)
     }
-  }
-  ws.addEventListener('message', onMessage)
+  })
 
-  // return () => {
-  //   ws.close()
-  //   ws.removeEventListener('message', onMessage)
-  // }
+  return () => ws.close()
 }
 
 export const useMessgaes = () => useAtomValue(messages)
-export const useAddMessage = () => {
-  const setMessages = useSetAtom(messages)
-  return (value: Invocation) => setMessages(values => [...values, value])
-}
