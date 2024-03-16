@@ -10,6 +10,9 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "up",
 		Short: "up",
+		PreRunE: func(cmd *cobra.Command, args []string) error {
+			return usecase.CheckConfigFileExists(repos)
+		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			port, _ := cmd.Flags().GetInt("port")
 
