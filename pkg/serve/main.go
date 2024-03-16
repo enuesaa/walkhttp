@@ -4,13 +4,15 @@ import (
 	"fmt"
 
 	"github.com/enuesaa/walkin/ctlweb"
+	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
-func New() Servectl {
+func New(repos repository.Repos) Servectl {
 	return Servectl{
+		repos: repos,
 		wsconns: make(map[*websocket.Conn]int),
 		wssend:  make(chan []byte),
 		Port:    3000,
@@ -18,6 +20,7 @@ func New() Servectl {
 }
 
 type Servectl struct {
+	repos repository.Repos
 	wsconns map[*websocket.Conn]int
 	wssend  chan []byte
 	Port    int

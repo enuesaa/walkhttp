@@ -13,7 +13,7 @@ func CreateUpCmd(repos repository.Repos) *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			port, _ := cmd.Flags().GetInt("port")
 
-			return usecase.Serve(port)
+			return usecase.Serve(repos, port)
 		},
 	}
 	cmd.Flags().Int("port", 3000, "port")
