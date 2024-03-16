@@ -7,8 +7,8 @@ import (
 
 func (s *Servectl) createHandleWs() func(*fiber.Ctx) error {
 	handler := websocket.New(func(c *websocket.Conn) {
-		defer s.rmConn(c)
-		s.addConn(c)
+		connId := s.wsconns.Add(c)
+		defer s.wsconns.Remove(connId)
 
 		for {
 			messageType, _, err := c.ReadMessage()

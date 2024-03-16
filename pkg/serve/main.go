@@ -5,7 +5,6 @@ import (
 
 	"github.com/enuesaa/walkin/ctlweb"
 	"github.com/enuesaa/walkin/pkg/repository"
-	"github.com/gofiber/contrib/websocket"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 )
@@ -13,16 +12,14 @@ import (
 func New(repos repository.Repos) Servectl {
 	return Servectl{
 		repos: repos,
-		wsconns: make(map[*websocket.Conn]int),
-		wssend:  make(chan []byte),
+		wsconns: NewWsConns(),
 		Port:    3000,
 	}
 }
 
 type Servectl struct {
 	repos repository.Repos
-	wsconns map[*websocket.Conn]int
-	wssend  chan []byte
+	wsconns WsConns
 	Port    int
 }
 
@@ -34,7 +31,6 @@ func (s *Servectl) Listen() error {
 	app := fiber.New()
 	app.Use(logger.New())
 
-	go s.broadcast()
 	app.Get("/ws", s.createHandleWs())
 	app.All("/api/*", s.handleApi)
 	app.All("/*", ctlweb.Serve)

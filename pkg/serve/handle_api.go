@@ -24,7 +24,7 @@ func (s *Servectl) handleApi(c *fiber.Ctx) error {
 		return err
 	}
 	go func() {
-		s.wssend <- data
+		s.wsconns.Send(string(data))
 	}()
 
 	return nil
