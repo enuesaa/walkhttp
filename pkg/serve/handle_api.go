@@ -1,7 +1,6 @@
 package serve
 
 import (
-	"encoding/json"
 	"fmt"
 
 	"github.com/enuesaa/walkin/pkg/invoke"
@@ -19,12 +18,8 @@ func (s *Servectl) handleApi(c *fiber.Ctx) error {
 	if err := invoke.Invoke(&invocation); err != nil {
 		return err
 	}
-	data, err := json.Marshal(invocation)
-	if err != nil {
-		return err
-	}
 	go func() {
-		s.wsconns.Send(string(data))
+		s.wsconns.Send(invocation.String())
 	}()
 
 	return nil

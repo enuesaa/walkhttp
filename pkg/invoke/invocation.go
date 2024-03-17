@@ -1,10 +1,20 @@
 package invoke
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/url"
 	"strings"
 )
+
+func NewInvocation(method string, url string) Invocation {
+	return Invocation{
+		Method:          method,
+		Url:             url,
+		RequestHeaders:  []Header{},
+		ResponseHeaders: []Header{},
+	}
+}
 
 type Invocation struct {
 	Status int    `json:"status"`
@@ -23,22 +33,21 @@ type Header struct {
 	Value string `json:"value"`
 }
 
-func NewInvocation(method string, url string) Invocation {
-	return Invocation{
-		Method:          method,
-		Url:             url,
-		RequestHeaders:  []Header{},
-		ResponseHeaders: []Header{},
-	}
-}
-
-func (invocation *Invocation) GetOperationName() (string, error) {
-	u, err := url.Parse(invocation.Url)
+func (inv *Invocation) GetOperationName() (string, error) {
+	u, err := url.Parse(inv.Url)
 	if err != nil {
 		return "", err
 	}
 	hyphenedHost := strings.ReplaceAll(u.Host, ".", "-")
 	hyphenedPath := strings.ReplaceAll(strings.ReplaceAll(u.Path, ".", "-"), "/", "-")
 
-	return fmt.Sprintf("%s-%s-%s", invocation.Method, hyphenedHost, hyphenedPath), nil
+	return fmt.Sprintf("%s-%s-%s", inv.Method, hyphenedHost, hyphenedPath), nil
+}
+
+func (inv *Invocation) String() string {
+	data, err := json.Marshal(inv)
+	if err != nil {
+		return "{}"
+	}
+	return string(data)
 }
