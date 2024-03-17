@@ -9,7 +9,7 @@ type Repos struct {
 
 func NewRepos() Repos {
 	return Repos{
-		Conf:   &ConfRepository{
+		Conf: &ConfRepository{
 			fs: FsRepository{},
 		},
 		Fs:     &FsRepository{},

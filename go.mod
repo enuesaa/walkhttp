@@ -7,6 +7,7 @@ require (
 	github.com/charmbracelet/huh v0.3.0
 	github.com/gofiber/contrib/websocket v1.3.0
 	github.com/gofiber/fiber/v2 v2.52.2
+	github.com/google/uuid v1.6.0
 	github.com/spf13/cobra v1.8.0
 )
 
@@ -19,7 +20,6 @@ require (
 	github.com/charmbracelet/lipgloss v0.10.0 // indirect
 	github.com/containerd/console v1.0.4 // indirect
 	github.com/fasthttp/websocket v1.5.8 // indirect
-	github.com/google/uuid v1.6.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
 	github.com/klauspost/compress v1.17.7 // indirect
 	github.com/lucasb-eyer/go-colorful v1.2.0 // indirect

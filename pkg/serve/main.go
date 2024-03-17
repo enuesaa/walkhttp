@@ -11,14 +11,14 @@ import (
 
 func New(repos repository.Repos) Servectl {
 	return Servectl{
-		repos: repos,
+		repos:   repos,
 		wsconns: NewWsConns(),
 		Port:    3000,
 	}
 }
 
 type Servectl struct {
-	repos repository.Repos
+	repos   repository.Repos
 	wsconns WsConns
 	Port    int
 }

@@ -6,7 +6,7 @@ import (
 )
 
 func NewWsConns() WsConns {
-	return WsConns {
+	return WsConns{
 		conns: make(map[string]*websocket.Conn),
 	}
 }

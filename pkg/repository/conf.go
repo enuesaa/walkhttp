@@ -14,7 +14,7 @@ type ConfRepositoryInterface interface {
 	Read() (Config, error)
 	CreateWalkinDir() error
 }
-type ConfRepository struct{
+type ConfRepository struct {
 	fs FsRepository
 }
 
