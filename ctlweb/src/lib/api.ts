@@ -4,6 +4,13 @@ export type Invocation = {
   id: number;
   method: string;
   url: string;
+  responseBody: string;
+  requestHeaders: InvocationHeader[]
+  responseHeaders: InvocationHeader[]
+}
+export type InvocationHeader = {
+  key: string
+  value: string
 }
 export const useListInvocations = () => useQuery('listInvocations', async (): Promise<Invocation[]> => {
   const res = await fetch('/api/invocations')
