@@ -1,19 +1,15 @@
-import { Header } from '@/components/common/Header'
-import { Main } from '@/components/common/Main'
-import { useMessgaes } from '@/lib/ws'
-import { HistoriesTable } from '@/components/invocation/Histories'
+import { Histories } from '@/components/invocation/Histories'
+import { Box, Flex } from '@radix-ui/themes'
 
 export default function TopPage() {
-  const messages = useMessgaes()
-
   return (
-    <>
-      <Header />
-      <Main>
-        histories
-
-        <HistoriesTable messages={messages} />
-      </Main>
-    </>
+    <Flex gap='5'>
+      <Box width='300px'>
+        <Histories />
+      </Box>
+      <Box flexGrow='1' flexShrink='1'>
+        a
+      </Box>
+    </Flex>
   )
 }

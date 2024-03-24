@@ -1,32 +1,25 @@
-import { Invocation } from '@/lib/api'
-import { Box, Table } from '@radix-ui/themes'
+import { useMessgaes } from '@/lib/ws'
+import { Badge, Card, ScrollArea, Text } from '@radix-ui/themes'
 import { HistoryDialog } from './HistoryDialog'
 
-type Props = {
-  messages: Invocation[]
-}
-export const HistoriesTable = ({ messages }: Props) => {
-  return (
-    <Table.Root>
-      <Table.Header>
-        <Table.Row>
-          <Table.ColumnHeaderCell>Time</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Method</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell>Path</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell></Table.ColumnHeaderCell>
-        </Table.Row>
-      </Table.Header>
+export const Histories = () => {
+  const messages = useMessgaes()
 
-      <Table.Body>
-        {messages.map((v,i) => (
-          <Table.Row key={i}>
-            <Table.RowHeaderCell>todo</Table.RowHeaderCell>
-            <Table.Cell>{v.method}</Table.Cell>
-            <Table.Cell>{v.url}</Table.Cell>
-            <Table.Cell><HistoryDialog invocation={v} /></Table.Cell>
-          </Table.Row>
-        ))}
-      </Table.Body>
-    </Table.Root>
+  return (
+    <ScrollArea type='hover' scrollbars='vertical' style={{maxHeight: '700px', padding: '0 15px 0 0'}}>
+      {messages.map((v,i) => (
+        <Card key={i} my='2' style={{position: 'relative'}}>
+          <Text as='div'>
+            <Badge color='green'>{v.method}</Badge> {v.url}
+          </Text>
+          <Text color='gray' size='2' style={{position:'absolute', top: '0', right: '0'}}>
+            200
+          </Text>
+          <Text color='gray' size='2' style={{position:'absolute', bottom: '0', right: '0'}}>
+            date
+          </Text>
+        </Card>
+      ))}
+    </ScrollArea>
   )
 }

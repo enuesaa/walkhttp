@@ -9,7 +9,8 @@ messages.onMount = (setMessages) => {
   ws.addEventListener('message', (event: MessageEvent<string>) => {
     try {
       const invocation = JSON.parse(event.data) as Invocation
-      setMessages(values => [invocation, ...values])
+      // TODO: remove. this is for debug
+      setMessages(values => [invocation, invocation, invocation, invocation, invocation, invocation, invocation, invocation, invocation, invocation, invocation, invocation, invocation, invocation, invocation, ...values])
     } catch (e) {
       console.error('failed to parse', e)
     }
