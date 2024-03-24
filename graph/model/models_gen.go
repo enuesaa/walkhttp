@@ -2,25 +2,21 @@
 
 package model
 
-type Mutation struct {
+type Header struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
+type Invocation struct {
+	ID              string    `json:"id"`
+	Status          int       `json:"status"`
+	Method          string    `json:"method"`
+	URL             string    `json:"url"`
+	RequestHeaders  []*Header `json:"requestHeaders,omitempty"`
+	ResponseHeaders []*Header `json:"responseHeaders,omitempty"`
+	RequestBody     *string   `json:"requestBody,omitempty"`
+	ResponseBody    *string   `json:"responseBody,omitempty"`
 }
 
 type Query struct {
-}
-
-type Todo struct {
-	ID   string `json:"id"`
-	Text string `json:"text"`
-	Done bool   `json:"done"`
-	User *User  `json:"user"`
-}
-
-type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
 }
