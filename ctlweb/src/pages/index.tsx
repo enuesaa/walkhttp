@@ -1,4 +1,5 @@
 import { Histories } from '@/components/invocation/Histories'
+import { History } from '@/components/invocation/History'
 import { Box, Flex } from '@radix-ui/themes'
 
 export default function TopPage() {
@@ -8,7 +9,7 @@ export default function TopPage() {
         <Histories />
       </Box>
       <Box flexGrow='1' flexShrink='1'>
-        a
+        <History />
       </Box>
     </Flex>
   )
