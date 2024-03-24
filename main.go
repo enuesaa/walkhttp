@@ -10,7 +10,7 @@ func main() {
 	app := &cobra.Command{
 		Use:     "walkin",
 		Short:   "A CLI tool to serve local api gateway",
-		Version: "0.0.2",
+		Version: "0.0.3",
 	}
 
 	repos := repository.NewRepos()

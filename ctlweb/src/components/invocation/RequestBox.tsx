@@ -16,7 +16,7 @@ export const RequestBox = () => {
   })
 
   return (
-    <Box grow='1' shrink='0' className={styles.main}>
+    <Box flexGrow='1' flexShrink='0' className={styles.main}>
       request
       <form onSubmit={hanldeSubmit}>
         <label>
@@ -37,11 +37,11 @@ export const RequestBox = () => {
         </label>
         <label>
           <Text as='div' size='2' mb='1' weight='bold'>Url</Text>
-          <TextField.Input type='url' {...form.register('url')} />
+          <TextField.Root type='url' {...form.register('url')} />
         </label>
         <label>
           <Text as='div' size='2' mb='1' weight='bold'>Body</Text>
-          <TextField.Input {...form.register('body')} />
+          <TextField.Root {...form.register('body')} />
         </label>
         <Button type='submit'>send</Button>
       </form>
