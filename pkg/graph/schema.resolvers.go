@@ -8,7 +8,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/enuesaa/walkin/graph/model"
+	"github.com/enuesaa/walkin/pkg/graph/model"
 )
 
 // Invocatoins is the resolver for the invocatoins field.

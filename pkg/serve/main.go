@@ -10,7 +10,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/enuesaa/walkin/graph"
+	"github.com/enuesaa/walkin/pkg/graph"
 	"github.com/gofiber/fiber/v2/middleware/adaptor"
 )
 

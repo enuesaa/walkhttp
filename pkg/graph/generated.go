@@ -14,7 +14,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/enuesaa/walkin/graph/model"
+	"github.com/enuesaa/walkin/pkg/graph/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -617,7 +617,7 @@ func (ec *executionContext) _Invocation_requestHeaders(ctx context.Context, fiel
 	}
 	res := resTmp.([]*model.Header)
 	fc.Result = res
-	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋgraphᚋmodelᚐHeader(ctx, field.Selections, res)
+	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Invocation_requestHeaders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -664,7 +664,7 @@ func (ec *executionContext) _Invocation_responseHeaders(ctx context.Context, fie
 	}
 	res := resTmp.([]*model.Header)
 	fc.Result = res
-	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋgraphᚋmodelᚐHeader(ctx, field.Selections, res)
+	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Invocation_responseHeaders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -796,7 +796,7 @@ func (ec *executionContext) _Query_invocatoins(ctx context.Context, field graphq
 	}
 	res := resTmp.([]*model.Invocation)
 	fc.Result = res
-	return ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋgraphᚋmodelᚐInvocationᚄ(ctx, field.Selections, res)
+	return ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocationᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_invocatoins(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3289,7 +3289,7 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋgraphᚋmodelᚐInvocationᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Invocation) graphql.Marshaler {
+func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocationᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Invocation) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -3313,7 +3313,7 @@ func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwa
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋgraphᚋmodelᚐInvocation(ctx, sel, v[i])
+			ret[i] = ec.marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocation(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3333,7 +3333,7 @@ func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwa
 	return ret
 }
 
-func (ec *executionContext) marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋgraphᚋmodelᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *model.Invocation) graphql.Marshaler {
+func (ec *executionContext) marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *model.Invocation) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -3637,7 +3637,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋgraphᚋmodelᚐHeader(ctx context.Context, sel ast.SelectionSet, v []*model.Header) graphql.Marshaler {
+func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx context.Context, sel ast.SelectionSet, v []*model.Header) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -3664,7 +3664,7 @@ func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkin
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋgraphᚋmodelᚐHeader(ctx, sel, v[i])
+			ret[i] = ec.marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3678,7 +3678,7 @@ func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkin
 	return ret
 }
 
-func (ec *executionContext) marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋgraphᚋmodelᚐHeader(ctx context.Context, sel ast.SelectionSet, v *model.Header) graphql.Marshaler {
+func (ec *executionContext) marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx context.Context, sel ast.SelectionSet, v *model.Header) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
