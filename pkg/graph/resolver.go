@@ -6,8 +6,6 @@ import (
 	"github.com/enuesaa/walkin/pkg/graph/model"
 )
 
-//go:generate go run github.com/99designs/gqlgen generate
-
 type Resolver struct{}
 func (r *Resolver) Invocatoins(ctx context.Context) ([]*model.Invocation, error) {
 	list := make([]*model.Invocation, 0)

@@ -1,14 +1,14 @@
 schema:
-  - graph/*.graphqls
+  - pkg/graph/*.graphqls
 exec:
-  filename: graph/generated.go
+  filename: pkg/graph/generated.go
   package: graph
 model:
-  filename: graph/model/models_gen.go
+  filename: pkg/graph/model/models_gen.go
   package: model
 resolver:
   layout: follow-schema
-  dir: graph
+  dir: pkg/graph
   package: graph
   filename_template: "{name}.resolvers.go"
 models:
