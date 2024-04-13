@@ -6,14 +6,20 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/enuesaa/walkin/pkg/graph/model"
 )
 
 // Invocatoins is the resolver for the invocatoins field.
 func (r *queryResolver) Invocatoins(ctx context.Context) ([]*model.Invocation, error) {
-	panic(fmt.Errorf("not implemented: Invocatoins - invocatoins"))
+	list := make([]*model.Invocation, 0)
+	list = append(list, &model.Invocation{
+		ID:     "a",
+		Status: 200,
+		Method: "GET",
+		URL:    "https://example.com",
+	})
+	return list, nil
 }
 
 // Query returns QueryResolver implementation.

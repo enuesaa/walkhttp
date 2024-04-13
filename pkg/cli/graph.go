@@ -16,11 +16,16 @@ func CreateGraphCmd(repos repository.Repos) *cobra.Command {
 		Use:   "graph",
 		Short: "poc graphql server",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			srv := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{Resolvers: &graph.Resolver{}}))
+			schema := graph.NewExecutableSchema(graph.Config{
+				Resolvers: &graph.Resolver{},
+			})
+			srv := handler.NewDefaultServer(schema)
 	
 			http.Handle("/", playground.Handler("GraphQL playground", "/query"))
 			http.Handle("/query", srv)
-			log.Fatal(http.ListenAndServe(":3002", nil))
+			if err := http.ListenAndServe(":3002", nil); err != nil {
+				log.Fatalf("Error: %s", err.Error())
+			}
 
 			return nil
 		},
