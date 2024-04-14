@@ -3,17 +3,14 @@ package serve
 import (
 	"fmt"
 
-	"github.com/enuesaa/walkin/ctlweb"
 	"github.com/enuesaa/walkin/pkg/repository"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/cors"
-	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/enuesaa/walkin/pkg/graph"
-	"github.com/gofiber/fiber/v2/middleware/adaptor"
 )
 
 func New(repos repository.Repos) Servectl {
@@ -35,20 +32,21 @@ func (s *Servectl) Addr() string {
 }
 
 func (s *Servectl) Listen() error {
-	app := fiber.New()
-	app.Use(logger.New())
-	app.Use(cors.New(cors.Config{
-		AllowOrigins: "*",
+	app := echo.New()
+	app.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+		Format: "method=${method}, uri=${uri}, status=${status}\n",
 	}))
-	
+	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+	}))
+
 	// see https://github.com/99designs/gqlgen/issues/1664
 	gqhandle := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{
 		Resolvers: &graph.Resolver{},
 	}))
 	gqhandle.AddTransport(&transport.Websocket{})
-	app.All("/graph", adaptor.HTTPHandlerFunc(gqhandle.ServeHTTP))
-	app.Get("/graph/playground", adaptor.HTTPHandlerFunc(playground.Handler("graph", "/graph")))
-	app.All("/*", ctlweb.Serve)
+	app.Any("/graph", echo.WrapHandler(gqhandle))
+	app.GET("/graph/playground", echo.WrapHandler(playground.Handler("graph", "/graph")))
 
-	return app.Listen(s.Addr())
+	return app.Start(s.Addr())
 }
