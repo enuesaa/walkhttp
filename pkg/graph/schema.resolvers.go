@@ -10,19 +10,39 @@ import (
 	"github.com/enuesaa/walkin/pkg/graph/model"
 )
 
-// Invocatoins is the resolver for the invocatoins field.
-func (r *queryResolver) Invocatoins(ctx context.Context) ([]*model.Invocation, error) {
-	list := make([]*model.Invocation, 0)
-	list = append(list, &model.Invocation{
-		ID:     "a",
-		Status: 200,
-		Method: "GET",
-		URL:    "https://example.com",
-	})
-	return list, nil
-}
-
 // Query returns QueryResolver implementation.
 func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 
 type queryResolver struct{ *Resolver }
+func (r *queryResolver) Invocations(ctx context.Context, status int) ([]*model.Invocation, error) {
+	list := make([]*model.Invocation, 0)
+	if status == 200 {
+		list = append(list, &model.Invocation{
+			ID:     "a",
+			Status: 200,
+			Method: "GET",
+			URL:    "https://example.com",
+			RequestHeaders: []*model.Header{
+				{Name: "Accept", Value: "application/json"},
+			},
+			ResponseHeaders: []*model.Header{},
+			RequestBody:     nil,
+			ResponseBody:    nil,
+		})
+	}
+	if status == 404 {
+		list = append(list, &model.Invocation{
+			ID:     "b",
+			Status: 404,
+			Method: "GET",
+			URL:    "https://example.com/aa",
+			RequestHeaders: []*model.Header{
+				{Name: "Accept", Value: "application/json"},
+			},
+			ResponseHeaders: []*model.Header{},
+			RequestBody:     nil,
+			ResponseBody:    nil,
+		})
+	}
+	return list, nil
+}

@@ -15,5 +15,5 @@ type Header {
 }
 
 type Query {
-  invocatoins: [Invocation!]!
+  invocations(status: Int!): [Invocation!]!
 }
