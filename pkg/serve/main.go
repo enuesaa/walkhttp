@@ -6,6 +6,7 @@ import (
 	"github.com/enuesaa/walkin/ctlweb"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -35,6 +36,9 @@ func (s *Servectl) Addr() string {
 func (s *Servectl) Listen() error {
 	app := fiber.New()
 	app.Use(logger.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+	}))
 	
 	// see https://github.com/99designs/gqlgen/issues/1664
 	gqhandle := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{
