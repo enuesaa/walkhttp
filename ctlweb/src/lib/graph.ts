@@ -9,4 +9,4 @@ query {
 }
 `
 
-export const useGetInvocations = () => useQuery<Query>(getInvocations)
+export const useListInvocations = () => useQuery<Query>(getInvocations)

@@ -1,12 +1,11 @@
-import { useGetInvocations } from '@/lib/graph'
+import { useListInvocations } from '@/lib/graph'
 
 export const Graph = () => {
-  const { loading, error, data } = useGetInvocations()
+  const { loading, error, data } = useListInvocations()
 
   if (loading) {
     return (<>loading</>)
   }
-  console.log(data)
 
   return (
     <>

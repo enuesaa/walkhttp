@@ -9,10 +9,10 @@ export default function TopPage() {
       <Graph />
       <Flex gap='5'>
         <Box flexGrow='0' flexShrink='0' width='300px'>
-          {/* <Histories /> */}
+          <Histories />
         </Box>
         <Box flexGrow='1' flexShrink='1'>
-          {/* <History /> */}
+          <History />
         </Box>
       </Flex>
     </>

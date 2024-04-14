@@ -1,5 +1,5 @@
 import { atom, useAtomValue } from 'jotai'
-import { Invocation } from './api'
+import { Invocation } from './graphtypes'
 
 const wsEndpoint = 'ws://localhost:3000/ws'
 
