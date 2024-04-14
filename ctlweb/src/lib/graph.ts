@@ -1,4 +1,5 @@
 import { gql, useQuery } from '@apollo/client'
+import { Query } from './graphtypes'
 
 const getInvocations = gql`
 query {
@@ -8,4 +9,4 @@ query {
 }
 `
 
-export const useGetInvocations = () => useQuery(getInvocations)
+export const useGetInvocations = () => useQuery<Query>(getInvocations)

@@ -10,7 +10,7 @@ export const Graph = () => {
 
   return (
     <>
-      {data.invocations.map((v,i) => (
+      {data?.invocations.map((v,i) => (
         <div key={i}>{v.id}</div>
       ))}
     </>
