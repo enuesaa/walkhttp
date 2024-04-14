@@ -20,3 +20,6 @@ type Invocation struct {
 
 type Query struct {
 }
+
+type Subscription struct {
+}

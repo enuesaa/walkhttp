@@ -6,14 +6,14 @@ package graph
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"github.com/enuesaa/walkin/pkg/graph/model"
+	"github.com/google/uuid"
 )
 
-// Query returns QueryResolver implementation.
-func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
-
-type queryResolver struct{ *Resolver }
+// Invocations is the resolver for the invocations field.
 func (r *queryResolver) Invocations(ctx context.Context, status int) ([]*model.Invocation, error) {
 	list := make([]*model.Invocation, 0)
 	if status == 200 {
@@ -46,3 +46,33 @@ func (r *queryResolver) Invocations(ctx context.Context, status int) ([]*model.I
 	}
 	return list, nil
 }
+
+// Name is the resolver for the name field.
+func (r *subscriptionResolver) Name(ctx context.Context) (<-chan string, error) {
+	ch := make(chan string)
+
+	go func() {
+		defer close(ch)
+		for {
+			time.Sleep(1 * time.Second)
+			t := uuid.New().String()
+			select {
+			case <-ctx.Done():
+				fmt.Println("Subscription Closed")
+				return
+			case ch <- t: // This is the actual send.
+			}
+		}
+	}()
+
+	return ch, nil
+}
+
+// Query returns QueryResolver implementation.
+func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
+
+// Subscription returns SubscriptionResolver implementation.
+func (r *Resolver) Subscription() SubscriptionResolver { return &subscriptionResolver{r} }
+
+type queryResolver struct{ *Resolver }
+type subscriptionResolver struct{ *Resolver }
