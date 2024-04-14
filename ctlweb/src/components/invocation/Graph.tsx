@@ -1,15 +1,7 @@
-import { gql, useQuery } from '@apollo/client';
-
-const GET_LOCATIONS = gql`
-  query {
-    invocations(status: 404) {
-      id
-    }
-  }
-`;
+import { useGetInvocations } from '@/lib/graph'
 
 export const Graph = () => {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
+  const { loading, error, data } = useGetInvocations()
 
   if (loading) {
     return (<>loading</>)
