@@ -41,10 +41,7 @@ func (s *Servectl) Listen() error {
 		Resolvers: &graph.Resolver{},
 	}))
 	app.Post("/graph", adaptor.HTTPHandlerFunc(gqhandle.ServeHTTP))
-	app.Get("/graphql", adaptor.HTTPHandlerFunc(playground.Handler("GraphQL", "/graphql")))
-
-	app.Get("/ws", s.createHandleWs())
-	app.All("/api/*", s.handleApi)
+	app.Get("/graph/playground", adaptor.HTTPHandlerFunc(playground.Handler("graph", "/graph")))
 	app.All("/*", ctlweb.Serve)
 
 	return app.Listen(s.Addr())
