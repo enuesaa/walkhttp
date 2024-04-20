@@ -5,8 +5,9 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
 import '@/styles/app.css'
 
 export default function App({ Component, pageProps }: AppProps) {
+  const apibase = process.env.NEXT_PUBLIC_API_BASE
   const queryClient = new ApolloClient({
-    uri: 'http://localhost:3000/graph',
+    uri: `${apibase}graph`,
     cache: new InMemoryCache(),
   }) 
 

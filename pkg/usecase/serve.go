@@ -3,6 +3,7 @@ package usecase
 import (
 	"fmt"
 
+	"github.com/enuesaa/walkin/ctlweb"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/labstack/echo/v4"
@@ -34,6 +35,7 @@ func Serve(repos repository.Repos, port int) error {
 		invocation := invoke.NewInvocation("GET", "https://example.com")
 		return invoke.Invoke(&invocation)
 	})
+	app.Any("/*", ctlweb.Serve)
 
 	return app.Start(fmt.Sprintf(":%d", port))
 }
