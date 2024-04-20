@@ -19,6 +19,10 @@ func CreateGetCmd(repos repository.Repos) *cobra.Command {
 				path = args[0]
 			}
 
+			if err := usecase.CreateWalkindir(repos); err != nil {
+				return err
+			}
+
 			invocation := invoke.NewInvocation("GET", path)
 			if err := usecase.PromptReq(repos, &invocation); err != nil {
 				return err
