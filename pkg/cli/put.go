@@ -10,7 +10,7 @@ import (
 func CreatePutCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "put",
-		Short: "make a put request",
+		Short: "put",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			path := ""
 			if len(args) > 0 {

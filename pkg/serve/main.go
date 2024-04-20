@@ -16,14 +16,12 @@ import (
 func New(repos repository.Repos) Servectl {
 	return Servectl{
 		repos:   repos,
-		wsconns: NewWsConns(),
 		Port:    3000,
 	}
 }
 
 type Servectl struct {
 	repos   repository.Repos
-	wsconns WsConns
 	Port    int
 }
 
@@ -47,6 +45,7 @@ func (s *Servectl) Listen() error {
 	gqhandle.AddTransport(&transport.Websocket{})
 	app.Any("/graph", echo.WrapHandler(gqhandle))
 	app.GET("/graph/playground", echo.WrapHandler(playground.Handler("graph", "/graph")))
+	app.GET("/aa", s.handleApi)
 
 	return app.Start(s.Addr())
 }

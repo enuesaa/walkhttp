@@ -1,7 +1,7 @@
 import { Histories } from '@/components/invocation/Histories'
 import { History } from '@/components/invocation/History'
 import { Box, Flex } from '@radix-ui/themes'
-import { Graph } from '@/components/invocation/Graph';
+import { Graph } from '@/components/invocation/Graph'
 
 export default function TopPage() {
   return (

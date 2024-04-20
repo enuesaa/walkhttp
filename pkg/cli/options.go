@@ -10,7 +10,7 @@ import (
 func CreateOptionsCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "options <path>",
-		Short: "make a options request",
+		Short: "options",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			path := ""
 			if len(args) > 0 {

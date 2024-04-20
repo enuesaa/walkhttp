@@ -12,7 +12,7 @@ import (
 func CreateGetCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "get <path>",
-		Short: "make a get request",
+		Short: "get",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			path := ""
 			if len(args) > 0 {

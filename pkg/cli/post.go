@@ -11,7 +11,7 @@ import (
 func CreatePostCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "post <path>",
-		Short: "make a post request",
+		Short: "post",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			path := ""
 			if len(args) > 0 {

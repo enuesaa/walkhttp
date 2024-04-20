@@ -1,7 +1,5 @@
+# misc
 .DS_Store
-.vscode
 
-# app
-*.log
-walkin-*.json
-.walkin
+# editor
+.vscode

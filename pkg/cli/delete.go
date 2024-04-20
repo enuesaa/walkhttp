@@ -10,7 +10,7 @@ import (
 func CreateDeleteCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "delete <path>",
-		Short: "make a delete request",
+		Short: "delete",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			path := ""
 			if len(args) > 0 {
