@@ -6,12 +6,16 @@ import (
 	"github.com/spf13/cobra"
 )
 
-func CreateUpCmd(repos repository.Repos) *cobra.Command {
+func CreateCtlCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "up",
-		Short: "up",
+		Use:   "ctl",
+		Short: "ctl",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			port, _ := cmd.Flags().GetInt("port")
+
+			if err := usecase.CreateWalkindir(repos); err != nil {
+				return err
+			}
 
 			return usecase.Serve(repos, port)
 		},
