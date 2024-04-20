@@ -11,9 +11,6 @@ func CreateOptionsCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "options <path>",
 		Short: "make a options request",
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return usecase.CheckConfigFileExists(repos)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			path := ""
 			if len(args) > 0 {

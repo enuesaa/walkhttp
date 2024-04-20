@@ -11,9 +11,6 @@ func CreatePutCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "put",
 		Short: "make a put request",
-		PreRunE: func(cmd *cobra.Command, args []string) error {
-			return usecase.CheckConfigFileExists(repos)
-		},
 		RunE: func(cmd *cobra.Command, args []string) error {
 			path := ""
 			if len(args) > 0 {
