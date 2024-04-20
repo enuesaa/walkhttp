@@ -14,13 +14,13 @@ func main() {
 	}
 
 	repos := repository.NewRepos()
-	// configure
+	app.AddCommand(cli.CreateConfigureCmd(repos))
 	app.AddCommand(cli.CreateGetCmd(repos))
 	app.AddCommand(cli.CreatePostCmd(repos))
 	app.AddCommand(cli.CreatePutCmd(repos))
 	app.AddCommand(cli.CreateDeleteCmd(repos))
 	app.AddCommand(cli.CreateOptionsCmd(repos))
-	// invoke 
+	app.AddCommand(cli.CreateInvokeCmd(repos))
 	app.AddCommand(cli.CreateCtlCmd(repos))
 
 	// disable default
