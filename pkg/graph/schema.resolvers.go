@@ -10,40 +10,34 @@ import (
 	"time"
 
 	"github.com/enuesaa/walkin/pkg/graph/model"
+	"github.com/enuesaa/walkin/pkg/invoke"
+	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/google/uuid"
 )
 
 // Invocations is the resolver for the invocations field.
 func (r *queryResolver) Invocations(ctx context.Context, status int) ([]*model.Invocation, error) {
 	list := make([]*model.Invocation, 0)
-	if status == 200 {
+
+	repos := repository.NewRepos()
+	invocations, err := invoke.ListLogs(repos)
+	if err != nil {
+		return make([]*model.Invocation, 0), err
+	}
+	list = make([]*model.Invocation, 0)
+	for i, invocation := range invocations {
 		list = append(list, &model.Invocation{
-			ID:     "a",
-			Status: 200,
-			Method: "GET",
-			URL:    "https://example.com",
-			RequestHeaders: []*model.Header{
-				{Name: "Accept", Value: "application/json"},
-			},
-			ResponseHeaders: []*model.Header{},
-			RequestBody:     nil,
-			ResponseBody:    nil,
+			ID: fmt.Sprintf("%d", i),
+			Status: invocation.Status,
+			Method: invocation.Method,
+			URL: invocation.Url,
+			RequestHeaders: make([]*model.Header, 0),
+			ResponseHeaders: make([]*model.Header, 0),
+			RequestBody: &invocation.RequestBody,
+			ResponseBody: &invocation.ResponseBody,
 		})
 	}
-	if status == 404 {
-		list = append(list, &model.Invocation{
-			ID:     "b",
-			Status: 404,
-			Method: "GET",
-			URL:    "https://example.com/aa",
-			RequestHeaders: []*model.Header{
-				{Name: "Accept", Value: "application/json"},
-			},
-			ResponseHeaders: []*model.Header{},
-			RequestBody:     nil,
-			ResponseBody:    nil,
-		})
-	}
+
 	return list, nil
 }
 

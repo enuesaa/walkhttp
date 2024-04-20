@@ -8,13 +8,13 @@ import (
 )
 
 func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
-	fmt.Printf("***\n")
+	repos.Log.Printf("***\n")
 	if err := repos.Prompt.Ask("Url", "", &invocation.Url); err != nil {
 		return err
 	}
-	fmt.Printf("* %s %s\n", invocation.Method, invocation.Url)
-	fmt.Printf("*\n")
-	fmt.Printf("* [Headers]\n")
+	repos.Log.Printf("* %s %s\n", invocation.Method, invocation.Url)
+	repos.Log.Printf("*\n")
+	repos.Log.Printf("* [Headers]\n")
 
 	for {
 		header := invoke.Header{}
@@ -30,18 +30,18 @@ func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 			return err
 		}
 		invocation.RequestHeaders = append(invocation.RequestHeaders, header)
-		fmt.Printf("* %s: %s\n", header.Key, header.Value)
+		repos.Log.Printf("* %s: %s\n", header.Key, header.Value)
 	}
 
 	if invocation.Method == "POST" || invocation.Method == "PUT" {
 		if err := repos.Prompt.Text("Body", "", &invocation.RequestBody); err != nil {
 			return err
 		}
-		fmt.Printf("*\n")
-		fmt.Printf("* [Body]\n")
-		fmt.Printf("* %s\n", invocation.RequestBody)
+		repos.Log.Printf("*\n")
+		repos.Log.Printf("* [Body]\n")
+		repos.Log.Printf("* %s\n", invocation.RequestBody)
 	}
-	fmt.Printf("***\n")
+	repos.Log.Printf("***\n")
 
 	confirm := true
 	if err := repos.Prompt.Confirm("Do you confirm?", &confirm); err != nil {

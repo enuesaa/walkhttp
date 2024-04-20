@@ -1,13 +1,17 @@
-import { useMessgaes } from '@/lib/ws'
 import { ScrollArea } from '@radix-ui/themes'
+import { useListInvocations } from '@/lib/graph'
 import { HistroiesItem } from './HistoriesItem'
 
 export const Histories = () => {
-  // const messages = useMessgaes()
+  const { loading, error, data } = useListInvocations()
+
+  if (loading || error != undefined) {
+    return <></>
+  }
 
   return (
     <ScrollArea type='hover' scrollbars='vertical' style={{maxHeight: '700px', padding: '0 15px 0 0'}}>
-      {/* {messages.map((v,i) => <HistroiesItem key={i} invocation={v} />)} */}
+      {data?.invocations.map((v,i) => <HistroiesItem key={i} invocation={v} />)}
     </ScrollArea>
   )
 }

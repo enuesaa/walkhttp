@@ -8,21 +8,21 @@ import (
 )
 
 func PromptReqConfirmOnly(repos repository.Repos, invocation *invoke.Invocation) error {
-	fmt.Printf("***\n")
-	fmt.Printf("* %s %s\n", invocation.Method, invocation.Url)
-	fmt.Printf("*\n")
-	fmt.Printf("* [Headers]\n")
+	repos.Log.Printf("***\n")
+	repos.Log.Printf("* %s %s\n", invocation.Method, invocation.Url)
+	repos.Log.Printf("*\n")
+	repos.Log.Printf("* [Headers]\n")
 
 	for _, header := range invocation.RequestHeaders {
-		fmt.Printf("* %s: %s\n", header.Key, header.Value)
+		repos.Log.Printf("* %s: %s\n", header.Key, header.Value)
 	}
 
 	if invocation.Method == "POST" || invocation.Method == "PUT" {
-		fmt.Printf("*\n")
-		fmt.Printf("* [Body]\n")
-		fmt.Printf("* %s\n", invocation.RequestBody)
+		repos.Log.Printf("*\n")
+		repos.Log.Printf("* [Body]\n")
+		repos.Log.Printf("* %s\n", invocation.RequestBody)
 	}
-	fmt.Printf("***\n")
+	repos.Log.Printf("***\n")
 
 	confirm := true
 	if err := repos.Prompt.Confirm("Do you confirm?", &confirm); err != nil {

@@ -1,4 +1,4 @@
-import { Invocation } from '@/lib/api'
+import { Invocation } from '@/lib/graphtypes'
 import { useSetInvocation } from '@/lib/state';
 import { Badge, Card, Text } from '@radix-ui/themes'
 import { MouseEventHandler } from 'react';
