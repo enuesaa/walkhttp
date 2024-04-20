@@ -9,15 +9,8 @@ import (
 
 func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 	fmt.Printf("***\n")
-	if invocation.Url == "" {
-		conf, err := repos.Conf.Read()
-		if err != nil {
-			return err
-		}
-		invocation.Url = conf.BaseUrl
-		if err := repos.Prompt.Ask("Url", "", &invocation.Url); err != nil {
-			return err
-		}
+	if err := repos.Prompt.Ask("Url", "", &invocation.Url); err != nil {
+		return err
 	}
 	fmt.Printf("* %s %s\n", invocation.Method, invocation.Url)
 	fmt.Printf("*\n")
