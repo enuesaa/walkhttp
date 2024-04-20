@@ -19,7 +19,6 @@ func main() {
 	app.AddCommand(cli.CreatePostCmd(repos))
 	app.AddCommand(cli.CreatePutCmd(repos))
 	app.AddCommand(cli.CreateDeleteCmd(repos))
-	app.AddCommand(cli.CreateOptionsCmd(repos))
 	app.AddCommand(cli.CreateInvokeCmd(repos))
 	app.AddCommand(cli.CreateCtlCmd(repos))
 

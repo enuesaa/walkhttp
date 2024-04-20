@@ -7,25 +7,21 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// example: walkin post /notes --header accept:application/json --body '{}'
 func CreatePostCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "post <path>",
+		Use:   "post <url>",
 		Short: "post",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			path := ""
+			url := ""
 			if len(args) > 0 {
-				path = args[0]
+				url = args[0]
 			}
 
-			invocation := invoke.NewInvocation("POST", path)
+			invocation := invoke.NewInvocation("POST", url)
 			if err := usecase.PromptReq(repos, &invocation); err != nil {
 				return err
 			}
-			if err := usecase.Invoke(repos, &invocation, false); err != nil {
-				return err
-			}
-			return nil
+			return usecase.Invoke(repos, &invocation)
 		},
 	}
 

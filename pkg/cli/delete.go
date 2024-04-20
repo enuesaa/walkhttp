@@ -9,22 +9,19 @@ import (
 
 func CreateDeleteCmd(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
-		Use:   "delete <path>",
+		Use:   "delete <url>",
 		Short: "delete",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			path := ""
+			url := ""
 			if len(args) > 0 {
-				path = args[0]
+				url = args[0]
 			}
 
-			invocation := invoke.NewInvocation("DELETE", path)
+			invocation := invoke.NewInvocation("DELETE", url)
 			if err := usecase.PromptReq(repos, &invocation); err != nil {
 				return err
 			}
-			if err := usecase.Invoke(repos, &invocation, false); err != nil {
-				return err
-			}
-			return nil
+			return usecase.Invoke(repos, &invocation)
 		},
 	}
 
