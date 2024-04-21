@@ -65,19 +65,21 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		Invocations func(childComplexity int, status int) int
+		Invocation  func(childComplexity int, id string) int
+		Invocations func(childComplexity int) int
 	}
 
 	Subscription struct {
-		Name func(childComplexity int) int
+		Invocations func(childComplexity int) int
 	}
 }
 
 type QueryResolver interface {
-	Invocations(ctx context.Context, status int) ([]*model.Invocation, error)
+	Invocations(ctx context.Context) ([]*model.Invocation, error)
+	Invocation(ctx context.Context, id string) (*model.Invocation, error)
 }
 type SubscriptionResolver interface {
-	Name(ctx context.Context) (<-chan string, error)
+	Invocations(ctx context.Context) (<-chan []*model.Invocation, error)
 }
 
 type executableSchema struct {
@@ -169,24 +171,31 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Invocation.URL(childComplexity), true
 
+	case "Query.invocation":
+		if e.complexity.Query.Invocation == nil {
+			break
+		}
+
+		args, err := ec.field_Query_invocation_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.Invocation(childComplexity, args["id"].(string)), true
+
 	case "Query.invocations":
 		if e.complexity.Query.Invocations == nil {
 			break
 		}
 
-		args, err := ec.field_Query_invocations_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
+		return e.complexity.Query.Invocations(childComplexity), true
 
-		return e.complexity.Query.Invocations(childComplexity, args["status"].(int)), true
-
-	case "Subscription.name":
-		if e.complexity.Subscription.Name == nil {
+	case "Subscription.invocations":
+		if e.complexity.Subscription.Invocations == nil {
 			break
 		}
 
-		return e.complexity.Subscription.Name(childComplexity), true
+		return e.complexity.Subscription.Invocations(childComplexity), true
 
 	}
 	return 0, false
@@ -328,18 +337,18 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 	return args, nil
 }
 
-func (ec *executionContext) field_Query_invocations_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Query_invocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 int
-	if tmp, ok := rawArgs["status"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-		arg0, err = ec.unmarshalNInt2int(ctx, tmp)
+	var arg0 string
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNID2string(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["status"] = arg0
+	args["id"] = arg0
 	return args, nil
 }
 
@@ -835,7 +844,7 @@ func (ec *executionContext) _Query_invocations(ctx context.Context, field graphq
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Invocations(rctx, fc.Args["status"].(int))
+		return ec.resolvers.Query().Invocations(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -880,6 +889,65 @@ func (ec *executionContext) fieldContext_Query_invocations(ctx context.Context, 
 			return nil, fmt.Errorf("no field named %q was found under type Invocation", field.Name)
 		},
 	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_invocation(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_invocation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().Invocation(rctx, fc.Args["id"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.Invocation)
+	fc.Result = res
+	return ec.marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocation(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_invocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Invocation_id(ctx, field)
+			case "status":
+				return ec.fieldContext_Invocation_status(ctx, field)
+			case "method":
+				return ec.fieldContext_Invocation_method(ctx, field)
+			case "url":
+				return ec.fieldContext_Invocation_url(ctx, field)
+			case "requestHeaders":
+				return ec.fieldContext_Invocation_requestHeaders(ctx, field)
+			case "responseHeaders":
+				return ec.fieldContext_Invocation_responseHeaders(ctx, field)
+			case "requestBody":
+				return ec.fieldContext_Invocation_requestBody(ctx, field)
+			case "responseBody":
+				return ec.fieldContext_Invocation_responseBody(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Invocation", field.Name)
+		},
+	}
 	defer func() {
 		if r := recover(); r != nil {
 			err = ec.Recover(ctx, r)
@@ -887,7 +955,7 @@ func (ec *executionContext) fieldContext_Query_invocations(ctx context.Context, 
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_invocations_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_invocation_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -1023,8 +1091,8 @@ func (ec *executionContext) fieldContext_Query___schema(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _Subscription_name(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
-	fc, err := ec.fieldContext_Subscription_name(ctx, field)
+func (ec *executionContext) _Subscription_invocations(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
+	fc, err := ec.fieldContext_Subscription_invocations(ctx, field)
 	if err != nil {
 		return nil
 	}
@@ -1037,7 +1105,7 @@ func (ec *executionContext) _Subscription_name(ctx context.Context, field graphq
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Subscription().Name(rctx)
+		return ec.resolvers.Subscription().Invocations(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1051,7 +1119,7 @@ func (ec *executionContext) _Subscription_name(ctx context.Context, field graphq
 	}
 	return func(ctx context.Context) graphql.Marshaler {
 		select {
-		case res, ok := <-resTmp.(<-chan string):
+		case res, ok := <-resTmp.(<-chan []*model.Invocation):
 			if !ok {
 				return nil
 			}
@@ -1059,7 +1127,7 @@ func (ec *executionContext) _Subscription_name(ctx context.Context, field graphq
 				w.Write([]byte{'{'})
 				graphql.MarshalString(field.Alias).MarshalGQL(w)
 				w.Write([]byte{':'})
-				ec.marshalNString2string(ctx, field.Selections, res).MarshalGQL(w)
+				ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocationᚄ(ctx, field.Selections, res).MarshalGQL(w)
 				w.Write([]byte{'}'})
 			})
 		case <-ctx.Done():
@@ -1068,14 +1136,32 @@ func (ec *executionContext) _Subscription_name(ctx context.Context, field graphq
 	}
 }
 
-func (ec *executionContext) fieldContext_Subscription_name(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Subscription_invocations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Subscription",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_Invocation_id(ctx, field)
+			case "status":
+				return ec.fieldContext_Invocation_status(ctx, field)
+			case "method":
+				return ec.fieldContext_Invocation_method(ctx, field)
+			case "url":
+				return ec.fieldContext_Invocation_url(ctx, field)
+			case "requestHeaders":
+				return ec.fieldContext_Invocation_requestHeaders(ctx, field)
+			case "responseHeaders":
+				return ec.fieldContext_Invocation_responseHeaders(ctx, field)
+			case "requestBody":
+				return ec.fieldContext_Invocation_requestBody(ctx, field)
+			case "responseBody":
+				return ec.fieldContext_Invocation_responseBody(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type Invocation", field.Name)
 		},
 	}
 	return fc, nil
@@ -3009,6 +3095,25 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
+		case "invocation":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_invocation(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "__type":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Query___type(ctx, field)
@@ -3053,8 +3158,8 @@ func (ec *executionContext) _Subscription(ctx context.Context, sel ast.Selection
 	}
 
 	switch fields[0].Name {
-	case "name":
-		return ec._Subscription_name(ctx, fields[0])
+	case "invocations":
+		return ec._Subscription_invocations(ctx, fields[0])
 	default:
 		panic("unknown field " + strconv.Quote(fields[0].Name))
 	}
@@ -3825,6 +3930,13 @@ func (ec *executionContext) marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋ
 		return graphql.Null
 	}
 	return ec._Header(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *model.Invocation) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._Invocation(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {

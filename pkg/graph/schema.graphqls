@@ -15,9 +15,10 @@ type Header {
 }
 
 type Query {
-  invocations(status: Int!): [Invocation!]!
+  invocations: [Invocation!]!
+  invocation(id: ID!): Invocation
 }
 
 type Subscription {
-  name: String!
+  invocations: [Invocation!]!
 }

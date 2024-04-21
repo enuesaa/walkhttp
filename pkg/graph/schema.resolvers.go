@@ -12,11 +12,10 @@ import (
 	"github.com/enuesaa/walkin/pkg/graph/model"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
-	"github.com/google/uuid"
 )
 
 // Invocations is the resolver for the invocations field.
-func (r *queryResolver) Invocations(ctx context.Context, status int) ([]*model.Invocation, error) {
+func (r *queryResolver) Invocations(ctx context.Context) ([]*model.Invocation, error) {
 	list := make([]*model.Invocation, 0)
 
 	repos := repository.NewRepos()
@@ -27,29 +26,60 @@ func (r *queryResolver) Invocations(ctx context.Context, status int) ([]*model.I
 	list = make([]*model.Invocation, 0)
 	for i, invocation := range invocations {
 		list = append(list, &model.Invocation{
-			ID: fmt.Sprintf("%d", i),
-			Status: invocation.Status,
-			Method: invocation.Method,
-			URL: invocation.Url,
-			RequestHeaders: make([]*model.Header, 0),
+			ID:              fmt.Sprintf("%d", i),
+			Status:          invocation.Status,
+			Method:          invocation.Method,
+			URL:             invocation.Url,
+			RequestHeaders:  make([]*model.Header, 0),
 			ResponseHeaders: make([]*model.Header, 0),
-			RequestBody: &invocation.RequestBody,
-			ResponseBody: &invocation.ResponseBody,
+			RequestBody:     &invocation.RequestBody,
+			ResponseBody:    &invocation.ResponseBody,
 		})
 	}
 
 	return list, nil
 }
 
-// Name is the resolver for the name field.
-func (r *subscriptionResolver) Name(ctx context.Context) (<-chan string, error) {
-	ch := make(chan string)
+// Invocation is the resolver for the invocation field.
+func (r *queryResolver) Invocation(ctx context.Context, id string) (*model.Invocation, error) {
+	repos := repository.NewRepos()
+	invocations, err := invoke.ListLogs(repos)
+	if err != nil {
+		return nil, err
+	}
+	for i, invocation := range invocations {
+		if fmt.Sprintf("%d", i) == id {
+			return &model.Invocation{
+				ID:              fmt.Sprintf("%d", i),
+				Status:          invocation.Status,
+				Method:          invocation.Method,
+				URL:             invocation.Url,
+				RequestHeaders:  make([]*model.Header, 0),
+				ResponseHeaders: make([]*model.Header, 0),
+				RequestBody:     &invocation.RequestBody,
+				ResponseBody:    &invocation.ResponseBody,
+			}, nil
+		}
+	}
+
+	return nil, fmt.Errorf("not found")
+}
+
+// Invocations is the resolver for the invocations field.
+func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*model.Invocation, error) {
+	ch := make(chan []*model.Invocation)
 
 	go func() {
 		defer close(ch)
 		for {
 			time.Sleep(1 * time.Second)
-			t := uuid.New().String()
+			t := make([]*model.Invocation, 0)
+			t = append(t, &model.Invocation{
+				ID: "3",
+				Status: 200,
+				Method: "GET",
+				URL: "https://example.com",
+			})
 			select {
 			case <-ctx.Done():
 				fmt.Println("Subscription Closed")

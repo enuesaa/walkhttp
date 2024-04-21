@@ -10,16 +10,16 @@ func main() {
 	app := &cobra.Command{
 		Use:     "walkin",
 		Short:   "A CLI tool to serve local api gateway",
-		Version: "0.0.3",
+		Version: "0.0.4",
 	}
 
 	repos := repository.NewRepos()
-	app.AddCommand(cli.CreateConfigureCmd(repos))
+	// app.AddCommand(cli.CreateConfigureCmd(repos))
 	app.AddCommand(cli.CreateGetCmd(repos))
 	app.AddCommand(cli.CreatePostCmd(repos))
 	app.AddCommand(cli.CreatePutCmd(repos))
 	app.AddCommand(cli.CreateDeleteCmd(repos))
-	app.AddCommand(cli.CreateInvokeCmd(repos))
+	// app.AddCommand(cli.CreateInvokeCmd(repos))
 	app.AddCommand(cli.CreateCtlCmd(repos))
 
 	// disable default
