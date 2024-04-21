@@ -12,16 +12,15 @@
     "graph": "graphql-codegen --config graph.config.ts"
   },
   "dependencies": {
-    "@apollo/client": "^3.9.11",
     "@radix-ui/themes": "^3.0.0",
     "@vanilla-extract/css": "^1.14.1",
-    "graphql": "^16.8.1",
     "jotai": "^2.7.1",
     "next": "^14.1.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.1",
-    "react-icons": "^5.0.1"
+    "react-icons": "^5.0.1",
+    "urql": "^4.0.7"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^5.0.2",
