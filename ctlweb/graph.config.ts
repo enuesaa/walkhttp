@@ -4,7 +4,7 @@ export default {
   overwrite: true,
   schema: '../pkg/graph/schema.graphqls',
   generates: {
-    './src/lib/graphtypes.ts': {
+    './src/graph/types.ts': {
       plugins: ['typescript'],
     },
   },

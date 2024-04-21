@@ -1,5 +1,5 @@
 import { ScrollArea } from '@radix-ui/themes'
-import { useListInvocations } from '@/lib/graph'
+import { useListInvocations } from '@/graph/invocations'
 import { HistroiesItem } from './HistoriesItem'
 
 export const Histories = () => {
