@@ -1,7 +1,8 @@
-import { Invocation } from '@/lib/graphtypes'
-import { useSetInvocation } from '@/lib/state';
+import { Invocation } from '@/graph/types'
+import { useSetInvocation } from '@/lib/state'
 import { Badge, Card, Text } from '@radix-ui/themes'
-import { MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react'
+import styles from './HistoriesItem.css'
 
 type Props = {
   invocation: Invocation;
@@ -15,7 +16,7 @@ export const HistroiesItem = ({ invocation }: Props) => {
   }
 
   return (
-    <Card my='2' style={{position: 'relative'}} onClick={handleClick}>
+    <Card my='2' onClick={handleClick} className={styles.main}>
       <Text as='div'>
         <Badge color='green'>{invocation.method}</Badge> {invocation.url}
       </Text>
