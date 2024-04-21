@@ -67,23 +67,34 @@ func (r *queryResolver) Invocation(ctx context.Context, id string) (*Invocation,
 // Invocations is the resolver for the invocations field.
 func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*Invocation, error) {
 	ch := make(chan []*Invocation)
+	repos := repository.NewRepos()
 
 	go func() {
 		defer close(ch)
 		for {
 			time.Sleep(1 * time.Second)
-			t := make([]*Invocation, 0)
-			t = append(t, &Invocation{
-				ID: "3",
-				Status: 200,
-				Method: "GET",
-				URL: "https://example.com",
-			})
+			invocations, err := invoke.ListLogs(repos)
+			if err != nil {
+				continue
+			}
+			list := make([]*Invocation, 0)
+			for i, invocation := range invocations {
+				list = append(list, &Invocation{
+					ID:              fmt.Sprintf("%d", i),
+					Status:          invocation.Status,
+					Method:          invocation.Method,
+					URL:             invocation.Url,
+					RequestHeaders:  make([]*Header, 0),
+					ResponseHeaders: make([]*Header, 0),
+					RequestBody:     &invocation.RequestBody,
+					ResponseBody:    &invocation.ResponseBody,
+				})
+			}
 			select {
 			case <-ctx.Done():
 				fmt.Println("Subscription Closed")
 				return
-			case ch <- t: // This is the actual send.
+			case ch <- list:
 			}
 		}
 	}()

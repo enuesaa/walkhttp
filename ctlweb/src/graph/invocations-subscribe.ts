@@ -6,7 +6,11 @@ export const query = gql`
   subscription {
     invocations {
       id,
-      url
+      status,
+      method,
+      url,
+      requestBody,
+      responseBody
     }
   }
 `
