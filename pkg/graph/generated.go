@@ -15,7 +15,6 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/enuesaa/walkin/pkg/graph/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -75,11 +74,11 @@ type ComplexityRoot struct {
 }
 
 type QueryResolver interface {
-	Invocations(ctx context.Context) ([]*model.Invocation, error)
-	Invocation(ctx context.Context, id string) (*model.Invocation, error)
+	Invocations(ctx context.Context) ([]*Invocation, error)
+	Invocation(ctx context.Context, id string) (*Invocation, error)
 }
 type SubscriptionResolver interface {
-	Invocations(ctx context.Context) (<-chan []*model.Invocation, error)
+	Invocations(ctx context.Context) (<-chan []*Invocation, error)
 }
 
 type executableSchema struct {
@@ -390,7 +389,7 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _Header_name(ctx context.Context, field graphql.CollectedField, obj *model.Header) (ret graphql.Marshaler) {
+func (ec *executionContext) _Header_name(ctx context.Context, field graphql.CollectedField, obj *Header) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Header_name(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -434,7 +433,7 @@ func (ec *executionContext) fieldContext_Header_name(ctx context.Context, field 
 	return fc, nil
 }
 
-func (ec *executionContext) _Header_value(ctx context.Context, field graphql.CollectedField, obj *model.Header) (ret graphql.Marshaler) {
+func (ec *executionContext) _Header_value(ctx context.Context, field graphql.CollectedField, obj *Header) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Header_value(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -478,7 +477,7 @@ func (ec *executionContext) fieldContext_Header_value(ctx context.Context, field
 	return fc, nil
 }
 
-func (ec *executionContext) _Invocation_id(ctx context.Context, field graphql.CollectedField, obj *model.Invocation) (ret graphql.Marshaler) {
+func (ec *executionContext) _Invocation_id(ctx context.Context, field graphql.CollectedField, obj *Invocation) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Invocation_id(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -522,7 +521,7 @@ func (ec *executionContext) fieldContext_Invocation_id(ctx context.Context, fiel
 	return fc, nil
 }
 
-func (ec *executionContext) _Invocation_status(ctx context.Context, field graphql.CollectedField, obj *model.Invocation) (ret graphql.Marshaler) {
+func (ec *executionContext) _Invocation_status(ctx context.Context, field graphql.CollectedField, obj *Invocation) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Invocation_status(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -566,7 +565,7 @@ func (ec *executionContext) fieldContext_Invocation_status(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _Invocation_method(ctx context.Context, field graphql.CollectedField, obj *model.Invocation) (ret graphql.Marshaler) {
+func (ec *executionContext) _Invocation_method(ctx context.Context, field graphql.CollectedField, obj *Invocation) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Invocation_method(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -610,7 +609,7 @@ func (ec *executionContext) fieldContext_Invocation_method(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _Invocation_url(ctx context.Context, field graphql.CollectedField, obj *model.Invocation) (ret graphql.Marshaler) {
+func (ec *executionContext) _Invocation_url(ctx context.Context, field graphql.CollectedField, obj *Invocation) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Invocation_url(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -654,7 +653,7 @@ func (ec *executionContext) fieldContext_Invocation_url(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _Invocation_requestHeaders(ctx context.Context, field graphql.CollectedField, obj *model.Invocation) (ret graphql.Marshaler) {
+func (ec *executionContext) _Invocation_requestHeaders(ctx context.Context, field graphql.CollectedField, obj *Invocation) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Invocation_requestHeaders(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -677,9 +676,9 @@ func (ec *executionContext) _Invocation_requestHeaders(ctx context.Context, fiel
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Header)
+	res := resTmp.([]*Header)
 	fc.Result = res
-	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx, field.Selections, res)
+	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐHeader(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Invocation_requestHeaders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -701,7 +700,7 @@ func (ec *executionContext) fieldContext_Invocation_requestHeaders(ctx context.C
 	return fc, nil
 }
 
-func (ec *executionContext) _Invocation_responseHeaders(ctx context.Context, field graphql.CollectedField, obj *model.Invocation) (ret graphql.Marshaler) {
+func (ec *executionContext) _Invocation_responseHeaders(ctx context.Context, field graphql.CollectedField, obj *Invocation) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Invocation_responseHeaders(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -724,9 +723,9 @@ func (ec *executionContext) _Invocation_responseHeaders(ctx context.Context, fie
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Header)
+	res := resTmp.([]*Header)
 	fc.Result = res
-	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx, field.Selections, res)
+	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐHeader(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Invocation_responseHeaders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -748,7 +747,7 @@ func (ec *executionContext) fieldContext_Invocation_responseHeaders(ctx context.
 	return fc, nil
 }
 
-func (ec *executionContext) _Invocation_requestBody(ctx context.Context, field graphql.CollectedField, obj *model.Invocation) (ret graphql.Marshaler) {
+func (ec *executionContext) _Invocation_requestBody(ctx context.Context, field graphql.CollectedField, obj *Invocation) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Invocation_requestBody(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -789,7 +788,7 @@ func (ec *executionContext) fieldContext_Invocation_requestBody(ctx context.Cont
 	return fc, nil
 }
 
-func (ec *executionContext) _Invocation_responseBody(ctx context.Context, field graphql.CollectedField, obj *model.Invocation) (ret graphql.Marshaler) {
+func (ec *executionContext) _Invocation_responseBody(ctx context.Context, field graphql.CollectedField, obj *Invocation) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Invocation_responseBody(ctx, field)
 	if err != nil {
 		return graphql.Null
@@ -856,9 +855,9 @@ func (ec *executionContext) _Query_invocations(ctx context.Context, field graphq
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*model.Invocation)
+	res := resTmp.([]*Invocation)
 	fc.Result = res
-	return ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocationᚄ(ctx, field.Selections, res)
+	return ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐInvocationᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_invocations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -915,9 +914,9 @@ func (ec *executionContext) _Query_invocation(ctx context.Context, field graphql
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.Invocation)
+	res := resTmp.(*Invocation)
 	fc.Result = res
-	return ec.marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocation(ctx, field.Selections, res)
+	return ec.marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐInvocation(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_invocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1119,7 +1118,7 @@ func (ec *executionContext) _Subscription_invocations(ctx context.Context, field
 	}
 	return func(ctx context.Context) graphql.Marshaler {
 		select {
-		case res, ok := <-resTmp.(<-chan []*model.Invocation):
+		case res, ok := <-resTmp.(<-chan []*Invocation):
 			if !ok {
 				return nil
 			}
@@ -1127,7 +1126,7 @@ func (ec *executionContext) _Subscription_invocations(ctx context.Context, field
 				w.Write([]byte{'{'})
 				graphql.MarshalString(field.Alias).MarshalGQL(w)
 				w.Write([]byte{':'})
-				ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocationᚄ(ctx, field.Selections, res).MarshalGQL(w)
+				ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐInvocationᚄ(ctx, field.Selections, res).MarshalGQL(w)
 				w.Write([]byte{'}'})
 			})
 		case <-ctx.Done():
@@ -2950,7 +2949,7 @@ func (ec *executionContext) fieldContext___Type_specifiedByURL(ctx context.Conte
 
 var headerImplementors = []string{"Header"}
 
-func (ec *executionContext) _Header(ctx context.Context, sel ast.SelectionSet, obj *model.Header) graphql.Marshaler {
+func (ec *executionContext) _Header(ctx context.Context, sel ast.SelectionSet, obj *Header) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, headerImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -2994,7 +2993,7 @@ func (ec *executionContext) _Header(ctx context.Context, sel ast.SelectionSet, o
 
 var invocationImplementors = []string{"Invocation"}
 
-func (ec *executionContext) _Invocation(ctx context.Context, sel ast.SelectionSet, obj *model.Invocation) graphql.Marshaler {
+func (ec *executionContext) _Invocation(ctx context.Context, sel ast.SelectionSet, obj *Invocation) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, invocationImplementors)
 
 	out := graphql.NewFieldSet(fields)
@@ -3536,7 +3535,7 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocationᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.Invocation) graphql.Marshaler {
+func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐInvocationᚄ(ctx context.Context, sel ast.SelectionSet, v []*Invocation) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -3560,7 +3559,7 @@ func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwa
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocation(ctx, sel, v[i])
+			ret[i] = ec.marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐInvocation(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3580,7 +3579,7 @@ func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwa
 	return ret
 }
 
-func (ec *executionContext) marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *model.Invocation) graphql.Marshaler {
+func (ec *executionContext) marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *Invocation) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -3884,7 +3883,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx context.Context, sel ast.SelectionSet, v []*model.Header) graphql.Marshaler {
+func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐHeader(ctx context.Context, sel ast.SelectionSet, v []*Header) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -3911,7 +3910,7 @@ func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkin
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx, sel, v[i])
+			ret[i] = ec.marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐHeader(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -3925,14 +3924,14 @@ func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkin
 	return ret
 }
 
-func (ec *executionContext) marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐHeader(ctx context.Context, sel ast.SelectionSet, v *model.Header) graphql.Marshaler {
+func (ec *executionContext) marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐHeader(ctx context.Context, sel ast.SelectionSet, v *Header) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Header(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚋmodelᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *model.Invocation) graphql.Marshaler {
+func (ec *executionContext) marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkinᚋpkgᚋgraphᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *Invocation) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

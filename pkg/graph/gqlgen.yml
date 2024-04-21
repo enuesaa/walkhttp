@@ -1,0 +1,17 @@
+# to generate, run `go run github.com/99designs/gqlgen generate`
+# see https://tech.layerx.co.jp/entry/2021/10/22/171242
+
+schema:
+  - '*.graphqls'
+
+exec:
+  filename: generated.go
+  package: graph
+
+model:
+  filename: schema.go
+  package: graph
+
+resolver:
+  layout: follow-schema
+  package: graph

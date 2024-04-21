@@ -34,10 +34,16 @@ export type Invocation = {
 
 export type Query = {
   __typename?: 'Query';
+  invocation?: Maybe<Invocation>;
   invocations: Array<Invocation>;
 };
 
 
-export type QueryInvocationsArgs = {
-  status: Scalars['Int']['input'];
+export type QueryInvocationArgs = {
+  id: Scalars['ID']['input'];
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  invocations: Array<Invocation>;
 };

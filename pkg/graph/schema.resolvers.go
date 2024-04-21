@@ -9,29 +9,28 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/enuesaa/walkin/pkg/graph/model"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
 // Invocations is the resolver for the invocations field.
-func (r *queryResolver) Invocations(ctx context.Context) ([]*model.Invocation, error) {
-	list := make([]*model.Invocation, 0)
+func (r *queryResolver) Invocations(ctx context.Context) ([]*Invocation, error) {
+	list := make([]*Invocation, 0)
 
 	repos := repository.NewRepos()
 	invocations, err := invoke.ListLogs(repos)
 	if err != nil {
-		return make([]*model.Invocation, 0), err
+		return make([]*Invocation, 0), err
 	}
-	list = make([]*model.Invocation, 0)
+	list = make([]*Invocation, 0)
 	for i, invocation := range invocations {
-		list = append(list, &model.Invocation{
+		list = append(list, &Invocation{
 			ID:              fmt.Sprintf("%d", i),
 			Status:          invocation.Status,
 			Method:          invocation.Method,
 			URL:             invocation.Url,
-			RequestHeaders:  make([]*model.Header, 0),
-			ResponseHeaders: make([]*model.Header, 0),
+			RequestHeaders:  make([]*Header, 0),
+			ResponseHeaders: make([]*Header, 0),
 			RequestBody:     &invocation.RequestBody,
 			ResponseBody:    &invocation.ResponseBody,
 		})
@@ -41,7 +40,7 @@ func (r *queryResolver) Invocations(ctx context.Context) ([]*model.Invocation, e
 }
 
 // Invocation is the resolver for the invocation field.
-func (r *queryResolver) Invocation(ctx context.Context, id string) (*model.Invocation, error) {
+func (r *queryResolver) Invocation(ctx context.Context, id string) (*Invocation, error) {
 	repos := repository.NewRepos()
 	invocations, err := invoke.ListLogs(repos)
 	if err != nil {
@@ -49,13 +48,13 @@ func (r *queryResolver) Invocation(ctx context.Context, id string) (*model.Invoc
 	}
 	for i, invocation := range invocations {
 		if fmt.Sprintf("%d", i) == id {
-			return &model.Invocation{
+			return &Invocation{
 				ID:              fmt.Sprintf("%d", i),
 				Status:          invocation.Status,
 				Method:          invocation.Method,
 				URL:             invocation.Url,
-				RequestHeaders:  make([]*model.Header, 0),
-				ResponseHeaders: make([]*model.Header, 0),
+				RequestHeaders:  make([]*Header, 0),
+				ResponseHeaders: make([]*Header, 0),
 				RequestBody:     &invocation.RequestBody,
 				ResponseBody:    &invocation.ResponseBody,
 			}, nil
@@ -66,15 +65,15 @@ func (r *queryResolver) Invocation(ctx context.Context, id string) (*model.Invoc
 }
 
 // Invocations is the resolver for the invocations field.
-func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*model.Invocation, error) {
-	ch := make(chan []*model.Invocation)
+func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*Invocation, error) {
+	ch := make(chan []*Invocation)
 
 	go func() {
 		defer close(ch)
 		for {
 			time.Sleep(1 * time.Second)
-			t := make([]*model.Invocation, 0)
-			t = append(t, &model.Invocation{
+			t := make([]*Invocation, 0)
+			t = append(t, &Invocation{
 				ID: "3",
 				Status: 200,
 				Method: "GET",
