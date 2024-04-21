@@ -1,9 +1,9 @@
 import { ScrollArea } from '@radix-ui/themes'
-import { useListInvocations } from '@/graph/invocations'
+import { useSubscribeInvocations } from '@/graph/invocations-subscribe'
 import { HistroiesItem } from './HistoriesItem'
 
 export const Histories = () => {
-  const invocations = useListInvocations()
+  const invocations = useSubscribeInvocations()
   if (invocations.fetching || invocations.error !== undefined) {
     return <></>
   }
