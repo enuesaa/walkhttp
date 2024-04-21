@@ -4,7 +4,7 @@ import { HistroiesItem } from './HistoriesItem'
 
 export const Histories = () => {
   const invocations = useListInvocations()
-  if (invocations.fetching || invocations.error != undefined) {
+  if (invocations.fetching || invocations.error !== undefined) {
     return <></>
   }
 

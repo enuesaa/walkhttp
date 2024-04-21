@@ -5,8 +5,11 @@ const query = gql`
   query {
     invocations {
       id,
+      status,
+      method,
       url,
-      method
+      requestBody,
+      responseBody
     }
   }
 `

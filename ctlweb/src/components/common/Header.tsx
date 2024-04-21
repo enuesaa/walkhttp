@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { Flex, Box, Container } from '@radix-ui/themes'
+import { Flex, Box } from '@radix-ui/themes'
 import styles from '@/components/common/Header.css'
 
 export const Header = () => {

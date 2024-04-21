@@ -9,11 +9,11 @@ export const History = () => {
 
   return (
     <>
-      <DataList.Root>
+      <DataList.Root m='5'>
         <DataList.Item align='center'>
           <DataList.Label minWidth='88px'>status</DataList.Label>
           <DataList.Value>
-            200
+            {invocation.status}
           </DataList.Value>
         </DataList.Item>
         
@@ -32,19 +32,21 @@ export const History = () => {
         </DataList.Item>
       </DataList.Root>
 
-      <Heading>Request Headers</Heading>
+      <Heading m='3' size='4'>Request Headers</Heading>
       <Code style={{display: 'block'}}>
         {JSON.stringify(invocation.requestHeaders, null, '  ')}
       </Code>
 
-      <Heading>Response Headers</Heading>
+      <Heading m='3' size='4'>Response Headers</Heading>
       <Code style={{display: 'block'}}>
         {JSON.stringify(invocation.responseHeaders, null, '  ')}
       </Code>
 
-      <Heading>Response Body</Heading>
+      <Heading m='3' size='4'>Response Body</Heading>
       <Code style={{display: 'block'}}>
-        {invocation.responseBody}
+        <pre>
+          {invocation.responseBody}
+        </pre>
       </Code>
     </>
   )
