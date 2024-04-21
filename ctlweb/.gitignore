@@ -4,24 +4,12 @@
 # next.js
 /.next/
 /dist
-
-# misc
-.DS_Store
-*.pem
+next-env.d.ts
+.env*.local
 
 # debug
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
 .pnpm-debug.log*
-
-# env files
-.env*.local
-.env
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts
-
-# editor
-.vscode

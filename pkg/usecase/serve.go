@@ -51,6 +51,7 @@ func Serve(repos repository.Repos, port int) error {
 		return invoke.Invoke(&invocation)
 	})
 	app.Any("/*", ctlweb.Serve)
+	app.Any("/", ctlweb.Serve)
 
 	return app.Start(fmt.Sprintf(":%d", port))
 }
