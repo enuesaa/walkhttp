@@ -2,10 +2,13 @@ package usecase
 
 import (
 	"fmt"
+	"net/http"
+	"time"
 
 	"github.com/enuesaa/walkin/ctlweb"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
@@ -25,10 +28,22 @@ func Serve(repos repository.Repos, port int) error {
 	}))
 
 	// see https://github.com/99designs/gqlgen/issues/1664
-	gqhandle := handler.NewDefaultServer(graph.NewExecutableSchema(graph.Config{
+	// see https://github.com/99designs/gqlgen/issues/2826
+	gqhandle := handler.New(graph.NewExecutableSchema(graph.Config{
 		Resolvers: &graph.Resolver{},
 	}))
-	gqhandle.AddTransport(&transport.Websocket{})
+	gqhandle.AddTransport(transport.Options{})
+	gqhandle.AddTransport(transport.GET{})
+	gqhandle.AddTransport(transport.POST{})
+	gqhandle.AddTransport(transport.MultipartForm{})
+	gqhandle.AddTransport(&transport.Websocket{
+		Upgrader: websocket.Upgrader{
+			CheckOrigin: func(r *http.Request) bool {
+				return true
+			},
+		},
+		KeepAlivePingInterval: 10 * time.Second,
+	})
 	app.Any("/graph", echo.WrapHandler(gqhandle))
 	app.GET("/graph/playground", echo.WrapHandler(playground.Handler("graph", "/graph")))
 	app.GET("/aa", func(c echo.Context) error {

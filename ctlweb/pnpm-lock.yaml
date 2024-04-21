@@ -11,6 +11,9 @@ dependencies:
   '@vanilla-extract/css':
     specifier: ^1.14.1
     version: 1.14.1
+  graphql-ws:
+    specifier: ^5.16.0
+    version: 5.16.0(graphql@16.8.1)
   jotai:
     specifier: ^2.7.1
     version: 2.7.1(@types/react@18.2.48)(react@18.2.0)
@@ -4435,7 +4438,6 @@ packages:
       graphql: '>=0.11 <=16'
     dependencies:
       graphql: 16.8.1
-    dev: true
 
   /graphql@16.8.1:
     resolution: {integrity: sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==}
