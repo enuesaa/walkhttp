@@ -91,6 +91,8 @@ func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*Invoc
 	return ch, nil
 }
 
+type Resolver struct{}
+
 // Query returns QueryResolver implementation.
 func (r *Resolver) Query() QueryResolver { return &queryResolver{r} }
 

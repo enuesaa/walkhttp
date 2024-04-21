@@ -5,7 +5,7 @@ schema:
   - '*.graphqls'
 
 exec:
-  filename: generated.go
+  filename: exec.go
   package: graph
 
 model:
