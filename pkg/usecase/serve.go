@@ -13,6 +13,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 
 	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/enuesaa/walkin/pkg/graph"
@@ -44,6 +45,7 @@ func Serve(repos repository.Repos, port int) error {
 		},
 		KeepAlivePingInterval: 10 * time.Second,
 	})
+	gqhandle.Use(extension.Introspection{})
 	app.Any("/graph", echo.WrapHandler(gqhandle))
 	app.GET("/graph/playground", echo.WrapHandler(playground.Handler("graph", "/graph")))
 	app.GET("/aa", func(c echo.Context) error {
