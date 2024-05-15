@@ -5,11 +5,11 @@ import { Query } from './types'
 export const query = gql`
   subscription {
     invocations {
-      id,
-      status,
-      method,
-      url,
-      requestBody,
+      id
+      status
+      method
+      url
+      requestBody
       responseBody
     }
   }

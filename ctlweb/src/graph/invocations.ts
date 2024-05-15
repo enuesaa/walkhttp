@@ -4,11 +4,11 @@ import { Query } from './types'
 const query = gql`
   query {
     invocations {
-      id,
-      status,
-      method,
-      url,
-      requestBody,
+      id
+      status
+      method
+      url
+      requestBody
       responseBody
     }
   }

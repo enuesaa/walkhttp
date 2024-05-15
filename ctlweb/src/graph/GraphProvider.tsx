@@ -3,7 +3,7 @@ import { createClient as createWSClient } from 'graphql-ws'
 import { ReactNode } from 'react'
 
 type Props = {
-  children: ReactNode,
+  children: ReactNode
 }
 export const GraphProvider = ({ children }: Props) => {
   const endpoint = process.env.NEXT_PUBLIC_GRAPH_ENDPOINT as string
@@ -22,18 +22,14 @@ export const GraphProvider = ({ children }: Props) => {
 
           return {
             subscribe(sink) {
-              const unsubscribe = wsclient.subscribe(input, sink);
-              return { unsubscribe };
+              const unsubscribe = wsclient.subscribe(input, sink)
+              return { unsubscribe }
             },
-          };
+          }
         },
       }),
     ],
   })
 
-  return (
-    <Provider value={client}>
-      {children}
-    </Provider>
-  )
+  return <Provider value={client}>{children}</Provider>
 }

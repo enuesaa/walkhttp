@@ -5,7 +5,7 @@ import { MouseEventHandler } from 'react'
 import styles from './HistoriesItem.css'
 
 type Props = {
-  invocation: Invocation;
+  invocation: Invocation
 }
 export const HistroiesItem = ({ invocation }: Props) => {
   const setInvocation = useSetInvocation()
@@ -20,10 +20,10 @@ export const HistroiesItem = ({ invocation }: Props) => {
       <Text as='div'>
         <Badge color='green'>{invocation.method}</Badge> {invocation.url}
       </Text>
-      <Text color='gray' size='2' style={{position:'absolute', top: '0', right: '0'}}>
+      <Text color='gray' size='2' style={{ position: 'absolute', top: '0', right: '0' }}>
         {invocation.status}
       </Text>
-      <Text color='gray' size='2' style={{position:'absolute', bottom: '0', right: '0'}}>
+      <Text color='gray' size='2' style={{ position: 'absolute', bottom: '0', right: '0' }}>
         date
       </Text>
     </Card>
