@@ -5,11 +5,14 @@ import (
 	"fmt"
 	"net/url"
 	"strings"
+
+	"github.com/oklog/ulid/v2"
 )
 
 // todo: make usecase
 func NewInvocation(method string, url string) Invocation {
 	return Invocation{
+		Id:              ulid.Make().String(),
 		Method:          method,
 		Url:             url,
 		RequestHeaders:  []Header{},
@@ -18,6 +21,7 @@ func NewInvocation(method string, url string) Invocation {
 }
 
 type Invocation struct {
+	Id     string `json:"id"`
 	Status int    `json:"status"`
 	Method string `json:"method"`
 	Url    string `json:"url"`

@@ -23,9 +23,9 @@ func (r *queryResolver) Invocations(ctx context.Context) ([]*Invocation, error) 
 		return make([]*Invocation, 0), err
 	}
 	list = make([]*Invocation, 0)
-	for i, invocation := range invocations {
+	for _, invocation := range invocations {
 		list = append(list, &Invocation{
-			ID:              fmt.Sprintf("%d", i),
+			ID:              invocation.Id,
 			Status:          invocation.Status,
 			Method:          invocation.Method,
 			URL:             invocation.Url,
@@ -46,10 +46,11 @@ func (r *queryResolver) Invocation(ctx context.Context, id string) (*Invocation,
 	if err != nil {
 		return nil, err
 	}
-	for i, invocation := range invocations {
-		if fmt.Sprintf("%d", i) == id {
+	// todo: refator
+	for _, invocation := range invocations {
+		if invocation.Id == id {
 			return &Invocation{
-				ID:              fmt.Sprintf("%d", i),
+				ID:              invocation.Id,
 				Status:          invocation.Status,
 				Method:          invocation.Method,
 				URL:             invocation.Url,
@@ -78,9 +79,9 @@ func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*Invoc
 				continue
 			}
 			list := make([]*Invocation, 0)
-			for i, invocation := range invocations {
+			for _, invocation := range invocations {
 				list = append(list, &Invocation{
-					ID:              fmt.Sprintf("%d", i),
+					ID:              invocation.Id,
 					Status:          invocation.Status,
 					Method:          invocation.Method,
 					URL:             invocation.Url,
