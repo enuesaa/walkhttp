@@ -8,6 +8,7 @@ require (
 	github.com/charmbracelet/huh v0.3.0
 	github.com/gorilla/websocket v1.5.1
 	github.com/labstack/echo/v4 v4.12.0
+	github.com/oklog/ulid/v2 v2.1.0
 	github.com/spf13/cobra v1.8.0
 	github.com/vektah/gqlparser/v2 v2.5.11
 )
@@ -36,7 +37,6 @@ require (
 	github.com/muesli/cancelreader v0.2.2 // indirect
 	github.com/muesli/reflow v0.3.0 // indirect
 	github.com/muesli/termenv v0.15.2 // indirect
-	github.com/oklog/ulid/v2 v2.1.0 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sosodev/duration v1.2.0 // indirect

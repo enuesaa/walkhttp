@@ -16,7 +16,6 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/enuesaa/walkin/pkg/graph"
 )
 
 func Serve(repos repository.Repos, port int) error {
@@ -30,8 +29,8 @@ func Serve(repos repository.Repos, port int) error {
 
 	// see https://github.com/99designs/gqlgen/issues/1664
 	// see https://github.com/99designs/gqlgen/issues/2826
-	gqhandle := handler.New(graph.NewExecutableSchema(graph.Config{
-		Resolvers: &graph.Resolver{},
+	gqhandle := handler.New(invoke.NewExecutableSchema(invoke.Config{
+		Resolvers: &invoke.Resolver{},
 	}))
 	gqhandle.AddTransport(transport.Options{})
 	gqhandle.AddTransport(transport.GET{})

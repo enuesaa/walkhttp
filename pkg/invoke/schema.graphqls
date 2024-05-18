@@ -5,8 +5,8 @@ type Invocation {
   url: String!
   requestHeaders: [Header]
   responseHeaders: [Header]
-  requestBody: String
-  responseBody: String
+  requestBody: String!
+  responseBody: String!
 }
 
 type Header {

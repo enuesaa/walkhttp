@@ -9,37 +9,18 @@ import (
 	"github.com/oklog/ulid/v2"
 )
 
-// todo: make usecase
 func NewInvocation(method string, url string) Invocation {
 	return Invocation{
-		Id:              ulid.Make().String(),
+		ID:              ulid.Make().String(),
 		Method:          method,
-		Url:             url,
-		RequestHeaders:  []Header{},
-		ResponseHeaders: []Header{},
+		URL:             url,
+		RequestHeaders:  []*Header{},
+		ResponseHeaders: []*Header{},
 	}
 }
 
-type Invocation struct {
-	Id     string `json:"id"`
-	Status int    `json:"status"`
-	Method string `json:"method"`
-	Url    string `json:"url"`
-
-	RequestHeaders []Header `json:"requestHeaders"`
-	RequestBody    string   `json:"requestBody"`
-
-	ResponseBody    string   `json:"responseBody"`
-	ResponseHeaders []Header `json:"responseHeaders"`
-}
-
-type Header struct {
-	Key   string `json:"key"`
-	Value string `json:"value"`
-}
-
 func (inv *Invocation) GetOperationName() (string, error) {
-	u, err := url.Parse(inv.Url)
+	u, err := url.Parse(inv.URL)
 	if err != nil {
 		return "", err
 	}

@@ -5,13 +5,13 @@ schema:
   - '*.graphqls'
 
 exec:
-  filename: exec.go
-  package: graph
+  filename: gqlexec.go
+  package: invoke
 
 model:
   filename: schema.go
-  package: graph
+  package: invoke
 
 resolver:
   layout: follow-schema
-  package: graph
+  package: invoke

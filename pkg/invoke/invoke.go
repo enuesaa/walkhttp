@@ -7,13 +7,13 @@ import (
 )
 
 func Invoke(invocation *Invocation) error {
-	req, err := http.NewRequest(invocation.Method, invocation.Url, nil)
+	req, err := http.NewRequest(invocation.Method, invocation.URL, nil)
 	if err != nil {
 		return err
 	}
 
 	for _, requestHeader := range invocation.RequestHeaders {
-		req.Header.Add(requestHeader.Key, requestHeader.Value)
+		req.Header.Add(requestHeader.Name, requestHeader.Value)
 	}
 
 	client := http.Client{}
@@ -28,8 +28,8 @@ func Invoke(invocation *Invocation) error {
 		if len(value) == 0 {
 			return fmt.Errorf("failed to map response header because there is no value supplied.")
 		}
-		invocation.ResponseHeaders = append(invocation.ResponseHeaders, Header{
-			Key:   key,
+		invocation.ResponseHeaders = append(invocation.ResponseHeaders, &Header{
+			Name:   key,
 			Value: value[0],
 		})
 	}

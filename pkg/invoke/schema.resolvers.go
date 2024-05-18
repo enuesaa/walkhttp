@@ -1,4 +1,4 @@
-package graph
+package invoke
 
 // This file will be automatically regenerated based on the schema, any resolver implementations
 // will be copied through when generating and any unknown code will be moved to the end.
@@ -9,7 +9,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
@@ -18,22 +17,13 @@ func (r *queryResolver) Invocations(ctx context.Context) ([]*Invocation, error) 
 	list := make([]*Invocation, 0)
 
 	repos := repository.NewRepos()
-	invocations, err := invoke.ListLogs(repos)
+	invocations, err := ListLogs(repos)
 	if err != nil {
 		return make([]*Invocation, 0), err
 	}
 	list = make([]*Invocation, 0)
 	for _, invocation := range invocations {
-		list = append(list, &Invocation{
-			ID:              invocation.Id,
-			Status:          invocation.Status,
-			Method:          invocation.Method,
-			URL:             invocation.Url,
-			RequestHeaders:  make([]*Header, 0),
-			ResponseHeaders: make([]*Header, 0),
-			RequestBody:     &invocation.RequestBody,
-			ResponseBody:    &invocation.ResponseBody,
-		})
+		list = append(list, &invocation)
 	}
 
 	return list, nil
@@ -42,23 +32,14 @@ func (r *queryResolver) Invocations(ctx context.Context) ([]*Invocation, error) 
 // Invocation is the resolver for the invocation field.
 func (r *queryResolver) Invocation(ctx context.Context, id string) (*Invocation, error) {
 	repos := repository.NewRepos()
-	invocations, err := invoke.ListLogs(repos)
+	invocations, err := ListLogs(repos)
 	if err != nil {
 		return nil, err
 	}
 	// todo: refator
 	for _, invocation := range invocations {
-		if invocation.Id == id {
-			return &Invocation{
-				ID:              invocation.Id,
-				Status:          invocation.Status,
-				Method:          invocation.Method,
-				URL:             invocation.Url,
-				RequestHeaders:  make([]*Header, 0),
-				ResponseHeaders: make([]*Header, 0),
-				RequestBody:     &invocation.RequestBody,
-				ResponseBody:    &invocation.ResponseBody,
-			}, nil
+		if invocation.ID == id {
+			return &invocation, nil
 		}
 	}
 
@@ -74,22 +55,13 @@ func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*Invoc
 		defer close(ch)
 		for {
 			time.Sleep(1 * time.Second)
-			invocations, err := invoke.ListLogs(repos)
+			invocations, err := ListLogs(repos)
 			if err != nil {
 				continue
 			}
 			list := make([]*Invocation, 0)
 			for _, invocation := range invocations {
-				list = append(list, &Invocation{
-					ID:              invocation.Id,
-					Status:          invocation.Status,
-					Method:          invocation.Method,
-					URL:             invocation.Url,
-					RequestHeaders:  make([]*Header, 0),
-					ResponseHeaders: make([]*Header, 0),
-					RequestBody:     &invocation.RequestBody,
-					ResponseBody:    &invocation.ResponseBody,
-				})
+				list = append(list, &invocation)
 			}
 			select {
 			case <-ctx.Done():

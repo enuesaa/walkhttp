@@ -9,28 +9,28 @@ import (
 
 func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 	repos.Log.Printf("***\n")
-	if err := repos.Prompt.Ask("Url", "", &invocation.Url); err != nil {
+	if err := repos.Prompt.Ask("Url", "", &invocation.URL); err != nil {
 		return err
 	}
-	repos.Log.Printf("* %s %s\n", invocation.Method, invocation.Url)
+	repos.Log.Printf("* %s %s\n", invocation.Method, invocation.URL)
 	repos.Log.Printf("*\n")
 	repos.Log.Printf("* [Headers]\n")
 
 	for {
 		header := invoke.Header{}
 		suggestion := []string{"content-type", "accept"}
-		if err := repos.Prompt.AskSuggest("Header Name", "(To skip, click enter)", suggestion, &header.Key); err != nil {
+		if err := repos.Prompt.AskSuggest("Header Name", "(To skip, click enter)", suggestion, &header.Name); err != nil {
 			return err
 		}
-		if header.Key == "" {
+		if header.Name == "" {
 			break
 		}
 
-		if err := repos.Prompt.Ask("Header Value", fmt.Sprintf(" (%s) ", header.Key), &header.Value); err != nil {
+		if err := repos.Prompt.Ask("Header Value", fmt.Sprintf(" (%s) ", header.Name), &header.Value); err != nil {
 			return err
 		}
-		invocation.RequestHeaders = append(invocation.RequestHeaders, header)
-		repos.Log.Printf("* %s: %s\n", header.Key, header.Value)
+		invocation.RequestHeaders = append(invocation.RequestHeaders, &header)
+		repos.Log.Printf("* %s: %s\n", header.Name, header.Value)
 	}
 
 	if invocation.Method == "POST" || invocation.Method == "PUT" {

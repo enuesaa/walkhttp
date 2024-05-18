@@ -19,7 +19,7 @@ func Log(repos repository.Repos, invocation *Invocation) error {
 	if err := repos.Fs.CreateDir(logsdir); err != nil {
 		return err
 	}
-	path := filepath.Join(logsdir, fmt.Sprintf("%s.json", invocation.Id))
+	path := filepath.Join(logsdir, fmt.Sprintf("%s.json", invocation.ID))
 
 	data, err := json.Marshal(invocation)
 	if err != nil {
