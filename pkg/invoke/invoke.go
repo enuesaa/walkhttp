@@ -6,7 +6,7 @@ import (
 	"net/http"
 )
 
-func Invoke(invocation *Invocation) error {
+func (srv *InvokeSrv) Invoke(invocation *Invocation) error {
 	req, err := http.NewRequest(invocation.Method, invocation.URL, nil)
 	if err != nil {
 		return err
@@ -29,7 +29,7 @@ func Invoke(invocation *Invocation) error {
 			return fmt.Errorf("failed to map response header because there is no value supplied.")
 		}
 		invocation.ResponseHeaders = append(invocation.ResponseHeaders, &Header{
-			Name:   key,
+			Name:  key,
 			Value: value[0],
 		})
 	}

@@ -8,21 +8,24 @@ import (
 )
 
 func (r *queryResolver) Invocations(ctx context.Context) ([]*Invocation, error) {
-	return ListLogs(r.repos)
+	invokeSrv := NewInvokeSrv(r.repos)
+	return invokeSrv.ListLogs()
 }
 
 func (r *queryResolver) Invocation(ctx context.Context, id string) (*Invocation, error) {
-	return GetLog(r.repos, id)
+	invokeSrv := NewInvokeSrv(r.repos)
+	return invokeSrv.GetLog(id)
 }
 
 func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*Invocation, error) {
 	ch := make(chan []*Invocation)
+	invokeSrv := NewInvokeSrv(r.repos)
 
 	go func() {
 		defer close(ch)
 		for {
 			time.Sleep(1 * time.Second)
-			invocations, err := ListLogs(r.repos)
+			invocations, err := invokeSrv.ListLogs()
 			if err != nil {
 				continue
 			}

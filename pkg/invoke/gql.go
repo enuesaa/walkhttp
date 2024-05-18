@@ -48,10 +48,6 @@ func ServeGraphql(repos repository.Repos, port int) error {
 	gqhandle.Use(extension.Introspection{})
 	app.Any("/graph", echo.WrapHandler(gqhandle))
 	app.GET("/graph/playground", echo.WrapHandler(playground.Handler("graph", "/graph")))
-	app.GET("/aa", func(c echo.Context) error {
-		invocation := NewInvocation("GET", "https://example.com")
-		return Invoke(&invocation)
-	})
 	app.Any("/*", ctlweb.Serve)
 	app.Any("/", ctlweb.Serve)
 

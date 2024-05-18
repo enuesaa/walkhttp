@@ -2,14 +2,14 @@ package invoke
 
 import "github.com/enuesaa/walkin/pkg/repository"
 
-type Resolver struct{
+type Resolver struct {
 	repos repository.Repos
 }
 
-type queryResolver struct{
+type queryResolver struct {
 	*Resolver
 }
 
-type subscriptionResolver struct{
+type subscriptionResolver struct {
 	*Resolver
 }

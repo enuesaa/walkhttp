@@ -6,10 +6,11 @@ import (
 )
 
 func Invoke(repos repository.Repos, invocation *invoke.Invocation) error {
-	if err := invoke.Invoke(invocation); err != nil {
+	invokeSrv := invoke.NewInvokeSrv(repos)
+	if err := invokeSrv.Invoke(invocation); err != nil {
 		return err
 	}
 	repos.Log.Printf("status: %d\n", invocation.Status)
 
-	return invoke.CreateLog(repos, invocation)
+	return invokeSrv.CreateLog(invocation)
 }

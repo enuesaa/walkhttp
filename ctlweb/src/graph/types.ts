@@ -24,9 +24,9 @@ export type Invocation = {
   __typename?: 'Invocation'
   id: Scalars['ID']['output']
   method: Scalars['String']['output']
-  requestBody?: Maybe<Scalars['String']['output']>
+  requestBody: Scalars['String']['output']
   requestHeaders?: Maybe<Array<Maybe<Header>>>
-  responseBody?: Maybe<Scalars['String']['output']>
+  responseBody: Scalars['String']['output']
   responseHeaders?: Maybe<Array<Maybe<Header>>>
   status: Scalars['Int']['output']
   url: Scalars['String']['output']
