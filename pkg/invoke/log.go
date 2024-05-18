@@ -8,7 +8,7 @@ import (
 	"github.com/enuesaa/walkin/pkg/repository"
 )
 
-func Log(repos repository.Repos, invocation *Invocation) error {
+func CreateLog(repos repository.Repos, invocation *Invocation) error {
 	homedir, err := repos.Fs.HomeDir()
 	if err != nil {
 		return err

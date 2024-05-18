@@ -9,7 +9,7 @@ exec:
   package: invoke
 
 model:
-  filename: schema.go
+  filename: gqlschema.go
   package: invoke
 
 resolver:

@@ -11,5 +11,5 @@ func Invoke(repos repository.Repos, invocation *invoke.Invocation) error {
 	}
 	repos.Log.Printf("status: %d\n", invocation.Status)
 
-	return invoke.Log(repos, invocation)
+	return invoke.CreateLog(repos, invocation)
 }

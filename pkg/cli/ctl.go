@@ -1,8 +1,8 @@
 package cli
 
 import (
+	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
-	"github.com/enuesaa/walkin/pkg/usecase"
 	"github.com/spf13/cobra"
 )
 
@@ -13,7 +13,7 @@ func CreateCtlCmd(repos repository.Repos) *cobra.Command {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			port, _ := cmd.Flags().GetInt("port")
 
-			return usecase.Serve(repos, port)
+			return invoke.ServeGraphql(repos, port)
 		},
 	}
 	cmd.Flags().Int("port", 3000, "port")
