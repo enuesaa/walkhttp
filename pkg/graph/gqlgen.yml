@@ -1,5 +1,5 @@
-# to generate, run `go run github.com/99designs/gqlgen generate`
 # see https://tech.layerx.co.jp/entry/2021/10/22/171242
+# run `go run github.com/99designs/gqlgen generate`
 
 schema:
   - '*.graphqls'

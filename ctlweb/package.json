@@ -1,12 +1,9 @@
 {
   "name": "my-nextjs-template",
-  "version": "0.1.0",
   "private": true,
-  "license": "MIT",
   "scripts": {
     "dev": "rm -rf .next && next dev --port 3001",
     "build": "next build",
-    "lint": "next lint",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
     "graph": "graphql-codegen --config graph.config.ts"
   },

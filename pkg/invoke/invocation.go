@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// todo: make usecase
 func NewInvocation(method string, url string) Invocation {
 	return Invocation{
 		Method:          method,
