@@ -26,18 +26,20 @@ export const History = () => {
         </DataList.Item>
       </DataList.Root>
 
-      <Heading m='3' size='4'>
-        Request Headers
+      <Heading m='1' mt='5' size='7'>
+        Request
       </Heading>
-      <Code style={{ display: 'block' }}>{JSON.stringify(invocation.requestHeaders, null, '  ')}</Code>
-
-      <Heading m='3' size='4'>
-        Response Headers
+      <Heading m='3' size='3'>
+        Headers
       </Heading>
-      <Code style={{ display: 'block' }}>{JSON.stringify(invocation.responseHeaders, null, '  ')}</Code>
-
-      <Heading m='3' size='4'>
-        Response Body
+      <Heading m='1' mt='5' size='7'>
+        Response
+      </Heading>
+      <Heading m='3' size='3'>
+        Headers
+      </Heading>
+      <Heading m='3' size='3'>
+        Body
       </Heading>
       <Code style={{ display: 'block' }}>
         <pre>{invocation.responseBody}</pre>
