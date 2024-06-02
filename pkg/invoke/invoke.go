@@ -1,13 +1,15 @@
 package invoke
 
 import (
+	"bytes"
 	"fmt"
 	"io"
 	"net/http"
 )
 
 func (srv *InvokeSrv) Invoke(invocation *Invocation) error {
-	req, err := http.NewRequest(invocation.Method, invocation.URL, nil)
+	reqbody := bytes.NewBuffer([]byte(invocation.RequestBody))
+	req, err := http.NewRequest(invocation.Method, invocation.URL, reqbody)
 	if err != nil {
 		return err
 	}
