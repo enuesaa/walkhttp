@@ -5,6 +5,7 @@ import (
 	"path/filepath"
 )
 
+//Deprecated
 func (srv *InvokeSrv) GetWalkinDir() (string, error) {
 	homedir, err := srv.repos.Fs.HomeDir()
 	if err != nil {
