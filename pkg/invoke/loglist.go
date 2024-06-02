@@ -7,10 +7,7 @@ import (
 func (srv *InvokeSrv) ListLogs() ([]*Invocation, error) {
 	list := make([]*Invocation, 0)
 
-	logsdir, err := srv.GetLogsDir()
-	if err != nil {
-		return list, err
-	}
+	logsdir := srv.GetLogsDir()
 	files, err := srv.repos.Fs.ListFiles(logsdir)
 	if err != nil {
 		return list, err
