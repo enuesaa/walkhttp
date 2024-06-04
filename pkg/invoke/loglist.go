@@ -4,11 +4,11 @@ import (
 	"encoding/json"
 )
 
+//Deprecated
 func (srv *InvokeSrv) ListLogs() ([]*Invocation, error) {
 	list := make([]*Invocation, 0)
 
-	logsdir := srv.GetLogsDir()
-	files, err := srv.repos.Fs.ListFiles(logsdir)
+	files, err := srv.repos.Fs.ListFiles(".")
 	if err != nil {
 		return list, err
 	}

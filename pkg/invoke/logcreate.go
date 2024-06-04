@@ -5,13 +5,7 @@ import (
 )
 
 func (srv *InvokeSrv) CreateLog(invocation *Invocation) error {
-	if err := srv.CreateLogsDir(); err != nil {
-		return err
-	}
-	path, err := srv.GetLogFilename(invocation.ID)
-	if err != nil {
-		return err
-	}
+	path := srv.GetLogFilename(invocation.ID)
 
 	data, err := json.Marshal(invocation)
 	if err != nil {
