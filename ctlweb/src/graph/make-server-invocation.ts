@@ -7,4 +7,4 @@ const query = gql`
   }
 `
 
-export const useMakeServerInvocation = () => useMutation<Query, {invocation: ServerInvocationInput}>(query)
+export const useMakeServerInvocation = () => useMutation<Query, { invocation: ServerInvocationInput }>(query)

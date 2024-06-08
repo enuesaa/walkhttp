@@ -9,7 +9,7 @@ type Repos struct {
 
 func NewRepos() Repos {
 	return Repos{
-		DB:     &InmemoryDB{
+		DB: &InmemoryDB{
 			data: make(map[string]interface{}),
 		},
 		Fs:     &FsRepository{},
@@ -20,7 +20,7 @@ func NewRepos() Repos {
 
 func NewMockRepos() Repos {
 	return Repos{
-		DB:     &InmemoryDB{
+		DB: &InmemoryDB{
 			data: make(map[string]interface{}),
 		},
 		Fs:     &FsMockRepository{},

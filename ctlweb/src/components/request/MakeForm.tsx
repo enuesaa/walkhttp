@@ -33,7 +33,7 @@ export const MakeForm = () => {
 
       try {
         const res = await fetch(invocation.url, {
-          method: invocation.method
+          method: invocation.method,
         })
         invocation.status = res.status
       } catch (e) {

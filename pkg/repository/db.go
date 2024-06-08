@@ -11,15 +11,15 @@ type DBRepositoryInterface interface {
 	Save(id string, data interface{}) error
 }
 
-type InmemoryDB struct{
+type InmemoryDB struct {
 	data map[string]interface{}
 }
 
 func (repo *InmemoryDB) List() []string {
 	keys := make([]string, 0)
-    for k := range repo.data {
-        keys = append(keys, k)
-    }
+	for k := range repo.data {
+		keys = append(keys, k)
+	}
 	sort.Strings(keys)
 
 	return keys

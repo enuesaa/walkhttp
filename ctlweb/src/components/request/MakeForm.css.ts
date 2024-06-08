@@ -19,5 +19,5 @@ export default {
   btn: style({
     margin: '30px 0',
     padding: '0 10px',
-  })
+  }),
 }

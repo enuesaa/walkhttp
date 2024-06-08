@@ -79,14 +79,14 @@ func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation 
 func (r *mutationResolver) MakeBrowserInvocation(ctx context.Context, invocation BrowserInvocationInput) (*bool, error) {
 	id := uuid.NewString()
 	data := Invocation{
-		ID: id,
-		Status: invocation.Status,
-		Method: invocation.Method,
-		URL: invocation.URL,
-		RequestHeaders: make([]*Header, 0),
+		ID:              id,
+		Status:          invocation.Status,
+		Method:          invocation.Method,
+		URL:             invocation.URL,
+		RequestHeaders:  make([]*Header, 0),
 		ResponseHeaders: make([]*Header, 0),
-		RequestBody: invocation.RequestBody,
-		ResponseBody: invocation.ResponseBody,
+		RequestBody:     invocation.RequestBody,
+		ResponseBody:    invocation.ResponseBody,
 	}
 	if err := r.repos.DB.Save(id, data); err != nil {
 		return nil, err

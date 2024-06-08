@@ -7,7 +7,7 @@ type Props = {
 export const History = ({ invocation }: Props) => {
   return (
     <>
-      <DataList.Root m='5'>
+      <DataList.Root my='2' mx='5'>
         <DataList.Item align='center'>
           <DataList.Label minWidth='88px'>status</DataList.Label>
           <DataList.Value>{invocation.status}</DataList.Value>
