@@ -6,6 +6,8 @@ import (
 	"context"
 	"fmt"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 func (r *queryResolver) Invocations(ctx context.Context) ([]*Invocation, error) {
@@ -68,7 +70,21 @@ func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation 
 	return nil, fmt.Errorf("not implemented")
 }
 func (r *mutationResolver) MakeBrowserInvocation(ctx context.Context, invocation BrowserInvocationInput) (*bool, error) {
-	return nil, fmt.Errorf("not implemented")
+	id := uuid.NewString()
+	data := Invocation{
+		ID: id,
+		Status: invocation.Status,
+		Method: invocation.Method,
+		URL: invocation.URL,
+		RequestHeaders: make([]*Header, 0),
+		ResponseHeaders: make([]*Header, 0),
+		RequestBody: invocation.RequestBody,
+		ResponseBody: invocation.ResponseBody,
+	}
+	if err := r.repos.DB.Save(id, data); err != nil {
+		return nil, err
+	}
+	return nil, nil
 }
 
 func (r *Resolver) Mutation() MutationResolver {
