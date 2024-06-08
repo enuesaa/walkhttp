@@ -19,6 +19,31 @@ type Query {
   invocation(id: ID!): Invocation
 }
 
+input HeaderInput {
+  name: String!
+  value: String!
+}
+input ServerInvocationInput {
+  method: String!
+  url: String!
+  requestHeaders: [HeaderInput]
+  requestBody: String!
+}
+input BrowserInvocationInput {
+  status: Int!
+  method: String!
+  url: String!
+  requestHeaders: [HeaderInput]
+  responseHeaders: [HeaderInput]
+  requestBody: String!
+  responseBody: String!
+}
+
+type Mutattion {
+  MakeServerInvocation(invocation: ServerInvocationInput!): Boolean
+  MakeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
+}
+
 type Subscription {
   invocations: [Invocation!]!
 }

@@ -2,7 +2,22 @@
 
 package invoke
 
+type BrowserInvocationInput struct {
+	Status          int            `json:"status"`
+	Method          string         `json:"method"`
+	URL             string         `json:"url"`
+	RequestHeaders  []*HeaderInput `json:"requestHeaders,omitempty"`
+	ResponseHeaders []*HeaderInput `json:"responseHeaders,omitempty"`
+	RequestBody     string         `json:"requestBody"`
+	ResponseBody    string         `json:"responseBody"`
+}
+
 type Header struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+type HeaderInput struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 }
@@ -18,7 +33,19 @@ type Invocation struct {
 	ResponseBody    string    `json:"responseBody"`
 }
 
+type Mutattion struct {
+	MakeServerInvocation  *bool `json:"MakeServerInvocation,omitempty"`
+	MakeBrowserInvocation *bool `json:"MakeBrowserInvocation,omitempty"`
+}
+
 type Query struct {
+}
+
+type ServerInvocationInput struct {
+	Method         string         `json:"method"`
+	URL            string         `json:"url"`
+	RequestHeaders []*HeaderInput `json:"requestHeaders,omitempty"`
+	RequestBody    string         `json:"requestBody"`
 }
 
 type Subscription struct {
