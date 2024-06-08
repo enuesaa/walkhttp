@@ -5,14 +5,30 @@ package invoke
 import (
 	"context"
 	"fmt"
+	"time"
 )
 
 func (r *queryResolver) Invocations(ctx context.Context) ([]*Invocation, error) {
-	return make([]*Invocation, 0), nil
+	list := make([]*Invocation, 0)
+	ids := r.repos.DB.List()
+	for _, id := range ids {
+		data, err := r.repos.DB.Get(id)
+		if err != nil {
+			return list, err
+		}
+		invocation := data.(Invocation)
+		list = append(list, &invocation)
+	}
+	return list, nil
 }
 
 func (r *queryResolver) Invocation(ctx context.Context, id string) (*Invocation, error) {
-	return nil, fmt.Errorf("not implemented")
+	data, err := r.repos.DB.Get(id)
+	if err != nil {
+		return nil, err
+	}
+	invocation := data.(Invocation)
+	return &invocation, nil
 }
 
 func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*Invocation, error) {
@@ -20,18 +36,25 @@ func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*Invoc
 
 	go func() {
 		defer close(ch)
-		// for {
-		// 	time.Sleep(1 * time.Second)
-		// 	invocations, err := invokeSrv.ListLogs()
-		// 	if err != nil {
-		// 		continue
-		// 	}
-		// 	select {
-		// 	case <-ctx.Done():
-		// 		return
-		// 	case ch <- invocations:
-		// 	}
-		// }
+		for {
+			time.Sleep(1 * time.Second)
+
+			invocations := make([]*Invocation, 0)
+			ids := r.repos.DB.List()
+			for _, id := range ids {
+				data, err := r.repos.DB.Get(id)
+				if err != nil {
+					continue
+				}
+				invocation := data.(Invocation)
+				invocations = append(invocations, &invocation)
+			}
+			select {
+			case <-ctx.Done():
+				return
+			case ch <- invocations:
+			}
+		}
 	}()
 
 	return ch, nil

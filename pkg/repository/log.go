@@ -22,7 +22,7 @@ type LogRepository struct {
 func (repo *LogRepository) Printf(format string, a ...any) {
 	text := fmt.Sprintf(format, a...)
 	repo.out += text
-	fmt.Printf(text)
+	fmt.Print(text)
 }
 
 func (repo *LogRepository) Fatalf(format string, a ...any) {
