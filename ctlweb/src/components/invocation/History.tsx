@@ -1,12 +1,10 @@
-import { useGetInvocation } from '@/lib/state'
-import { Code, DataList, Heading, Skeleton } from '@radix-ui/themes'
+import { Invocation } from '@/graph/types'
+import { Code, DataList, Heading } from '@radix-ui/themes'
 
-export const History = () => {
-  const invocation = useGetInvocation()
-  if (invocation === undefined) {
-    return <Skeleton />
-  }
-
+type Props = {
+  invocation: Invocation
+}
+export const History = ({ invocation }: Props) => {
   return (
     <>
       <DataList.Root m='5'>

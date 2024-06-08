@@ -2,6 +2,7 @@ package repository
 
 import (
 	"fmt"
+	"sort"
 )
 
 type DBRepositoryInterface interface {
@@ -19,6 +20,8 @@ func (repo *InmemoryDB) List() []string {
     for k := range repo.data {
         keys = append(keys, k)
     }
+	sort.Strings(keys)
+
 	return keys
 }
 
