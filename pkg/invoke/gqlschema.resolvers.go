@@ -4,7 +4,6 @@ package invoke
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -67,7 +66,15 @@ func (r *Resolver) Query() QueryResolver {
 }
 
 func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation ServerInvocationInput) (*bool, error) {
-	return nil, fmt.Errorf("not implemented")
+	invokeSrv := NewInvokeSrv(r.repos)
+	data := invokeSrv.Create(invocation.Method, invocation.URL)
+	if err := invokeSrv.Invoke(&data); err != nil {
+		return nil, err
+	}
+	if err := r.repos.DB.Save(data.ID, data); err != nil {
+		return nil, err
+	}
+	return nil, nil
 }
 func (r *mutationResolver) MakeBrowserInvocation(ctx context.Context, invocation BrowserInvocationInput) (*bool, error) {
 	id := uuid.NewString()
