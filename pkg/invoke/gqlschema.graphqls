@@ -40,8 +40,8 @@ input BrowserInvocationInput {
 }
 
 type Mutation {
-  MakeServerInvocation(invocation: ServerInvocationInput!): Boolean
-  MakeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
+  makeServerInvocation(invocation: ServerInvocationInput!): Boolean
+  makeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
 }
 
 type Subscription {

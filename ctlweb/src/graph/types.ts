@@ -14,10 +14,25 @@ export type Scalars = {
   Float: { input: number; output: number }
 }
 
+export type BrowserInvocationInput = {
+  method: Scalars['String']['input']
+  requestBody: Scalars['String']['input']
+  requestHeaders?: InputMaybe<Array<InputMaybe<HeaderInput>>>
+  responseBody: Scalars['String']['input']
+  responseHeaders?: InputMaybe<Array<InputMaybe<HeaderInput>>>
+  status: Scalars['Int']['input']
+  url: Scalars['String']['input']
+}
+
 export type Header = {
   __typename?: 'Header'
   name: Scalars['String']['output']
   value: Scalars['String']['output']
+}
+
+export type HeaderInput = {
+  name: Scalars['String']['input']
+  value: Scalars['String']['input']
 }
 
 export type Invocation = {
@@ -32,6 +47,20 @@ export type Invocation = {
   url: Scalars['String']['output']
 }
 
+export type Mutation = {
+  __typename?: 'Mutation'
+  MakeBrowserInvocation?: Maybe<Scalars['Boolean']['output']>
+  MakeServerInvocation?: Maybe<Scalars['Boolean']['output']>
+}
+
+export type MutationMakeBrowserInvocationArgs = {
+  invocation: BrowserInvocationInput
+}
+
+export type MutationMakeServerInvocationArgs = {
+  invocation: ServerInvocationInput
+}
+
 export type Query = {
   __typename?: 'Query'
   invocation?: Maybe<Invocation>
@@ -40,6 +69,13 @@ export type Query = {
 
 export type QueryInvocationArgs = {
   id: Scalars['ID']['input']
+}
+
+export type ServerInvocationInput = {
+  method: Scalars['String']['input']
+  requestBody: Scalars['String']['input']
+  requestHeaders?: InputMaybe<Array<InputMaybe<HeaderInput>>>
+  url: Scalars['String']['input']
 }
 
 export type Subscription = {
