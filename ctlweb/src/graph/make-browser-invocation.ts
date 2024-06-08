@@ -1,5 +1,5 @@
 import { gql, useMutation } from 'urql'
-import { Query } from './types'
+import { BrowserInvocationInput, Query } from './types'
 
 const query = gql`
   mutation ($invocation: BrowserInvocationInput!) {
@@ -7,4 +7,4 @@ const query = gql`
   }
 `
 
-export const useMakeBrowserInvocation = () => useMutation<Query>(query)
+export const useMakeBrowserInvocation = () => useMutation<Query, {invocation: BrowserInvocationInput}>(query)

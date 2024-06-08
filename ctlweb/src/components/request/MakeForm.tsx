@@ -26,8 +26,20 @@ export const MakeForm = () => {
         url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
         requestHeaders: [],
         requestBody: '',
+        responseHeaders: [],
+        responseBody: '',
+        status: 0,
       }
-      // call here.
+
+      try {
+        const res = await fetch(invocation.url, {
+          method: invocation.method
+        })
+        invocation.status = res.status
+      } catch (e) {
+        console.log(e)
+      }
+
       await invokeBrowser({ invocation })
     }
   }
