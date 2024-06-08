@@ -2,23 +2,29 @@ package main
 
 import (
 	"github.com/enuesaa/walkin/pkg/cli"
+	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/spf13/cobra"
 )
 
 func main() {
+	repos := repository.NewRepos()
 	app := &cobra.Command{
 		Use:     "walkin",
 		Short:   "A CLI tool to serve local api gateway",
 		Version: "0.0.6",
-	}
+		RunE: func(cmd *cobra.Command, args []string) error {
+			port, _ := cmd.Flags().GetInt("port")
 
-	repos := repository.NewRepos()
+			return invoke.ServeGraphql(repos, port)
+		},
+	}
+	app.Flags().Int("port", 3000, "port")
+
 	app.AddCommand(cli.CreateGetCmd(repos))
 	app.AddCommand(cli.CreatePostCmd(repos))
 	app.AddCommand(cli.CreatePutCmd(repos))
 	app.AddCommand(cli.CreateDeleteCmd(repos))
-	app.AddCommand(cli.CreateCtlCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
