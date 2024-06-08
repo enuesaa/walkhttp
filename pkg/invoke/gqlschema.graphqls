@@ -39,7 +39,7 @@ input BrowserInvocationInput {
   responseBody: String!
 }
 
-type Mutattion {
+type Mutation {
   MakeServerInvocation(invocation: ServerInvocationInput!): Boolean
   MakeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
 }

@@ -33,9 +33,7 @@ type Invocation struct {
 	ResponseBody    string    `json:"responseBody"`
 }
 
-type Mutattion struct {
-	MakeServerInvocation  *bool `json:"MakeServerInvocation,omitempty"`
-	MakeBrowserInvocation *bool `json:"MakeBrowserInvocation,omitempty"`
+type Mutation struct {
 }
 
 type Query struct {

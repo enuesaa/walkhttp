@@ -41,6 +41,17 @@ func (r *Resolver) Query() QueryResolver {
 	return &queryResolver{r}
 }
 
+func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation ServerInvocationInput) (*bool, error) {
+	return nil, fmt.Errorf("not implemented")
+}
+func (r *mutationResolver) MakeBrowserInvocation(ctx context.Context, invocation BrowserInvocationInput) (*bool, error) {
+	return nil, fmt.Errorf("not implemented")
+}
+
+func (r *Resolver) Mutation() MutationResolver {
+	return &mutationResolver{r}
+}
+
 func (r *Resolver) Subscription() SubscriptionResolver {
 	return &subscriptionResolver{r}
 }

@@ -39,6 +39,7 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	Mutation() MutationResolver
 	Query() QueryResolver
 	Subscription() SubscriptionResolver
 }
@@ -63,7 +64,7 @@ type ComplexityRoot struct {
 		URL             func(childComplexity int) int
 	}
 
-	Mutattion struct {
+	Mutation struct {
 		MakeBrowserInvocation func(childComplexity int, invocation BrowserInvocationInput) int
 		MakeServerInvocation  func(childComplexity int, invocation ServerInvocationInput) int
 	}
@@ -78,6 +79,10 @@ type ComplexityRoot struct {
 	}
 }
 
+type MutationResolver interface {
+	MakeServerInvocation(ctx context.Context, invocation ServerInvocationInput) (*bool, error)
+	MakeBrowserInvocation(ctx context.Context, invocation BrowserInvocationInput) (*bool, error)
+}
 type QueryResolver interface {
 	Invocations(ctx context.Context) ([]*Invocation, error)
 	Invocation(ctx context.Context, id string) (*Invocation, error)
@@ -175,29 +180,29 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Invocation.URL(childComplexity), true
 
-	case "Mutattion.MakeBrowserInvocation":
-		if e.complexity.Mutattion.MakeBrowserInvocation == nil {
+	case "Mutation.MakeBrowserInvocation":
+		if e.complexity.Mutation.MakeBrowserInvocation == nil {
 			break
 		}
 
-		args, err := ec.field_Mutattion_MakeBrowserInvocation_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_MakeBrowserInvocation_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutattion.MakeBrowserInvocation(childComplexity, args["invocation"].(BrowserInvocationInput)), true
+		return e.complexity.Mutation.MakeBrowserInvocation(childComplexity, args["invocation"].(BrowserInvocationInput)), true
 
-	case "Mutattion.MakeServerInvocation":
-		if e.complexity.Mutattion.MakeServerInvocation == nil {
+	case "Mutation.MakeServerInvocation":
+		if e.complexity.Mutation.MakeServerInvocation == nil {
 			break
 		}
 
-		args, err := ec.field_Mutattion_MakeServerInvocation_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_MakeServerInvocation_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutattion.MakeServerInvocation(childComplexity, args["invocation"].(ServerInvocationInput)), true
+		return e.complexity.Mutation.MakeServerInvocation(childComplexity, args["invocation"].(ServerInvocationInput)), true
 
 	case "Query.invocation":
 		if e.complexity.Query.Invocation == nil {
@@ -269,6 +274,21 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 			}
 
 			return &response
+		}
+	case ast.Mutation:
+		return func(ctx context.Context) *graphql.Response {
+			if !first {
+				return nil
+			}
+			first = false
+			ctx = graphql.WithUnmarshalerMap(ctx, inputUnmarshalMap)
+			data := ec._Mutation(ctx, rc.Operation.SelectionSet)
+			var buf bytes.Buffer
+			data.MarshalGQL(&buf)
+
+			return &graphql.Response{
+				Data: buf.Bytes(),
+			}
 		}
 	case ast.Subscription:
 		next := ec._Subscription(ctx, rc.Operation.SelectionSet)
@@ -354,7 +374,7 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
 // region    ***************************** args.gotpl *****************************
 
-func (ec *executionContext) field_Mutattion_MakeBrowserInvocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_MakeBrowserInvocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 BrowserInvocationInput
@@ -369,7 +389,7 @@ func (ec *executionContext) field_Mutattion_MakeBrowserInvocation_args(ctx conte
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutattion_MakeServerInvocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_MakeServerInvocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 ServerInvocationInput
@@ -898,8 +918,8 @@ func (ec *executionContext) fieldContext_Invocation_responseBody(_ context.Conte
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutattion_MakeServerInvocation(ctx context.Context, field graphql.CollectedField, obj *Mutattion) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutattion_MakeServerInvocation(ctx, field)
+func (ec *executionContext) _Mutation_MakeServerInvocation(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_MakeServerInvocation(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -912,7 +932,7 @@ func (ec *executionContext) _Mutattion_MakeServerInvocation(ctx context.Context,
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.MakeServerInvocation, nil
+		return ec.resolvers.Mutation().MakeServerInvocation(rctx, fc.Args["invocation"].(ServerInvocationInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -926,12 +946,12 @@ func (ec *executionContext) _Mutattion_MakeServerInvocation(ctx context.Context,
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutattion_MakeServerInvocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_MakeServerInvocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Mutattion",
+		Object:     "Mutation",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
 		},
@@ -943,15 +963,15 @@ func (ec *executionContext) fieldContext_Mutattion_MakeServerInvocation(ctx cont
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutattion_MakeServerInvocation_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_MakeServerInvocation_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutattion_MakeBrowserInvocation(ctx context.Context, field graphql.CollectedField, obj *Mutattion) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutattion_MakeBrowserInvocation(ctx, field)
+func (ec *executionContext) _Mutation_MakeBrowserInvocation(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_MakeBrowserInvocation(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -964,7 +984,7 @@ func (ec *executionContext) _Mutattion_MakeBrowserInvocation(ctx context.Context
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.MakeBrowserInvocation, nil
+		return ec.resolvers.Mutation().MakeBrowserInvocation(rctx, fc.Args["invocation"].(BrowserInvocationInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -978,12 +998,12 @@ func (ec *executionContext) _Mutattion_MakeBrowserInvocation(ctx context.Context
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutattion_MakeBrowserInvocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_MakeBrowserInvocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "Mutattion",
+		Object:     "Mutation",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
 		},
@@ -995,7 +1015,7 @@ func (ec *executionContext) fieldContext_Mutattion_MakeBrowserInvocation(ctx con
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutattion_MakeBrowserInvocation_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_MakeBrowserInvocation_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -3383,21 +3403,33 @@ func (ec *executionContext) _Invocation(ctx context.Context, sel ast.SelectionSe
 	return out
 }
 
-var mutattionImplementors = []string{"Mutattion"}
+var mutationImplementors = []string{"Mutation"}
 
-func (ec *executionContext) _Mutattion(ctx context.Context, sel ast.SelectionSet, obj *Mutattion) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, mutattionImplementors)
+func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, mutationImplementors)
+	ctx = graphql.WithFieldContext(ctx, &graphql.FieldContext{
+		Object: "Mutation",
+	})
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
+		innerCtx := graphql.WithRootFieldContext(ctx, &graphql.RootFieldContext{
+			Object: field.Name,
+			Field:  field,
+		})
+
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("Mutattion")
+			out.Values[i] = graphql.MarshalString("Mutation")
 		case "MakeServerInvocation":
-			out.Values[i] = ec._Mutattion_MakeServerInvocation(ctx, field, obj)
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_MakeServerInvocation(ctx, field)
+			})
 		case "MakeBrowserInvocation":
-			out.Values[i] = ec._Mutattion_MakeBrowserInvocation(ctx, field, obj)
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_MakeBrowserInvocation(ctx, field)
+			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

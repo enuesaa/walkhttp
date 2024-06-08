@@ -12,6 +12,10 @@ type queryResolver struct {
 	*Resolver
 }
 
+type mutationResolver struct {
+	*Resolver
+}
+
 type subscriptionResolver struct {
 	*Resolver
 }
