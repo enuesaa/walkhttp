@@ -1,6 +1,7 @@
 package repository
 
 type Repos struct {
+	DB     DBRepositoryInterface
 	Fs     FsRepositoryInterface
 	Prompt PromptInterface
 	Log    LogRepositoryInterface
@@ -8,6 +9,9 @@ type Repos struct {
 
 func NewRepos() Repos {
 	return Repos{
+		DB:     &InmemoryDB{
+			data: make(map[string]interface{}),
+		},
 		Fs:     &FsRepository{},
 		Prompt: &Prompt{},
 		Log:    &LogRepository{},
@@ -16,6 +20,9 @@ func NewRepos() Repos {
 
 func NewMockRepos() Repos {
 	return Repos{
+		DB:     &InmemoryDB{
+			data: make(map[string]interface{}),
+		},
 		Fs:     &FsMockRepository{},
 		Prompt: &Prompt{},
 		Log:    &LogMockRepository{},
