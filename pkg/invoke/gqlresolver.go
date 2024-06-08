@@ -1,6 +1,8 @@
 package invoke
 
-import "github.com/enuesaa/walkin/pkg/repository"
+import (
+	"github.com/enuesaa/walkin/pkg/repository"
+)
 
 type Resolver struct {
 	repos repository.Repos

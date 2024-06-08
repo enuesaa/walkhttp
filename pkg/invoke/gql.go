@@ -17,7 +17,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/playground"
 )
 
-func ServeGraphql(repos repository.Repos, port int) error {
+func Serve(repos repository.Repos, port int) error {
 	app := echo.New()
 	app.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
 		Format: "method=${method}, uri=${uri}, status=${status}\n",

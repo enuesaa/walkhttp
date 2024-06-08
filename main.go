@@ -16,7 +16,7 @@ func main() {
 		RunE: func(cmd *cobra.Command, args []string) error {
 			port, _ := cmd.Flags().GetInt("port")
 
-			return invoke.ServeGraphql(repos, port)
+			return invoke.Serve(repos, port)
 		},
 	}
 	app.Flags().Int("port", 3000, "port")

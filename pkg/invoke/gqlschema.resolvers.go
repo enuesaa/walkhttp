@@ -4,37 +4,34 @@ package invoke
 
 import (
 	"context"
-	"time"
+	"fmt"
 )
 
 func (r *queryResolver) Invocations(ctx context.Context) ([]*Invocation, error) {
-	invokeSrv := NewInvokeSrv(r.repos)
-	return invokeSrv.ListLogs()
+	return make([]*Invocation, 0), nil
 }
 
 func (r *queryResolver) Invocation(ctx context.Context, id string) (*Invocation, error) {
-	invokeSrv := NewInvokeSrv(r.repos)
-	return invokeSrv.GetLog(id)
+	return nil, fmt.Errorf("not implemented")
 }
 
 func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*Invocation, error) {
 	ch := make(chan []*Invocation)
-	invokeSrv := NewInvokeSrv(r.repos)
 
 	go func() {
 		defer close(ch)
-		for {
-			time.Sleep(1 * time.Second)
-			invocations, err := invokeSrv.ListLogs()
-			if err != nil {
-				continue
-			}
-			select {
-			case <-ctx.Done():
-				return
-			case ch <- invocations:
-			}
-		}
+		// for {
+		// 	time.Sleep(1 * time.Second)
+		// 	invocations, err := invokeSrv.ListLogs()
+		// 	if err != nil {
+		// 		continue
+		// 	}
+		// 	select {
+		// 	case <-ctx.Done():
+		// 		return
+		// 	case ch <- invocations:
+		// 	}
+		// }
 	}()
 
 	return ch, nil
