@@ -2,7 +2,7 @@ import { style } from '@vanilla-extract/css'
 
 export default {
   main: style({
-    maxWidth: '500px',
+    maxWidth: '700px',
     margin: '0 auto',
     fontSize: '25px',
     lineHeight: '1.7',
@@ -17,7 +17,7 @@ export default {
     margin: '10px 0',
   }),
   btn: style({
-    margin: '20px 0',
+    margin: '30px 0',
     padding: '0 10px',
   })
 }

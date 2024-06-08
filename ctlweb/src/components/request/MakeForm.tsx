@@ -1,25 +1,26 @@
 import { Select, TextField, Button, SegmentedControl } from '@radix-ui/themes'
 import styles from './MakeForm.css'
 import { useMakeServerInvocation } from '@/graph/make-server-invocation'
-import { MouseEventHandler } from 'react'
+import { useMakeBrowserInvocation } from '@/graph/make-browser-invocation'
+import { FormEventHandler, MouseEventHandler } from 'react'
 
 export const MakeForm = () => {
-  const [data, invoke] = useMakeServerInvocation()
+  const [invoveServerData, invokeServer] = useMakeServerInvocation()
+  const [invoveBrowserData, invokeBrowser] = useMakeBrowserInvocation()
 
-  const handleClick: MouseEventHandler<HTMLButtonElement> = async (e) => {
+  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
-    await invoke({
-      invocation: {
-        method: 'GET',
-        url: 'https://example.com/',
-        requestHeaders: [],
-        requestBody: '',
-      },
-    })
+    const invocation = {
+      method: (e.currentTarget.elements.namedItem('method') as HTMLInputElement).value,
+      url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
+      requestHeaders: [],
+      requestBody: '',
+    }
+    await invokeServer({ invocation })
   }
 
   return (
-    <section className={styles.main}>
+    <form className={styles.main} onSubmit={handleSubmit}>
       <div className={styles.from}>
         <SegmentedControl.Root defaultValue='Server' size='3' radius='full'>
           <SegmentedControl.Item value='Server'>Server</SegmentedControl.Item>
@@ -28,7 +29,7 @@ export const MakeForm = () => {
       </div>
 
       <div className={styles.method}>
-        <Select.Root defaultValue='GET' size='3'>
+        <Select.Root defaultValue='GET' size='3' name='method'>
           <Select.Trigger />
           <Select.Content>
             <Select.Item value='GET'>GET</Select.Item>
@@ -40,12 +41,12 @@ export const MakeForm = () => {
       </div>
 
       <div className={styles.url}>
-        <TextField.Root placeholder='https://example.com/' size='3' />
+        <TextField.Root placeholder='https://example.com/' size='3' name='url' />
       </div>
 
       <div className={styles.btn}>
-        <Button onClick={handleClick}>Call</Button>
+        <Button>Call</Button>
       </div>
-    </section>
+    </form>
   )
 }

@@ -8,7 +8,7 @@ import { GraphProvider } from '@/graph/GraphProvider'
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <GraphProvider>
-      <Theme appearance='dark'>
+      <Theme appearance='dark' accentColor='cyan'>
         <Layout>
           <Component {...pageProps} />
         </Layout>

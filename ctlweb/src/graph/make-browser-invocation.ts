@@ -7,4 +7,4 @@ const query = gql`
   }
 `
 
-export const useMakeBrowserInvocation = () => useMutation<Query>(query)[0]
+export const useMakeBrowserInvocation = () => useMutation<Query>(query)
