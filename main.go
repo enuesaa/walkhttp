@@ -1,6 +1,8 @@
 package main
 
 import (
+	"log"
+
 	"github.com/enuesaa/walkin/pkg/cli"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
@@ -8,11 +10,12 @@ import (
 )
 
 func main() {
-	repos := repository.NewRepos()
+	repos := repository.New()
+
 	app := &cobra.Command{
 		Use:     "walkin",
-		Short:   "A CLI tool to serve local api gateway",
-		Version: "0.0.6",
+		Short:   "http client",
+		Version: "0.0.7",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			port, _ := cmd.Flags().GetInt("port")
 
@@ -29,10 +32,13 @@ func main() {
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
 	app.CompletionOptions.DisableDefaultCmd = true
+	app.SilenceErrors = true
 	app.SilenceUsage = true
 	app.PersistentFlags().SortFlags = false
 	app.PersistentFlags().BoolP("help", "", false, "Show help information")
 	app.PersistentFlags().BoolP("version", "", false, "Show version")
 
-	app.Execute()
+	if err := app.Execute(); err != nil {
+		log.Fatalf("Error: %s", err.Error())
+	}
 }

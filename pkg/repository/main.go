@@ -7,7 +7,7 @@ type Repos struct {
 	Log    LogRepositoryInterface
 }
 
-func NewRepos() Repos {
+func New() Repos {
 	return Repos{
 		DB: &InmemoryDB{
 			data: make(map[string]interface{}),
@@ -15,16 +15,5 @@ func NewRepos() Repos {
 		Fs:     &FsRepository{},
 		Prompt: &Prompt{},
 		Log:    &LogRepository{},
-	}
-}
-
-func NewMockRepos() Repos {
-	return Repos{
-		DB: &InmemoryDB{
-			data: make(map[string]interface{}),
-		},
-		Fs:     &FsMockRepository{},
-		Prompt: &Prompt{},
-		Log:    &LogMockRepository{},
 	}
 }
