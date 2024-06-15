@@ -12,7 +12,7 @@ type PromptInterface interface {
 	Ask(message string, notice string, value *string) error
 	AskSuggest(message string, notice string, suggestion []string, value *string) error
 	Text(message string, notice string, value *string) error
-	Select() error
+	Select(options []string, value *string) error
 }
 type Prompt struct{}
 
@@ -111,22 +111,20 @@ func (prompt *Prompt) keymap() *huh.KeyMap {
 	return keymap
 }
 
-func (prompt *Prompt) Select() error {
-	country := ""
-	// form := huh.NewForm(
-	// 	huh.NewGroup(
-	// 		huh.NewNote(),
-			form := huh.NewSelect[string]().
-				Options(
-					huh.NewOption("GET", "GET"),
-					huh.NewOption("POST", "POST"),
-					huh.NewOption("PUT", "PUT"),
-					huh.NewOption("DELETE", "DELETE"),
-				).
-				// Inline(true).
-				Value(&country)
-	// 	),
-	// )
+func (prompt *Prompt) Select(options []string, value *string) error {
+	huhopts := make([]huh.Option[string], 0)
+	for _, option := range options {
+		huhopts = append(huhopts, huh.NewOption(option, option))
+	}
+
+	form := huh.NewForm(
+		huh.NewGroup(
+			huh.NewNote(),
+			huh.NewSelect[string]().
+				Options(huhopts...).
+				Value(value),
+		),
+	)
 
 	return form.Run()
 }

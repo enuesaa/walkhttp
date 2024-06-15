@@ -6,6 +6,7 @@ import (
 	"github.com/enuesaa/walkin/pkg/cli"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/enuesaa/walkin/pkg/usecase"
 	"github.com/spf13/cobra"
 )
 
@@ -17,10 +18,13 @@ func main() {
 		Short:   "http client",
 		Version: "0.0.7",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			if err := repos.Prompt.Select(); err != nil {
-				return err
-			}
 			port, _ := cmd.Flags().GetInt("port")
+			repos.Log.Printf("*\n")
+			repos.Log.Printf("* Serving web console on localhost:%d.\n", port)
+			repos.Log.Printf("* You can also call http endpoint via prompt.\n")
+			repos.Log.Printf("*\n")
+
+			go usecase.PromptStart(repos)
 
 			return invoke.Serve(repos, port)
 		},

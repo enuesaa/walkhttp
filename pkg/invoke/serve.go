@@ -23,5 +23,8 @@ func Serve(repos repository.Repos, port int) error {
 	app.Any("/*", ctlweb.Serve)
 	app.Any("/", ctlweb.Serve)
 
+	app.HideBanner = true
+	app.HidePort = true
+
 	return app.Start(fmt.Sprintf(":%d", port))
 }
