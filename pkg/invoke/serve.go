@@ -11,9 +11,6 @@ import (
 
 func Serve(repos repository.Repos, port int) error {
 	app := echo.New()
-	app.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: "method=${method}, uri=${uri}, status=${status}\n",
-	}))
 	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 	}))

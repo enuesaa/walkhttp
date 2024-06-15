@@ -25,5 +25,9 @@ func Prompt(repos repository.Repos) error {
 	repos.Log.Printf("***\n")
 	repos.Log.Printf("\n")
 
+	if err := repos.DB.Save(invocation.ID, invocation); err != nil {
+		return err
+	}
+
 	return nil
 }
