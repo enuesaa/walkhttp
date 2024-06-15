@@ -54,6 +54,7 @@ type ComplexityRoot struct {
 	}
 
 	Invocation struct {
+		Created         func(childComplexity int) int
 		ID              func(childComplexity int) int
 		Method          func(childComplexity int) int
 		RequestBody     func(childComplexity int) int
@@ -123,6 +124,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Header.Value(childComplexity), true
+
+	case "Invocation.created":
+		if e.complexity.Invocation.Created == nil {
+			break
+		}
+
+		return e.complexity.Invocation.Created(childComplexity), true
 
 	case "Invocation.id":
 		if e.complexity.Invocation.ID == nil {
@@ -918,6 +926,50 @@ func (ec *executionContext) fieldContext_Invocation_responseBody(_ context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _Invocation_created(ctx context.Context, field graphql.CollectedField, obj *Invocation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Invocation_created(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Created, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Invocation_created(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Invocation",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_makeServerInvocation(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_makeServerInvocation(ctx, field)
 	if err != nil {
@@ -1077,6 +1129,8 @@ func (ec *executionContext) fieldContext_Query_invocations(_ context.Context, fi
 				return ec.fieldContext_Invocation_requestBody(ctx, field)
 			case "responseBody":
 				return ec.fieldContext_Invocation_responseBody(ctx, field)
+			case "created":
+				return ec.fieldContext_Invocation_created(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Invocation", field.Name)
 		},
@@ -1136,6 +1190,8 @@ func (ec *executionContext) fieldContext_Query_invocation(ctx context.Context, f
 				return ec.fieldContext_Invocation_requestBody(ctx, field)
 			case "responseBody":
 				return ec.fieldContext_Invocation_responseBody(ctx, field)
+			case "created":
+				return ec.fieldContext_Invocation_created(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Invocation", field.Name)
 		},
@@ -1352,6 +1408,8 @@ func (ec *executionContext) fieldContext_Subscription_invocations(_ context.Cont
 				return ec.fieldContext_Invocation_requestBody(ctx, field)
 			case "responseBody":
 				return ec.fieldContext_Invocation_responseBody(ctx, field)
+			case "created":
+				return ec.fieldContext_Invocation_created(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Invocation", field.Name)
 		},
@@ -3377,6 +3435,11 @@ func (ec *executionContext) _Invocation(ctx context.Context, sel ast.SelectionSe
 			}
 		case "responseBody":
 			out.Values[i] = ec._Invocation_responseBody(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		case "created":
+			out.Values[i] = ec._Invocation_created(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}

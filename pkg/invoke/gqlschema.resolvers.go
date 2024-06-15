@@ -87,6 +87,7 @@ func (r *mutationResolver) MakeBrowserInvocation(ctx context.Context, invocation
 		ResponseHeaders: make([]*Header, 0),
 		RequestBody:     invocation.RequestBody,
 		ResponseBody:    invocation.ResponseBody,
+		Created:         time.Now().Format(time.RFC3339),
 	}
 	if err := r.repos.DB.Save(id, data); err != nil {
 		return nil, err

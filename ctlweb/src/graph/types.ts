@@ -37,6 +37,7 @@ export type HeaderInput = {
 
 export type Invocation = {
   __typename?: 'Invocation'
+  created: Scalars['String']['output']
   id: Scalars['ID']['output']
   method: Scalars['String']['output']
   requestBody: Scalars['String']['output']
@@ -49,8 +50,8 @@ export type Invocation = {
 
 export type Mutation = {
   __typename?: 'Mutation'
-  MakeBrowserInvocation?: Maybe<Scalars['Boolean']['output']>
-  MakeServerInvocation?: Maybe<Scalars['Boolean']['output']>
+  makeBrowserInvocation?: Maybe<Scalars['Boolean']['output']>
+  makeServerInvocation?: Maybe<Scalars['Boolean']['output']>
 }
 
 export type MutationMakeBrowserInvocationArgs = {

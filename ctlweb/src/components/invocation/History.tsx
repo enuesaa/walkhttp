@@ -22,6 +22,11 @@ export const History = ({ invocation }: Props) => {
           <DataList.Label minWidth='88px'>url</DataList.Label>
           <DataList.Value>{invocation.url}</DataList.Value>
         </DataList.Item>
+        
+        <DataList.Item align='center'>
+          <DataList.Label minWidth='88px'>created</DataList.Label>
+          <DataList.Value>{invocation.created}</DataList.Value>
+        </DataList.Item>
       </DataList.Root>
 
       <Heading m='1' mt='5' size='7'>

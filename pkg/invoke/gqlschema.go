@@ -31,6 +31,7 @@ type Invocation struct {
 	ResponseHeaders []*Header `json:"responseHeaders,omitempty"`
 	RequestBody     string    `json:"requestBody"`
 	ResponseBody    string    `json:"responseBody"`
+	Created         string    `json:"created"`
 }
 
 type Mutation struct {

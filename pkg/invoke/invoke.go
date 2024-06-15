@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"time"
 )
 
 func (srv *InvokeSrv) Invoke(invocation *Invocation) error {
+	invocation.Created = time.Now().Format(time.RFC3339)
+
 	reqbody := bytes.NewBuffer([]byte(invocation.RequestBody))
 	req, err := http.NewRequest(invocation.Method, invocation.URL, reqbody)
 	if err != nil {

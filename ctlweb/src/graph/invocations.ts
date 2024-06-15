@@ -10,6 +10,7 @@ const query = gql`
       url
       requestBody
       responseBody
+      created
     }
   }
 `
