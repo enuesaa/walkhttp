@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/charmbracelet/huh"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/enuesaa/walkin/pkg/usecase"
@@ -23,15 +24,18 @@ func main() {
 			repos.Log.Printf("You can also call http endpoint via prompt.\n")
 			repos.Log.Printf("\n")
 
-			go func () {
-				for {
-					if err := usecase.Prompt(repos); err != nil {
-						repos.Log.Printf("Error: %s", err.Error())
+			go invoke.Serve(repos, port)
+
+			for {
+				if err := usecase.Prompt(repos); err != nil {
+					repos.Log.Printf("Error: %s", err.Error())
+					if err == huh.ErrUserAborted {
+						break
 					}
 				}
-			}()
+			}
 
-			return invoke.Serve(repos, port)
+			return nil
 		},
 	}
 	app.Flags().Int("port", 3000, "port")
