@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 
-	"github.com/enuesaa/walkin/pkg/cli"
 	"github.com/enuesaa/walkin/pkg/invoke"
 	"github.com/enuesaa/walkin/pkg/repository"
 	"github.com/enuesaa/walkin/pkg/usecase"
@@ -15,7 +14,7 @@ func main() {
 
 	app := &cobra.Command{
 		Use:     "walkin",
-		Short:   "http client",
+		Short:   "A CLI tool to call http endpoint with browser or prompt.",
 		Version: "0.0.7",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			port, _ := cmd.Flags().GetInt("port")
@@ -30,11 +29,6 @@ func main() {
 		},
 	}
 	app.Flags().Int("port", 3000, "port")
-
-	app.AddCommand(cli.CreateGetCmd(repos))
-	app.AddCommand(cli.CreatePostCmd(repos))
-	app.AddCommand(cli.CreatePutCmd(repos))
-	app.AddCommand(cli.CreateDeleteCmd(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
