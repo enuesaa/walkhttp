@@ -16,5 +16,5 @@ func PromptStart(repos repository.Repos) error {
 		return err
 	}
 
-	return nil
+	return PromptStart(repos)
 }
