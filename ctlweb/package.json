@@ -1,5 +1,5 @@
 {
-  "name": "walkin",
+  "name": "@enuesaa/walkin-ui",
   "private": true,
   "scripts": {
     "dev": "rm -rf .next && next dev --port 3001",

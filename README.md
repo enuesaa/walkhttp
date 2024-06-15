@@ -1,4 +1,6 @@
 # walkin
+A CLI tool to call http endpoint with browser or prompt.
+
 > [!NOTE]  
 > Work in progress.. `walkin` is currently under development.
 

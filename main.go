@@ -16,7 +16,7 @@ func main() {
 	app := &cobra.Command{
 		Use:     "walkin",
 		Short:   "A CLI tool to call http endpoint with browser or prompt.",
-		Version: "0.0.7",
+		Version: "0.0.8",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			port, _ := cmd.Flags().GetInt("port")
 			repos.Log.Printf("\n")
