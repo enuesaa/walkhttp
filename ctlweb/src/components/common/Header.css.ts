@@ -15,7 +15,7 @@ globalStyle(`${main} svg`, {
 export default {
   main,
   heading: style({
-    color: 'white',
+    color: '#fafafa',
     margin: '0 10px',
     textDecoration: 'none',
   }),
@@ -23,7 +23,7 @@ export default {
     display: 'block',
     width: '100px',
     fontSize: '16px',
-    color: 'white',
+    color: '#fafafa',
     textDecoration: 'none',
   }),
 }
