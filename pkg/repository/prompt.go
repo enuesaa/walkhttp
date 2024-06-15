@@ -121,7 +121,8 @@ func (prompt *Prompt) Select(options []string, value *string) error {
 		huh.NewGroup(
 			huh.NewSelect[string]().
 				Options(huhopts...).
-				Value(value),
+				Value(value).
+				Height(7),
 		),
 	)
 	form.WithKeyMap(prompt.keymap())
