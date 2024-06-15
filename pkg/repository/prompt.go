@@ -119,12 +119,13 @@ func (prompt *Prompt) Select(options []string, value *string) error {
 
 	form := huh.NewForm(
 		huh.NewGroup(
-			huh.NewNote(),
 			huh.NewSelect[string]().
 				Options(huhopts...).
 				Value(value),
 		),
 	)
+	form.WithKeyMap(prompt.keymap())
+	form.WithTheme(huh.ThemeBase())
 
 	return form.Run()
 }

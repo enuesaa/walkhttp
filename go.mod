@@ -3,16 +3,16 @@ module github.com/enuesaa/walkin
 go 1.22.3
 
 require (
-	github.com/99designs/gqlgen v0.17.47
+	github.com/99designs/gqlgen v0.17.49
 	github.com/c-bata/go-prompt v0.2.6
 	github.com/charmbracelet/bubbles v0.18.0
 	github.com/charmbracelet/huh v0.4.2
 	github.com/google/uuid v1.6.0
-	github.com/gorilla/websocket v1.5.1
+	github.com/gorilla/websocket v1.5.3
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/oklog/ulid/v2 v2.1.0
-	github.com/spf13/cobra v1.8.0
-	github.com/vektah/gqlparser/v2 v2.5.12
+	github.com/spf13/cobra v1.8.1
+	github.com/vektah/gqlparser/v2 v2.5.16
 )
 
 require (
@@ -23,7 +23,7 @@ require (
 	github.com/charmbracelet/bubbletea v0.26.4 // indirect
 	github.com/charmbracelet/lipgloss v0.11.0 // indirect
 	github.com/charmbracelet/x/ansi v0.1.2 // indirect
-	github.com/charmbracelet/x/exp/strings v0.0.0-20240604151742-48a1c837e23d // indirect
+	github.com/charmbracelet/x/exp/strings v0.0.0-20240606154654-7c42867b53c7 // indirect
 	github.com/charmbracelet/x/input v0.1.2 // indirect
 	github.com/charmbracelet/x/term v0.1.1 // indirect
 	github.com/charmbracelet/x/windows v0.1.2 // indirect
@@ -54,13 +54,13 @@ require (
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/xo/terminfo v0.0.0-20220910002029-abceb7e1c41e // indirect
 	github.com/xrash/smetrics v0.0.0-20240521201337-686a1a2994c1 // indirect
-	golang.org/x/crypto v0.23.0 // indirect
+	golang.org/x/crypto v0.24.0 // indirect
 	golang.org/x/mod v0.18.0 // indirect
-	golang.org/x/net v0.25.0 // indirect
+	golang.org/x/net v0.26.0 // indirect
 	golang.org/x/sync v0.7.0 // indirect
 	golang.org/x/sys v0.21.0 // indirect
 	golang.org/x/text v0.16.0 // indirect
 	golang.org/x/time v0.5.0 // indirect
-	golang.org/x/tools v0.21.1-0.20240508182429-e35e4ccd0d2d // indirect
+	golang.org/x/tools v0.22.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )

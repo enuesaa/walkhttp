@@ -10,6 +10,5 @@ func Invoke(repos repository.Repos, invocation *invoke.Invocation) error {
 	if err := invokeSrv.Invoke(invocation); err != nil {
 		return err
 	}
-	repos.Log.Printf("status: %d\n", invocation.Status)
 	return nil
 }

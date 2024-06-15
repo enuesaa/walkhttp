@@ -8,13 +8,12 @@ import (
 )
 
 func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
-	repos.Log.Printf("***\n")
+	repos.Log.Printf("* %s\n", invocation.Method)
 	if err := repos.Prompt.Ask("Url", "", &invocation.URL); err != nil {
 		return err
 	}
-	repos.Log.Printf("* %s %s\n", invocation.Method, invocation.URL)
+	repos.Log.Printf("* %s\n", invocation.URL)
 	repos.Log.Printf("*\n")
-	repos.Log.Printf("* [Headers]\n")
 
 	for {
 		header := invoke.Header{}
@@ -41,7 +40,6 @@ func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 		repos.Log.Printf("* [Body]\n")
 		repos.Log.Printf("* %s\n", invocation.RequestBody)
 	}
-	repos.Log.Printf("***\n")
 
 	confirm := true
 	if err := repos.Prompt.Confirm("Do you confirm?", &confirm); err != nil {
