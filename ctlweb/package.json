@@ -1,5 +1,5 @@
 {
-  "name": "@enuesaa/walkin-ui",
+  "name": "@enuesaa/walkhttp-ui",
   "private": true,
   "scripts": {
     "dev": "rm -rf .next && next dev --port 3001",

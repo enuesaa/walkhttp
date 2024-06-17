@@ -4,9 +4,9 @@ import (
 	"log"
 
 	"github.com/charmbracelet/huh"
-	"github.com/enuesaa/walkin/pkg/invoke"
-	"github.com/enuesaa/walkin/pkg/repository"
-	"github.com/enuesaa/walkin/pkg/usecase"
+	"github.com/enuesaa/walkhttp/pkg/invoke"
+	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/pkg/usecase"
 	"github.com/spf13/cobra"
 )
 
@@ -14,7 +14,7 @@ func main() {
 	repos := repository.New()
 
 	app := &cobra.Command{
-		Use:     "walkin",
+		Use:     "walkhttp",
 		Short:   "A CLI tool to call http endpoint with browser or prompt.",
 		Version: "0.0.8",
 		RunE: func(cmd *cobra.Command, args []string) error {

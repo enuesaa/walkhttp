@@ -3,8 +3,8 @@ package invoke
 import (
 	"fmt"
 
-	"github.com/enuesaa/walkin/ctlweb"
-	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/enuesaa/walkhttp/ctlweb"
+	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )

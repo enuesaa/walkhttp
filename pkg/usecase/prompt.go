@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
 func Prompt(repos repository.Repos) error {

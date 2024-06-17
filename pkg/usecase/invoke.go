@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/enuesaa/walkin/pkg/invoke"
-	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/enuesaa/walkhttp/pkg/invoke"
+	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
 func Invoke(repos repository.Repos, invocation *invoke.Invocation) error {

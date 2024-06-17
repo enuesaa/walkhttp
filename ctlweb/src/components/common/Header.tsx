@@ -5,7 +5,7 @@ export const Header = () => {
   return (
     <header className={styles.main}>
       <Link href='/' className={styles.heading}>
-        walkin
+        walkhttp
       </Link>
     </header>
   )

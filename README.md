@@ -6,11 +6,11 @@ A CLI tool to call http endpoint with browser or prompt.
 
 ## Usage [Experimental]
 ```console
-$ walkin --help
+$ walkhttp --help
 A CLI tool to call http endpoint with browser or prompt.
 
 Usage:
-  walkin [flags]
+  walkhttp [flags]
 
 Flags:
       --help       Show help information

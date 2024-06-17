@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang='ja'>
       <Head>
-        <title>walkin</title>
+        <title>walkhttp</title>
       </Head>
       <body>
         <Main />

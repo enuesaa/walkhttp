@@ -1,7 +1,7 @@
 package invoke
 
 import (
-	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
 type Resolver struct {

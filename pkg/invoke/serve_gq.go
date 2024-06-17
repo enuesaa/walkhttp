@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/enuesaa/walkin/pkg/repository"
+	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 
