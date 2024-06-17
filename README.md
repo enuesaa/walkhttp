@@ -1,8 +1,8 @@
-# walkin
+# walkhttp
 A CLI tool to call http endpoint with browser or prompt.
 
 > [!NOTE]  
-> Work in progress.. `walkin` is currently under development.
+> Work in progress.. `walkhttp` is currently under development.
 
 ## Usage [Experimental]
 ```console
