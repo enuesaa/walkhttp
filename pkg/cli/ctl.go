@@ -21,7 +21,7 @@ func CtlCommand(repos repository.Repos) *cobra.Command {
 			repos.Log.Printf("Serving web console on localhost:%d.\n", port)
 			repos.Log.Printf("\n")
 
-			go func ()  {
+			go func() {
 				time.Sleep(1 * time.Second)
 				url := fmt.Sprintf("http://localhost:%d", port)
 				browser.OpenURL(url)
