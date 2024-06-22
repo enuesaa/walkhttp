@@ -7,7 +7,6 @@ import { MakeServerForm } from './MakeServerForm'
 export const MakeForm = () => {
   const [fromServer, setFromServer] = useState<boolean>(true)
 
-
   const handleChangeFrom = (from: string) => {
     setFromServer(from === 'Server')
   }

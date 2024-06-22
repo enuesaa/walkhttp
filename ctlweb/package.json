@@ -8,7 +8,7 @@
     "gqlgen": "graphql-codegen --config graph.config.ts"
   },
   "dependencies": {
-    "@radix-ui/themes": "^3.0.5",
+    "@radix-ui/themes": "^3.1.1",
     "@vanilla-extract/css": "^1.15.3",
     "graphql-ws": "^5.16.0",
     "next": "^14.2.4",

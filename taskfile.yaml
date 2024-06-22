@@ -10,3 +10,8 @@ tasks:
     cmds:
       - cd pkg/invoke && go run github.com/99designs/gqlgen generate
       - cd ctlweb && pnpm gqlgen
+
+  fmt:
+    cmds:
+      - go fmt ./...
+      - cd ctlweb && pnpm format

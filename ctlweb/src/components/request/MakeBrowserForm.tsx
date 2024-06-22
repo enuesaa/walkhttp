@@ -7,8 +7,8 @@ import { BrowserInvocationInput } from '@/graph/types'
 export const MakeBrowserForm = () => {
   const [invoveBrowserData, invokeBrowser] = useMakeBrowserInvocation()
 
-  const {register, handleSubmit, control} = useForm<BrowserInvocationInput>()
-  const onSubmit = handleSubmit(async(invocation) => {
+  const { register, handleSubmit, control } = useForm<BrowserInvocationInput>()
+  const onSubmit = handleSubmit(async (invocation) => {
     invocation.requestHeaders = []
     invocation.status = 0
     invocation.responseHeaders = []
@@ -34,7 +34,7 @@ export const MakeBrowserForm = () => {
           name='method'
           defaultValue='GET'
           control={control}
-          render={({field}) => (
+          render={({ field }) => (
             <Select.Root size='3' onValueChange={field.onChange} {...field}>
               <Select.Trigger />
               <Select.Content>

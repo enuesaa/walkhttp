@@ -7,8 +7,8 @@ import { ServerInvocationInput } from '@/graph/types'
 export const MakeServerForm = () => {
   const [invoveServerData, invokeServer] = useMakeServerInvocation()
 
-  const {register, handleSubmit, control} = useForm<ServerInvocationInput>()
-  const onSubmit = handleSubmit(async(invocation) => await invokeServer({ invocation }))
+  const { register, handleSubmit, control } = useForm<ServerInvocationInput>()
+  const onSubmit = handleSubmit(async (invocation) => await invokeServer({ invocation }))
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>
@@ -17,7 +17,7 @@ export const MakeServerForm = () => {
           name='method'
           defaultValue='GET'
           control={control}
-          render={({field}) => (
+          render={({ field }) => (
             <Select.Root size='3' onValueChange={field.onChange} {...field}>
               <Select.Trigger />
               <Select.Content>
