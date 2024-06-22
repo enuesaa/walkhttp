@@ -1,61 +1,55 @@
 import { Select, TextField, Button, TextArea } from '@radix-ui/themes'
 import styles from './MakeForm.css'
 import { useMakeServerInvocation } from '@/graph/make-server-invocation'
-import { FormEventHandler } from 'react'
-import { useForm } from '@tanstack/react-form'
-import type { FieldApi } from '@tanstack/react-form'
+import { useForm, Controller } from 'react-hook-form'
+import { ServerInvocationInput } from '@/graph/types'
 
 export const MakeServerForm = () => {
   const [invoveServerData, invokeServer] = useMakeServerInvocation()
 
-  const form = useForm({
-    defaultValues: {
-      url: '',
-    },
-    onSubmit: async ({ value }) => {
-      console.log(value)
-      // const invocation = {
-      //   method: (e.currentTarget.elements.namedItem('method') as HTMLInputElement).value,
-      //   url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
-      //   requestHeaders: [],
-      //   requestBody: (e.currentTarget.elements.namedItem('body') as HTMLInputElement).value,
-      // }
-      // await invokeServer({ invocation })
-    },
+  const {register, handleSubmit, control} = useForm<ServerInvocationInput>()
+  const onSubmit = handleSubmit(async (invocation) => {
+    // const invocation = {
+    //   method: (e.currentTarget.elements.namedItem('method') as HTMLInputElement).value,
+    //   url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
+    //   requestHeaders: [],
+    //   requestBody: (e.currentTarget.elements.namedItem('body') as HTMLInputElement).value,
+    // }
+    await invokeServer({ invocation })
   })
 
   return (
-    <form className={styles.form} onSubmit={e => {e.preventDefault();form.handleSubmit()}}>
+    <form className={styles.form} onSubmit={onSubmit}>
       <div className={styles.method}>
-        <Select.Root defaultValue='GET' size='3' name='method'>
-          <Select.Trigger />
-          <Select.Content>
-            <Select.Item value='GET'>GET</Select.Item>
-            <Select.Item value='POST'>POST</Select.Item>
-            <Select.Item value='PUT'>PUT</Select.Item>
-            <Select.Item value='DELETE'>DELETE</Select.Item>
-          </Select.Content>
-        </Select.Root>
-      </div>
-
-      <div className={styles.url}>
-        <form.Field
-          name='url'
-          children={f => (
-            <TextField.Root name={f.name} placeholder='https://example.com/' size='3' onChange={(e) => f.handleChange(e.target.value)} />
+        <Controller
+          name='method'
+          defaultValue='GET'
+          control={control}
+          render={({field}) => (
+            <Select.Root size='3' onValueChange={field.onChange} {...field}>
+              <Select.Trigger />
+              <Select.Content>
+                <Select.Item value='GET'>GET</Select.Item>
+                <Select.Item value='POST'>POST</Select.Item>
+                <Select.Item value='PUT'>PUT</Select.Item>
+                <Select.Item value='DELETE'>DELETE</Select.Item>
+              </Select.Content>
+            </Select.Root>
           )}
         />
       </div>
-{/* 
+
+      <div className={styles.url}>
+        <TextField.Root placeholder='https://example.com/' size='3' {...register('url')} />
+      </div>
+
       <div className={styles.body}>
         <span>body</span>
-        <TextArea name='body' placeholder='{}'></TextArea>
-      </div> */}
+        <TextArea placeholder='{}' {...register('requestBody')}></TextArea>
+      </div>
 
       <div className={styles.btn}>
-        <form.Subscribe
-          children={(<Button type='submit'>Call</Button>)}
-        />
+        <Button type='submit'>Call</Button>
       </div>
     </form>
   )
