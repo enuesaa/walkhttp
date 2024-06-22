@@ -20,4 +20,8 @@ export default {
     margin: '30px 0',
     padding: '0 10px',
   }),
+  body: style({
+    fontSize: '16px',
+    marginTop: '10px',
+  }),
 }

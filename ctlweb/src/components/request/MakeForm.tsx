@@ -1,4 +1,4 @@
-import { Select, TextField, Button, SegmentedControl } from '@radix-ui/themes'
+import { Select, TextField, Button, SegmentedControl, TextArea, Heading } from '@radix-ui/themes'
 import styles from './MakeForm.css'
 import { useMakeServerInvocation } from '@/graph/make-server-invocation'
 import { useMakeBrowserInvocation } from '@/graph/make-browser-invocation'
@@ -17,7 +17,7 @@ export const MakeForm = () => {
         method: (e.currentTarget.elements.namedItem('method') as HTMLInputElement).value,
         url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
         requestHeaders: [],
-        requestBody: '',
+        requestBody: (e.currentTarget.elements.namedItem('body') as HTMLInputElement).value,
       }
       await invokeServer({ invocation })
     } else {
@@ -25,7 +25,7 @@ export const MakeForm = () => {
         method: (e.currentTarget.elements.namedItem('method') as HTMLInputElement).value,
         url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
         requestHeaders: [],
-        requestBody: '',
+        requestBody: (e.currentTarget.elements.namedItem('body') as HTMLInputElement).value,
         responseHeaders: [],
         responseBody: '',
         status: 0,
@@ -34,6 +34,7 @@ export const MakeForm = () => {
       try {
         const res = await fetch(invocation.url, {
           method: invocation.method,
+          body: invocation.requestBody,
         })
         invocation.status = res.status
       } catch (e) {
@@ -71,6 +72,11 @@ export const MakeForm = () => {
 
       <div className={styles.url}>
         <TextField.Root placeholder='https://example.com/' size='3' name='url' />
+      </div>
+
+      <div className={styles.body}>
+        <span>body</span>
+        <TextArea name='body' placeholder='{}'></TextArea>
       </div>
 
       <div className={styles.btn}>
