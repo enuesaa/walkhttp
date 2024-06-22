@@ -1,23 +1,18 @@
 import { Select, TextField, Button, TextArea } from '@radix-ui/themes'
 import styles from './MakeForm.css'
 import { useMakeBrowserInvocation } from '@/graph/make-browser-invocation'
-import { FormEventHandler } from 'react'
+import { Controller, useForm } from 'react-hook-form'
+import { BrowserInvocationInput } from '@/graph/types'
 
 export const MakeBrowserForm = () => {
   const [invoveBrowserData, invokeBrowser] = useMakeBrowserInvocation()
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault()
-
-    const invocation = {
-      method: (e.currentTarget.elements.namedItem('method') as HTMLInputElement).value,
-      url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
-      requestHeaders: [],
-      requestBody: (e.currentTarget.elements.namedItem('body') as HTMLInputElement).value,
-      responseHeaders: [],
-      responseBody: '',
-      status: 0,
-    }
+  const {register, handleSubmit, control} = useForm<BrowserInvocationInput>()
+  const onSubmit = handleSubmit(async(invocation) => {
+    invocation.requestHeaders = []
+    invocation.status = 0
+    invocation.responseHeaders = []
+    invocation.responseBody = ''
 
     try {
       const res = await fetch(invocation.url, {
@@ -30,29 +25,36 @@ export const MakeBrowserForm = () => {
     }
 
     await invokeBrowser({ invocation })
-  }
+  })
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={onSubmit}>
       <div className={styles.method}>
-        <Select.Root defaultValue='GET' size='3' name='method'>
-          <Select.Trigger />
-          <Select.Content>
-            <Select.Item value='GET'>GET</Select.Item>
-            <Select.Item value='POST'>POST</Select.Item>
-            <Select.Item value='PUT'>PUT</Select.Item>
-            <Select.Item value='DELETE'>DELETE</Select.Item>
-          </Select.Content>
-        </Select.Root>
+        <Controller
+          name='method'
+          defaultValue='GET'
+          control={control}
+          render={({field}) => (
+            <Select.Root size='3' onValueChange={field.onChange} {...field}>
+              <Select.Trigger />
+              <Select.Content>
+                <Select.Item value='GET'>GET</Select.Item>
+                <Select.Item value='POST'>POST</Select.Item>
+                <Select.Item value='PUT'>PUT</Select.Item>
+                <Select.Item value='DELETE'>DELETE</Select.Item>
+              </Select.Content>
+            </Select.Root>
+          )}
+        />
       </div>
 
       <div className={styles.url}>
-        <TextField.Root placeholder='https://example.com/' size='3' name='url' />
+        <TextField.Root placeholder='https://example.com/' size='3' {...register('url')} />
       </div>
 
       <div className={styles.body}>
         <span>body</span>
-        <TextArea name='body' placeholder='{}'></TextArea>
+        <TextArea placeholder='{}' {...register('requestBody')}></TextArea>
       </div>
 
       <div className={styles.btn}>

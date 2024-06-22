@@ -8,15 +8,7 @@ export const MakeServerForm = () => {
   const [invoveServerData, invokeServer] = useMakeServerInvocation()
 
   const {register, handleSubmit, control} = useForm<ServerInvocationInput>()
-  const onSubmit = handleSubmit(async (invocation) => {
-    // const invocation = {
-    //   method: (e.currentTarget.elements.namedItem('method') as HTMLInputElement).value,
-    //   url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
-    //   requestHeaders: [],
-    //   requestBody: (e.currentTarget.elements.namedItem('body') as HTMLInputElement).value,
-    // }
-    await invokeServer({ invocation })
-  })
+  const onSubmit = handleSubmit(async(invocation) => await invokeServer({ invocation }))
 
   return (
     <form className={styles.form} onSubmit={onSubmit}>
@@ -49,7 +41,7 @@ export const MakeServerForm = () => {
       </div>
 
       <div className={styles.btn}>
-        <Button type='submit'>Call</Button>
+        <Button>Call</Button>
       </div>
     </form>
   )
