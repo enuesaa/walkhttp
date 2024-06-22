@@ -11,11 +11,16 @@ A CLI tool to call http endpoint with browser or prompt.
 
 Usage:
   walkhttp [flags]
+  walkhttp [command]
+
+Available Commands:
+  ctl         Serve web console
 
 Flags:
-      --help       Show help information
-      --port int   port (default 3000)
-      --version    Show version
+      --help      Show help information
+      --version   Show version
+
+Use "walkhttp [command] --help" for more information about a command.
 ```
 
 ## Development Plan
