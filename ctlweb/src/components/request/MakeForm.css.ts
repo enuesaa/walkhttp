@@ -1,14 +1,14 @@
 import { style } from '@vanilla-extract/css'
 
 export default {
-  main: style({
+  control: style({
+    textAlign: 'center',
+  }),
+  form: style({
     maxWidth: '700px',
     margin: '0 auto',
     fontSize: '25px',
     lineHeight: '1.7',
-  }),
-  from: style({
-    textAlign: 'center',
   }),
   method: style({
     margin: '10px 0',
