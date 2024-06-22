@@ -2,23 +2,30 @@ import { Select, TextField, Button, TextArea } from '@radix-ui/themes'
 import styles from './MakeForm.css'
 import { useMakeServerInvocation } from '@/graph/make-server-invocation'
 import { FormEventHandler } from 'react'
+import { useForm } from '@tanstack/react-form'
+import type { FieldApi } from '@tanstack/react-form'
 
 export const MakeServerForm = () => {
   const [invoveServerData, invokeServer] = useMakeServerInvocation()
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault()
-      const invocation = {
-        method: (e.currentTarget.elements.namedItem('method') as HTMLInputElement).value,
-        url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
-        requestHeaders: [],
-        requestBody: (e.currentTarget.elements.namedItem('body') as HTMLInputElement).value,
-      }
-      await invokeServer({ invocation })
-  }
+  const form = useForm({
+    defaultValues: {
+      url: '',
+    },
+    onSubmit: async ({ value }) => {
+      console.log(value)
+      // const invocation = {
+      //   method: (e.currentTarget.elements.namedItem('method') as HTMLInputElement).value,
+      //   url: (e.currentTarget.elements.namedItem('url') as HTMLInputElement).value,
+      //   requestHeaders: [],
+      //   requestBody: (e.currentTarget.elements.namedItem('body') as HTMLInputElement).value,
+      // }
+      // await invokeServer({ invocation })
+    },
+  })
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit}>
+    <form className={styles.form} onSubmit={e => {e.preventDefault();form.handleSubmit()}}>
       <div className={styles.method}>
         <Select.Root defaultValue='GET' size='3' name='method'>
           <Select.Trigger />
@@ -32,16 +39,23 @@ export const MakeServerForm = () => {
       </div>
 
       <div className={styles.url}>
-        <TextField.Root placeholder='https://example.com/' size='3' name='url' />
+        <form.Field
+          name='url'
+          children={f => (
+            <TextField.Root name={f.name} placeholder='https://example.com/' size='3' onChange={(e) => f.handleChange(e.target.value)} />
+          )}
+        />
       </div>
-
+{/* 
       <div className={styles.body}>
         <span>body</span>
         <TextArea name='body' placeholder='{}'></TextArea>
-      </div>
+      </div> */}
 
       <div className={styles.btn}>
-        <Button>Call</Button>
+        <form.Subscribe
+          children={(<Button type='submit'>Call</Button>)}
+        />
       </div>
     </form>
   )
