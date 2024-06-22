@@ -5,7 +5,7 @@
     "dev": "rm -rf .next && next dev --port 3001",
     "build": "next build",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "graphgen": "graphql-codegen --config graph.config.ts"
+    "gqlgen": "graphql-codegen --config graph.config.ts"
   },
   "dependencies": {
     "@radix-ui/themes": "^3.0.5",
