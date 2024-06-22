@@ -17,3 +17,8 @@ Flags:
       --port int   port (default 3000)
       --version    Show version
 ```
+
+## Development Plan
+- [ ] [ctlweb] create `ctl` subcommand to serve web console
+- [ ] [prompt] create `get`, `post`, `put`, `delete`, `options` subcommand. These commands start prompt with received method.
+- [ ] [prompt] implement rich prompt using go-prompt or huh.
