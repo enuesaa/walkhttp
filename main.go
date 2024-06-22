@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/charmbracelet/huh"
-	"github.com/enuesaa/walkhttp/pkg/invoke"
+	"github.com/enuesaa/walkhttp/pkg/cli"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/enuesaa/walkhttp/pkg/usecase"
 	"github.com/spf13/cobra"
@@ -18,14 +18,6 @@ func main() {
 		Short:   "A CLI tool to call http endpoint with browser or prompt.",
 		Version: "0.0.8",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			port, _ := cmd.Flags().GetInt("port")
-			repos.Log.Printf("\n")
-			repos.Log.Printf("Serving web console on localhost:%d.\n", port)
-			repos.Log.Printf("You can also call http endpoint via prompt.\n")
-			repos.Log.Printf("\n")
-
-			go invoke.Serve(repos, port)
-
 			for {
 				if err := usecase.Prompt(repos); err != nil {
 					repos.Log.Printf("Error: %s", err.Error())
@@ -38,7 +30,7 @@ func main() {
 			return nil
 		},
 	}
-	app.Flags().Int("port", 3000, "port")
+	app.AddCommand(cli.CtlCommand(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})

@@ -19,6 +19,6 @@ Flags:
 ```
 
 ## Development Plan
-- [ ] [ctlweb] create `ctl` subcommand to serve web console
+- [x] [ctlweb] create `ctl` subcommand to serve web console
 - [ ] [prompt] create `get`, `post`, `put`, `delete`, `options` subcommand. These commands start prompt with received method.
 - [ ] [prompt] implement rich prompt using go-prompt or huh.
