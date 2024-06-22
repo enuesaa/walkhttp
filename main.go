@@ -16,7 +16,7 @@ func main() {
 	app := &cobra.Command{
 		Use:     "walkhttp",
 		Short:   "A CLI tool to call http endpoint with browser or prompt.",
-		Version: "0.0.8",
+		Version: "0.0.9",
 		RunE: func(cmd *cobra.Command, args []string) error {
 			for {
 				if err := usecase.Prompt(repos); err != nil {
@@ -31,7 +31,7 @@ func main() {
 		},
 	}
 	app.AddCommand(cli.CtlCommand(repos))
-	// app.AddCommand(cli.Prompt(repos))
+	app.AddCommand(cli.Prompt(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
