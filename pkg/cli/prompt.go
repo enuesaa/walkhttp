@@ -2,21 +2,40 @@ package cli
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/spf13/cobra"
-	"strings"
 
 	"github.com/charmbracelet/bubbles/cursor"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/huh"
 	"github.com/charmbracelet/lipgloss"
 )
 
 // see https://github.com/charmbracelet/bubbletea/blob/master/examples/textinputs/main.go
+// see https://github.com/charmbracelet/bubbletea/blob/master/examples/list-simple/main.go
 func Prompt(repos repository.Repos) *cobra.Command {
 	cmd := &cobra.Command{
 		Use: "prompt",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			selected := ""
+		
+			form := huh.NewSelect[string]()
+			form.Options(
+				huh.Option[string]{Key: "GET", Value: "GET"},
+				huh.Option[string]{Key: "POST", Value: "POST"},
+				huh.Option[string]{Key: "PUT", Value: "PUT"},
+				huh.Option[string]{Key: "DELETE", Value: "DELETE"},
+				huh.Option[string]{Key: "OPTIONS", Value: "OPTIONS"},
+			)
+			form.Value(&selected)
+			form.Inline(true)
+			if err := form.Run(); err != nil {
+				return err
+			}
+
 			_, err := tea.NewProgram(initialModel()).Run()
 			return err
 		},
@@ -52,14 +71,9 @@ func initialModel() model {
 
 		switch i {
 		case 0:
-			t.Placeholder = "Method"
-			t.Focus()
-			t.PromptStyle = focusedStyle
-			t.TextStyle = focusedStyle
-		case 1:
 			t.Placeholder = "Url"
 			t.CharLimit = 64
-		case 2:
+		case 1:
 			t.Placeholder = "Body"
 		}
 		m.inputs[i] = t
