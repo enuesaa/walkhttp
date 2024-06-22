@@ -1,8 +1,12 @@
 package cli
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/enuesaa/walkhttp/pkg/invoke"
 	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/pkg/browser"
 	"github.com/spf13/cobra"
 )
 
@@ -16,6 +20,12 @@ func CtlCommand(repos repository.Repos) *cobra.Command {
 			repos.Log.Printf("\n")
 			repos.Log.Printf("Serving web console on localhost:%d.\n", port)
 			repos.Log.Printf("\n")
+
+			go func ()  {
+				time.Sleep(1 * time.Second)
+				url := fmt.Sprintf("http://localhost:%d", port)
+				browser.OpenURL(url)
+			}()
 
 			return invoke.Serve(repos, port)
 		},
