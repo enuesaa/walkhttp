@@ -4,12 +4,16 @@ go 1.22.3
 
 require (
 	github.com/99designs/gqlgen v0.17.49
+	github.com/c-bata/go-prompt v0.2.6
 	github.com/charmbracelet/bubbles v0.18.0
+	github.com/charmbracelet/bubbletea v0.26.5
 	github.com/charmbracelet/huh v0.4.2
+	github.com/charmbracelet/lipgloss v0.11.0
 	github.com/google/uuid v1.6.0
 	github.com/gorilla/websocket v1.5.3
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/oklog/ulid/v2 v2.1.0
+	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c
 	github.com/spf13/cobra v1.8.1
 	github.com/vektah/gqlparser/v2 v2.5.16
 )
@@ -19,8 +23,6 @@ require (
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
 	github.com/catppuccin/go v0.2.0 // indirect
-	github.com/charmbracelet/bubbletea v0.26.5 // indirect
-	github.com/charmbracelet/lipgloss v0.11.0 // indirect
 	github.com/charmbracelet/x/ansi v0.1.2 // indirect
 	github.com/charmbracelet/x/exp/strings v0.0.0-20240621151055-6ef6757dbe52 // indirect
 	github.com/charmbracelet/x/input v0.1.2 // indirect
@@ -38,11 +40,12 @@ require (
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mattn/go-localereader v0.0.1 // indirect
 	github.com/mattn/go-runewidth v0.0.15 // indirect
+	github.com/mattn/go-tty v0.0.3 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/muesli/ansi v0.0.0-20230316100256-276c6243b2f6 // indirect
 	github.com/muesli/cancelreader v0.2.2 // indirect
 	github.com/muesli/termenv v0.15.2 // indirect
-	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c // indirect
+	github.com/pkg/term v1.2.0-beta.2 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/sosodev/duration v1.3.1 // indirect
