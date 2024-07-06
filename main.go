@@ -18,6 +18,8 @@ func main() {
 		Short:   "A CLI tool to call http endpoint with browser or prompt.",
 		Version: "0.0.9",
 		RunE: func(cmd *cobra.Command, args []string) error {
+			usecase.PrintBanner(repos)
+
 			for {
 				if err := usecase.Prompt(repos); err != nil {
 					repos.Log.Printf("Error: %s", err.Error())
