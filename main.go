@@ -1,12 +1,14 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"time"
 
-	"github.com/charmbracelet/huh"
 	"github.com/enuesaa/walkhttp/pkg/cli"
+	"github.com/enuesaa/walkhttp/pkg/invoke"
 	"github.com/enuesaa/walkhttp/pkg/repository"
-	"github.com/enuesaa/walkhttp/pkg/usecase"
+	"github.com/pkg/browser"
 	"github.com/spf13/cobra"
 )
 
@@ -18,21 +20,23 @@ func main() {
 		Short:   "A CLI tool to call http endpoint with browser or prompt.",
 		Version: "0.0.9",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			usecase.PrintBanner(repos)
+			port, _ := cmd.Flags().GetInt("port")
 
-			for {
-				if err := usecase.Prompt(repos); err != nil {
-					repos.Log.Printf("Error: %s", err.Error())
-					if err == huh.ErrUserAborted {
-						break
-					}
-				}
-			}
+			repos.Log.Printf("\n")
+			repos.Log.Printf("Serving web console on localhost:%d.\n", port)
+			repos.Log.Printf("\n")
 
-			return nil
+			go func() {
+				time.Sleep(1 * time.Second)
+				url := fmt.Sprintf("http://localhost:%d", port)
+				browser.OpenURL(url)
+			}()
+
+			return invoke.Serve(repos, port)
 		},
 	}
-	app.AddCommand(cli.CtlCommand(repos))
+	app.Flags().Int("port", 3000, "port")
+
 	app.AddCommand(cli.Prompt(repos))
 
 	// disable default
