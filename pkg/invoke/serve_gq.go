@@ -13,12 +13,13 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 )
 
-func ServeGQ(repos repository.Repos, port int) echo.HandlerFunc {
+func ServeGQ(repos repository.Repos, baseUrl string, port int) echo.HandlerFunc {
 	// see https://github.com/99designs/gqlgen/issues/1664
 	// see https://github.com/99designs/gqlgen/issues/2826
 	gqhandle := handler.New(NewExecutableSchema(Config{
 		Resolvers: &Resolver{
 			repos: repos,
+			baseUrl: baseUrl,
 		},
 	}))
 	gqhandle.AddTransport(transport.Options{})

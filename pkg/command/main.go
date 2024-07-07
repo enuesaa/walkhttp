@@ -38,6 +38,8 @@ func New(repos repository.Repos) *cli.App {
 		},
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
+			configpath := c.String("config")
+			conf := usecase.LoadConfig(repos, configpath)
 
 			usecase.PrintBanner(repos)
 
@@ -47,7 +49,7 @@ func New(repos repository.Repos) *cli.App {
 				browser.OpenURL(url)
 			}()
 
-			return invoke.Serve(repos, port)
+			return invoke.Serve(repos, conf.BaseUrl, port)
 
 		},
 		Suggest: true,

@@ -3,8 +3,10 @@ import styles from './MakeForm.css'
 import { useMakeServerInvocation } from '@/graph/make-server-invocation'
 import { useForm, Controller } from 'react-hook-form'
 import { ServerInvocationInput } from '@/graph/types'
+import { useGetAppConfig } from '@/graph/appconfig'
 
 export const MakeServerForm = () => {
+  const appConfig = useGetAppConfig()
   const [invoveServerData, invokeServer] = useMakeServerInvocation()
 
   const { register, handleSubmit, control } = useForm<ServerInvocationInput>()
@@ -32,7 +34,7 @@ export const MakeServerForm = () => {
       </div>
 
       <div className={styles.url}>
-        <TextField.Root placeholder='https://example.com/' size='3' {...register('url')} />
+        <TextField.Root defaultValue={appConfig.data?.appConfig.baseUrl} size='3' {...register('url')} />
       </div>
 
       <div className={styles.body}>

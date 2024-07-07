@@ -14,6 +14,11 @@ export type Scalars = {
   Float: { input: number; output: number }
 }
 
+export type AppConfig = {
+  __typename?: 'AppConfig'
+  baseUrl: Scalars['String']['output']
+}
+
 export type BrowserInvocationInput = {
   method: Scalars['String']['input']
   requestBody: Scalars['String']['input']
@@ -64,6 +69,7 @@ export type MutationMakeServerInvocationArgs = {
 
 export type Query = {
   __typename?: 'Query'
+  appConfig: AppConfig
   invocation?: Maybe<Invocation>
   invocations: Array<Invocation>
 }

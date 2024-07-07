@@ -48,6 +48,10 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
+	AppConfig struct {
+		BaseURL func(childComplexity int) int
+	}
+
 	Header struct {
 		Name  func(childComplexity int) int
 		Value func(childComplexity int) int
@@ -71,6 +75,7 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
+		AppConfig   func(childComplexity int) int
 		Invocation  func(childComplexity int, id string) int
 		Invocations func(childComplexity int) int
 	}
@@ -85,6 +90,7 @@ type MutationResolver interface {
 	MakeBrowserInvocation(ctx context.Context, invocation BrowserInvocationInput) (*bool, error)
 }
 type QueryResolver interface {
+	AppConfig(ctx context.Context) (*AppConfig, error)
 	Invocations(ctx context.Context) ([]*Invocation, error)
 	Invocation(ctx context.Context, id string) (*Invocation, error)
 }
@@ -110,6 +116,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	ec := executionContext{nil, e, 0, 0, nil}
 	_ = ec
 	switch typeName + "." + field {
+
+	case "AppConfig.baseUrl":
+		if e.complexity.AppConfig.BaseURL == nil {
+			break
+		}
+
+		return e.complexity.AppConfig.BaseURL(childComplexity), true
 
 	case "Header.name":
 		if e.complexity.Header.Name == nil {
@@ -211,6 +224,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.MakeServerInvocation(childComplexity, args["invocation"].(ServerInvocationInput)), true
+
+	case "Query.appConfig":
+		if e.complexity.Query.AppConfig == nil {
+			break
+		}
+
+		return e.complexity.Query.AppConfig(childComplexity), true
 
 	case "Query.invocation":
 		if e.complexity.Query.Invocation == nil {
@@ -479,6 +499,50 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 // endregion ************************** directives.gotpl **************************
 
 // region    **************************** field.gotpl *****************************
+
+func (ec *executionContext) _AppConfig_baseUrl(ctx context.Context, field graphql.CollectedField, obj *AppConfig) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AppConfig_baseUrl(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BaseURL, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AppConfig_baseUrl(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AppConfig",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
 
 func (ec *executionContext) _Header_name(ctx context.Context, field graphql.CollectedField, obj *Header) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Header_name(ctx, field)
@@ -1070,6 +1134,54 @@ func (ec *executionContext) fieldContext_Mutation_makeBrowserInvocation(ctx cont
 	if fc.Args, err = ec.field_Mutation_makeBrowserInvocation_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_appConfig(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_appConfig(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().AppConfig(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*AppConfig)
+	fc.Result = res
+	return ec.marshalNAppConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋinvokeᚐAppConfig(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_appConfig(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "baseUrl":
+				return ec.fieldContext_AppConfig_baseUrl(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AppConfig", field.Name)
+		},
 	}
 	return fc, nil
 }
@@ -3349,6 +3461,45 @@ func (ec *executionContext) unmarshalInputServerInvocationInput(ctx context.Cont
 
 // region    **************************** object.gotpl ****************************
 
+var appConfigImplementors = []string{"AppConfig"}
+
+func (ec *executionContext) _AppConfig(ctx context.Context, sel ast.SelectionSet, obj *AppConfig) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, appConfigImplementors)
+
+	out := graphql.NewFieldSet(fields)
+	deferred := make(map[string]*graphql.FieldSet)
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("AppConfig")
+		case "baseUrl":
+			out.Values[i] = ec._AppConfig_baseUrl(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch(ctx)
+	if out.Invalids > 0 {
+		return graphql.Null
+	}
+
+	atomic.AddInt32(&ec.deferred, int32(len(deferred)))
+
+	for label, dfs := range deferred {
+		ec.processDeferredGroup(graphql.DeferredGroup{
+			Label:    label,
+			Path:     graphql.GetPath(ctx),
+			FieldSet: dfs,
+			Context:  ctx,
+		})
+	}
+
+	return out
+}
+
 var headerImplementors = []string{"Header"}
 
 func (ec *executionContext) _Header(ctx context.Context, sel ast.SelectionSet, obj *Header) graphql.Marshaler {
@@ -3535,6 +3686,28 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
+		case "appConfig":
+			field := field
+
+			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_appConfig(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&fs.Invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx,
+					func(ctx context.Context) graphql.Marshaler { return innerFunc(ctx, out) })
+			}
+
+			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
 		case "invocations":
 			field := field
 
@@ -3952,6 +4125,20 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 // endregion **************************** object.gotpl ****************************
 
 // region    ***************************** type.gotpl *****************************
+
+func (ec *executionContext) marshalNAppConfig2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋinvokeᚐAppConfig(ctx context.Context, sel ast.SelectionSet, v AppConfig) graphql.Marshaler {
+	return ec._AppConfig(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNAppConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋinvokeᚐAppConfig(ctx context.Context, sel ast.SelectionSet, v *AppConfig) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._AppConfig(ctx, sel, v)
+}
 
 func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
 	res, err := graphql.UnmarshalBoolean(v)

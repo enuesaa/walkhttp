@@ -15,7 +15,12 @@ type Header {
   value: String!
 }
 
+type AppConfig {
+  baseUrl: String!
+}
+
 type Query {
+  appConfig: AppConfig!
   invocations: [Invocation!]!
   invocation(id: ID!): Invocation
 }

@@ -2,6 +2,10 @@
 
 package invoke
 
+type AppConfig struct {
+	BaseURL string `json:"baseUrl"`
+}
+
 type BrowserInvocationInput struct {
 	Status          int            `json:"status"`
 	Method          string         `json:"method"`

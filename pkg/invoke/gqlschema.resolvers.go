@@ -9,6 +9,14 @@ import (
 	"github.com/google/uuid"
 )
 
+//TODO refactor
+func (r *queryResolver) AppConfig(ctx context.Context) (*AppConfig, error) {
+	config := AppConfig{
+		BaseURL: r.baseUrl,
+	}
+	return &config, nil
+}
+
 func (r *queryResolver) Invocations(ctx context.Context) ([]*Invocation, error) {
 	list := make([]*Invocation, 0)
 	ids := r.repos.DB.List()

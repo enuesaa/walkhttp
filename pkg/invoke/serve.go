@@ -9,13 +9,13 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-func Serve(repos repository.Repos, port int) error {
+func Serve(repos repository.Repos, baseUrl string, port int) error {
 	app := echo.New()
 	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 	}))
 
-	app.Any("/graph", ServeGQ(repos, port))
+	app.Any("/graph", ServeGQ(repos, baseUrl, port))
 	app.GET("/graph/playground", ServeGQPlayground())
 	app.Any("/*", ctlweb.Serve)
 	app.Any("/", ctlweb.Serve)

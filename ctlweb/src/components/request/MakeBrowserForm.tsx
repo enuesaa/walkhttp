@@ -3,8 +3,10 @@ import styles from './MakeForm.css'
 import { useMakeBrowserInvocation } from '@/graph/make-browser-invocation'
 import { Controller, useForm } from 'react-hook-form'
 import { BrowserInvocationInput } from '@/graph/types'
+import { useGetAppConfig } from '@/graph/appconfig'
 
 export const MakeBrowserForm = () => {
+  const appConfig = useGetAppConfig()
   const [invoveBrowserData, invokeBrowser] = useMakeBrowserInvocation()
 
   const { register, handleSubmit, control } = useForm<BrowserInvocationInput>()
@@ -49,7 +51,7 @@ export const MakeBrowserForm = () => {
       </div>
 
       <div className={styles.url}>
-        <TextField.Root placeholder='https://example.com/' size='3' {...register('url')} />
+        <TextField.Root defaultValue={appConfig.data?.appConfig.baseUrl} size='3' {...register('url')} />
       </div>
 
       <div className={styles.body}>

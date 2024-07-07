@@ -6,6 +6,7 @@ import (
 
 type Resolver struct {
 	repos repository.Repos
+	baseUrl string
 }
 
 type queryResolver struct {
