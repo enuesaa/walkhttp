@@ -4,14 +4,8 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func Prompt(repos repository.Repos) error {
-	methods := []string{"GET", "POST", "PUT", "DELETE"}
-	selected := ""
-	if err := repos.Prompt.Select(methods, &selected); err != nil {
-		return err
-	}
-
-	invocation := Create(repos, selected, "")
+func Prompt(repos repository.Repos, method string) error {
+	invocation := Create(repos, method, "")
 	repos.Log.Printf("***\n")
 	if err := PromptReq(repos, &invocation); err != nil {
 		repos.Log.Printf("***\n")

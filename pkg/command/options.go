@@ -2,6 +2,7 @@ package command
 
 import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/pkg/usecase"
 	"github.com/urfave/cli/v2"
 )
 
@@ -18,7 +19,7 @@ func NewOptionsCommand(repos repository.Repos) *cli.Command {
 			},
 		},
 		Action: func(c *cli.Context) error {
-			return nil
+			return usecase.Prompt(repos, "OPTIONS")
 		},
 	}
 
