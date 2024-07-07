@@ -8,6 +8,8 @@ exec:
   filename: ../serve/gql/exec.go
   package: gql
 
+# TODO: serve/schema/schema.go へ移動
+# TODO: header や invocation は別に struct として定義する
 model:
   filename: schema.go
   package: schema
