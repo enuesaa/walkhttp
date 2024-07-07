@@ -1,11 +1,11 @@
-package invoke
+package serve
 
 import (
 	"net/http"
 	"time"
 
 	"github.com/enuesaa/walkhttp/pkg/repository"
-	"github.com/enuesaa/walkhttp/pkg/invoke/gql"
+	"github.com/enuesaa/walkhttp/pkg/serve/gql"
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 

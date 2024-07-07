@@ -1,11 +1,12 @@
-package invoke
+package serve
 
 import (
 	"context"
 	"time"
 
-	"github.com/enuesaa/walkhttp/pkg/invoke/gql"
-	"github.com/enuesaa/walkhttp/pkg/invoke/schema"
+	"github.com/enuesaa/walkhttp/pkg/invoke"
+	"github.com/enuesaa/walkhttp/pkg/serve/gql"
+	"github.com/enuesaa/walkhttp/pkg/schema"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/google/uuid"
 )
@@ -92,7 +93,7 @@ func (r *Resolver) Query() gql.QueryResolver {
 }
 
 func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation schema.ServerInvocationInput) (*bool, error) {
-	invokeSrv := NewInvokeSrv(r.repos)
+	invokeSrv := invoke.NewInvokeSrv(r.repos)
 	data := invokeSrv.Create(invocation.Method, invocation.URL)
 	if err := invokeSrv.Invoke(&data); err != nil {
 		return nil, err

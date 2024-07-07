@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/enuesaa/walkhttp/pkg/invoke"
 	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/pkg/serve"
 	"github.com/enuesaa/walkhttp/pkg/usecase"
 	"github.com/pkg/browser"
 	"github.com/urfave/cli/v2"
@@ -49,7 +49,7 @@ func New(repos repository.Repos) *cli.App {
 				browser.OpenURL(url)
 			}()
 
-			return invoke.Serve(repos, conf.BaseUrl, port)
+			return serve.Serve(repos, conf.BaseUrl, port)
 
 		},
 		Suggest: true,

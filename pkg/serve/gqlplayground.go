@@ -1,4 +1,4 @@
-package invoke
+package serve
 
 import (
 	"github.com/99designs/gqlgen/graphql/playground"

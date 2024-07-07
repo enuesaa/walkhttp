@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/invoke/schema"
+	"github.com/enuesaa/walkhttp/pkg/schema"
 )
 
 func New() Config {
