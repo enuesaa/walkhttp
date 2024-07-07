@@ -5,7 +5,6 @@ import (
 	"log"
 	"time"
 
-	"github.com/enuesaa/walkhttp/pkg/cli"
 	"github.com/enuesaa/walkhttp/pkg/invoke"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/pkg/browser"
@@ -36,8 +35,6 @@ func main() {
 		},
 	}
 	app.Flags().Int("port", 3000, "port")
-
-	app.AddCommand(cli.Prompt(repos))
 
 	// disable default
 	app.SetHelpCommand(&cobra.Command{Hidden: true})
