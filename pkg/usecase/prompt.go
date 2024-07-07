@@ -1,10 +1,11 @@
 package usecase
 
 import (
+	"github.com/enuesaa/walkhttp/pkg/config"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func Prompt(repos repository.Repos, method string) error {
+func Prompt(repos repository.Repos, method string, conf config.Config) error {
 	invocation := Create(repos, method, "")
 	repos.Log.Printf("***\n")
 	if err := PromptReq(repos, &invocation); err != nil {

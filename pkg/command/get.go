@@ -1,8 +1,6 @@
 package command
 
 import (
-	"fmt"
-
 	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/enuesaa/walkhttp/pkg/usecase"
 	"github.com/urfave/cli/v2"
@@ -22,12 +20,9 @@ func NewGetCommand(repos repository.Repos) *cli.Command {
 		},
 		Action: func(c *cli.Context) error {
 			configpath := c.String("config")
-			if configpath != "" {
-				conf, _ := usecase.ReadConfig(repos, configpath)
-				fmt.Printf("%+v\n", conf)
-			}
+			conf := usecase.LoadConfig(repos, configpath)
 
-			return usecase.Prompt(repos, "GET")
+			return usecase.Prompt(repos, "GET", conf)
 		},
 	}
 

@@ -19,7 +19,10 @@ func NewPutCommand(repos repository.Repos) *cli.Command {
 			},
 		},
 		Action: func(c *cli.Context) error {
-			return usecase.Prompt(repos, "PUT")
+			configpath := c.String("config")
+			conf := usecase.LoadConfig(repos, configpath)
+
+			return usecase.Prompt(repos, "PUT", conf)
 		},
 	}
 
