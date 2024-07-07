@@ -6,9 +6,11 @@ import (
 	"io"
 	"net/http"
 	"time"
+
+	"github.com/enuesaa/walkhttp/pkg/invoke/schema"
 )
 
-func (srv *InvokeSrv) Invoke(invocation *Invocation) error {
+func (srv *InvokeSrv) Invoke(invocation *schema.Invocation) error {
 	invocation.Created = time.Now().Format(time.RFC3339)
 
 	reqbody := bytes.NewBuffer([]byte(invocation.RequestBody))
@@ -33,7 +35,7 @@ func (srv *InvokeSrv) Invoke(invocation *Invocation) error {
 		if len(value) == 0 {
 			return fmt.Errorf("failed to map response header because there is no value supplied.")
 		}
-		invocation.ResponseHeaders = append(invocation.ResponseHeaders, &Header{
+		invocation.ResponseHeaders = append(invocation.ResponseHeaders, &schema.Header{
 			Name:  key,
 			Value: value[0],
 		})

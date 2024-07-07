@@ -1,7 +1,7 @@
 package config
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/invoke"
+	"github.com/enuesaa/walkhttp/pkg/invoke/schema"
 )
 
 func New() Config {
@@ -18,6 +18,6 @@ type Config struct {
 type Endpoint struct {
 	Path string `json:"path"` // like `/aaa`
 	Method string `json:"method"` // like `GET`
-	Headers []invoke.Header `json:"headers"` // default headers
+	Headers []schema.Header `json:"headers"` // default headers
 	Body string `json:"body"` // default body
 }

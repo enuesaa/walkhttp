@@ -3,11 +3,11 @@ package usecase
 import (
 	"fmt"
 
-	"github.com/enuesaa/walkhttp/pkg/invoke"
+	"github.com/enuesaa/walkhttp/pkg/invoke/schema"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
+func PromptReq(repos repository.Repos, invocation *schema.Invocation) error {
 	repos.Log.Printf("* %s\n", invocation.Method)
 	if err := repos.Prompt.Ask("Url", "", &invocation.URL); err != nil {
 		return err
@@ -16,7 +16,7 @@ func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 	repos.Log.Printf("*\n")
 
 	for {
-		header := invoke.Header{}
+		header := schema.Header{}
 		suggestion := []string{"content-type", "accept"}
 		if err := repos.Prompt.AskSuggest("Header Name", "(To skip, click enter)", suggestion, &header.Name); err != nil {
 			return err
