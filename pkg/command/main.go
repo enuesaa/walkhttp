@@ -6,6 +6,7 @@ import (
 
 	"github.com/enuesaa/walkhttp/pkg/invoke"
 	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/pkg/usecase"
 	"github.com/pkg/browser"
 	"github.com/urfave/cli/v2"
 )
@@ -35,9 +36,7 @@ func New(repos repository.Repos) *cli.App {
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
 
-			repos.Log.Printf("\n")
-			repos.Log.Printf("Serving web console on localhost:%d.\n", port)
-			repos.Log.Printf("\n")
+			usecase.PrintBanner(repos)
 
 			go func() {
 				time.Sleep(1 * time.Second)
