@@ -22,6 +22,12 @@ func New(repos repository.Repos) *cli.App {
 				Usage:    "Serve port",
 				Value:    3000,
 			},
+			&cli.StringFlag{
+				Name:     "config",
+				Aliases: []string{"c"},
+				Usage:    "config file path",
+				Value:    "walkhttp.json",
+			},
 		},
 		Commands: []*cli.Command{
 			NewGetCommand(repos),

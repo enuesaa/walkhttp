@@ -12,9 +12,9 @@ func NewDeleteCommand(repos repository.Repos) *cli.Command {
 		Usage: "make http DELETE request",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     "collection",
+				Name:     "config",
 				Aliases: []string{"c"},
-				Usage:    "walkhttp collection file path",
+				Usage:    "config file path",
 				Value:    "walkhttp.json",
 			},
 		},

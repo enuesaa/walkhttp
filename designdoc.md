@@ -11,5 +11,5 @@ walkhttp post -c walkhttp.json -v
 walkhttp put -c walkhttp.json
 walkhttp delete -c walkhttp.json
 walkhttp search -c walkhttp.json
-walkhttp # serve web console
+walkhttp -c walkhttp.json # serve web console
 ```
