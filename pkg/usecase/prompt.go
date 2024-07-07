@@ -1,12 +1,12 @@
 package usecase
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/config"
+	"github.com/enuesaa/walkhttp/pkg/schema"
 	"github.com/enuesaa/walkhttp/pkg/invoke"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func Prompt(repos repository.Repos, method string, conf config.Config) error {
+func Prompt(repos repository.Repos, method string, conf schema.Config) error {
 	invokeSrv := invoke.NewInvokeSrv(repos)
 	invocation := invokeSrv.Create(method, conf.BaseUrl)
 	repos.Log.Printf("***\n")

@@ -1,23 +1,23 @@
 package usecase
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/config"
+	"github.com/enuesaa/walkhttp/pkg/schema"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func LoadConfig(repos repository.Repos, path string) config.Config {
+func LoadConfig(repos repository.Repos, path string) schema.Config {
 	if path == "" {
-		return config.New()
+		return schema.NewConfig()
 	}
-	configSrv := config.NewSrv(repos)
+	configSrv := schema.NewConfigSrv(repos)
 	conf, err := configSrv.Read(path)
 	if err != nil {
-		return config.New()
+		return schema.NewConfig()
 	}
 	return conf
 }
 
-func WriteConfig(repos repository.Repos, path string, conf config.Config) error {
-	configSrv := config.NewSrv(repos)
+func WriteConfig(repos repository.Repos, path string, conf schema.Config) error {
+	configSrv := schema.NewConfigSrv(repos)
 	return configSrv.Write(path, conf)
 }

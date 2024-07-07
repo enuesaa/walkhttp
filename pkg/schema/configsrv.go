@@ -1,4 +1,4 @@
-package config
+package schema
 
 import (
 	"encoding/json"
@@ -6,7 +6,7 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func NewSrv(repos repository.Repos) ConfigSrv {
+func NewConfigSrv(repos repository.Repos) ConfigSrv {
 	return ConfigSrv{repos: repos}
 }
 
