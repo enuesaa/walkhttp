@@ -1,13 +1,15 @@
 # designdoc
 
-## TODO
-- インタフェースの調整が必要
-  - web or cli
-  - サブコマンドを作るのか
-- postman みたいにコレクション機能は欲しい
-- 実行したらコレクションに追加するみたいな
-- イメージに近いもの
-  https://github.com/charmbracelet/huh?tab=readme-ov-file#what-about-bubble-tea
+- 1セッションでなんでもできなきゃ、とこだわる必要はない
+- サブコマンドを定義して、それぞれがプロンプトを立ち上げられればいい
 
-## インタフェース
-- サブコマンドなし
+## Commands
+```bash
+walkhttp get -c walkhttp.json
+walkhttp post -c walkhttp.json
+walkhttp post -c walkhttp.json -v
+walkhttp put -c walkhttp.json
+walkhttp delete -c walkhttp.json
+walkhttp search -c walkhttp.json
+walkhttp # serve web console
+```
