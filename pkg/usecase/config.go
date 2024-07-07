@@ -5,9 +5,16 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func ReadConfig(repos repository.Repos, path string) (config.Config, error) {
+func LoadConfig(repos repository.Repos, path string) config.Config {
+	if path == "" {
+		return config.New()
+	}
 	configSrv := config.NewSrv(repos)
-	return configSrv.Read(path)
+	conf, err := configSrv.Read(path)
+	if err != nil {
+		return config.New()
+	}
+	return conf
 }
 
 func WriteConfig(repos repository.Repos, path string, conf config.Config) error {
