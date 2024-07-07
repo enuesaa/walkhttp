@@ -23,5 +23,13 @@ func Prompt(repos repository.Repos, method string) error {
 		return err
 	}
 
+	// config file modified
+	// do you save?
+
+	// リクエストが終わったら prompt でクエリできる
+	// headers
+	// headers.Accept
+	// body
+
 	return nil
 }
