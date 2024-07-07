@@ -14,7 +14,7 @@ import (
 func New(repos repository.Repos) *cli.App {
 	app := &cli.App{
 		Name:    "walkhttp",
-		Version: "0.0.9",
+		Version: "0.0.8",
 		Usage:   "A CLI tool to call http endpoint with browser or prompt.",
 		Flags: []cli.Flag{
 			&cli.IntFlag{
