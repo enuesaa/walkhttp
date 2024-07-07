@@ -10,7 +10,6 @@ import (
 
 func main() {
 	repos := repository.New()
-
 	app := cli.New(repos)
 
 	if err := app.Run(os.Args); err != nil {

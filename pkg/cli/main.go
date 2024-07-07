@@ -23,6 +23,13 @@ func New(repos repository.Repos) *cli.App {
 				Category: "SERVE",
 			},
 		},
+		Commands: []*cli.Command{
+			NewGetCommand(repos),
+			NewPostCommand(repos),
+			NewPutCommand(repos),
+			NewDeleteCommand(repos),
+			NewOptionsCommand(repos),
+		},
 		Args:      true,
 		ArgsUsage: "commands",
 		Action: func(c *cli.Context) error {
@@ -43,6 +50,7 @@ func New(repos repository.Repos) *cli.App {
 		},
 		Suggest: true,
 	}
+
 
 	// disable default
 	app.OnUsageError = func(c *cli.Context, err error, isSubcommand bool) error {
