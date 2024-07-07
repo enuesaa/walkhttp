@@ -21,7 +21,6 @@ func New(repos repository.Repos) *cli.App {
 				Name:     "port",
 				Usage:    "Serve port",
 				Value:    3000,
-				Category: "SERVE",
 			},
 		},
 		Commands: []*cli.Command{
@@ -31,8 +30,6 @@ func New(repos repository.Repos) *cli.App {
 			NewDeleteCommand(repos),
 			NewOptionsCommand(repos),
 		},
-		Args:      true,
-		ArgsUsage: "commands",
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
 
@@ -50,7 +47,6 @@ func New(repos repository.Repos) *cli.App {
 		Suggest: true,
 	}
 
-
 	// disable default
 	app.OnUsageError = func(c *cli.Context, err error, isSubcommand bool) error {
 		return err
@@ -66,10 +62,9 @@ AUTHOR:
 	{{end}}{{if .Commands}}
 COMMANDS:
 {{range .Commands}}{{if not .HideHelp}}   {{join .Names ", "}}{{ "\t"}}{{.Usage}}{{ "\n" }}{{end}}{{end}}{{end}}{{if .VisibleFlags}}
-FLAGS:{{range .VisibleFlagCategories}}{{if len .Name}}  {{.Name}}{{end}}
-	{{range .Flags}}{{.}}
-	{{end}}
-{{end}}{{end}}`
+FLAGS:{{range .Flags}}
+	{{.}}{{end}}
+{{end}}`
 
 	return app
 }
