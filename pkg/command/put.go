@@ -1,14 +1,14 @@
-package cli
+package command
 
 import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/urfave/cli/v2"
 )
 
-func NewDeleteCommand(repos repository.Repos) *cli.Command {
+func NewPutCommand(repos repository.Repos) *cli.Command {
 	app := &cli.Command{
-		Name:  "delete",
-		Usage: "make http DELETE request",
+		Name:  "put",
+		Usage: "make http PUT request",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     "collection",

@@ -1,14 +1,14 @@
-package cli
+package command
 
 import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/urfave/cli/v2"
 )
 
-func NewPostCommand(repos repository.Repos) *cli.Command {
+func NewOptionsCommand(repos repository.Repos) *cli.Command {
 	app := &cli.Command{
-		Name:  "post",
-		Usage: "make http POST request",
+		Name:  "options",
+		Usage: "make http OPTIONS request",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:     "collection",
