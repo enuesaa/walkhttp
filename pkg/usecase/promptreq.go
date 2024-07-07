@@ -9,7 +9,6 @@ import (
 
 func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
 	repos.Log.Printf("* %s\n", invocation.Method)
-	invocation.URL = "https://"
 	if err := repos.Prompt.Ask("Url", "", &invocation.URL); err != nil {
 		return err
 	}
