@@ -1,23 +1,23 @@
 package usecase
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/config"
+	"github.com/enuesaa/walkhttp/pkg/invoke"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func LoadConfig(repos repository.Repos, path string) config.Config {
+func LoadConfig(repos repository.Repos, path string) invoke.Config {
 	if path == "" {
-		return config.NewConfig()
+		return invoke.NewConfig()
 	}
-	configSrv := config.NewConfigSrv(repos)
+	configSrv := invoke.NewConfigSrv(repos)
 	conf, err := configSrv.Read(path)
 	if err != nil {
-		return config.NewConfig()
+		return invoke.NewConfig()
 	}
 	return conf
 }
 
-func WriteConfig(repos repository.Repos, path string, conf config.Config) error {
-	configSrv := config.NewConfigSrv(repos)
+func WriteConfig(repos repository.Repos, path string, conf invoke.Config) error {
+	configSrv := invoke.NewConfigSrv(repos)
 	return configSrv.Write(path, conf)
 }

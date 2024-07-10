@@ -1,4 +1,4 @@
-package config
+package invoke
 
 import (
 	"github.com/enuesaa/walkhttp/pkg/serve/schema"
