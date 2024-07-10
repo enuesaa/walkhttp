@@ -1,4 +1,8 @@
-package schema
+package config
+
+import (
+	"github.com/enuesaa/walkhttp/pkg/serve/schema"
+)
 
 func NewConfig() Config {
 	return Config{
@@ -14,6 +18,6 @@ type Config struct {
 type Endpoint struct {
 	Path string `json:"path"` // like `/aaa`
 	Method string `json:"method"` // like `GET`
-	Headers []Header `json:"headers"` // default headers
+	Headers []schema.Header `json:"headers"` // default headers
 	Body string `json:"body"` // default body
 }

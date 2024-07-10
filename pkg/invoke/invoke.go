@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/enuesaa/walkhttp/pkg/schema"
+	"github.com/enuesaa/walkhttp/pkg/serve/schema"
 )
 
 func (srv *InvokeSrv) Invoke(invocation *schema.Invocation) error {

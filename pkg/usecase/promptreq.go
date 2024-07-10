@@ -3,7 +3,7 @@ package usecase
 import (
 	"fmt"
 
-	"github.com/enuesaa/walkhttp/pkg/schema"
+	"github.com/enuesaa/walkhttp/pkg/serve/schema"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 

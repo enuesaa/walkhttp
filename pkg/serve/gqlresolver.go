@@ -6,7 +6,7 @@ import (
 
 	"github.com/enuesaa/walkhttp/pkg/invoke"
 	"github.com/enuesaa/walkhttp/pkg/serve/gql"
-	"github.com/enuesaa/walkhttp/pkg/schema"
+	"github.com/enuesaa/walkhttp/pkg/serve/schema"
 	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/google/uuid"
 )
