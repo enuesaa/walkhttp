@@ -27,7 +27,7 @@ func (srv *ConfigSrv) Read(path string) (Config, error) {
 }
 
 func (srv *ConfigSrv) Write(path string, config Config) error {
-	fbytes, err := json.Marshal(config)
+	fbytes, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
 		return err
 	}
