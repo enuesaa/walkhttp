@@ -6,7 +6,7 @@ import (
 )
 
 func Prompt(repos repository.Repos, method string, conf invoke.Config) error {
-	invokeSrv := invoke.NewInvokeSrv(repos)
+	invokeSrv := invoke.New(repos)
 	invocation := invokeSrv.Create(method, conf.BaseUrl)
 	repos.Log.Printf("***\n")
 	if err := PromptReq(repos, &invocation); err != nil {

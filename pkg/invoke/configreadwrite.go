@@ -2,19 +2,9 @@ package invoke
 
 import (
 	"encoding/json"
-
-	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func NewConfigSrv(repos repository.Repos) ConfigSrv {
-	return ConfigSrv{repos: repos}
-}
-
-type ConfigSrv struct {
-	repos repository.Repos
-}
-
-func (srv *ConfigSrv) Read(path string) (Config, error) {
+func (srv *InvokeSrv) Read(path string) (Config, error) {
 	fbytes, err := srv.repos.Fs.Read(path)
 	if err != nil {
 		return Config{}, err
@@ -26,7 +16,7 @@ func (srv *ConfigSrv) Read(path string) (Config, error) {
 	return config, nil
 }
 
-func (srv *ConfigSrv) Write(path string, config Config) error {
+func (srv *InvokeSrv) Write(path string, config Config) error {
 	fbytes, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
 		return err

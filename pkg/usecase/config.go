@@ -9,7 +9,7 @@ func LoadConfig(repos repository.Repos, path string) invoke.Config {
 	if path == "" {
 		return invoke.NewConfig()
 	}
-	configSrv := invoke.NewConfigSrv(repos)
+	configSrv := invoke.New(repos)
 	conf, err := configSrv.Read(path)
 	if err != nil {
 		return invoke.NewConfig()
@@ -18,6 +18,6 @@ func LoadConfig(repos repository.Repos, path string) invoke.Config {
 }
 
 func WriteConfig(repos repository.Repos, path string, conf invoke.Config) error {
-	configSrv := invoke.NewConfigSrv(repos)
+	configSrv := invoke.New(repos)
 	return configSrv.Write(path, conf)
 }

@@ -7,7 +7,7 @@ import (
 )
 
 func Invoke(repos repository.Repos, invocation *schema.Invocation) error {
-	invokeSrv := invoke.NewInvokeSrv(repos)
+	invokeSrv := invoke.New(repos)
 	if err := invokeSrv.Invoke(invocation); err != nil {
 		return err
 	}

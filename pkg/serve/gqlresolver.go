@@ -93,7 +93,7 @@ func (r *Resolver) Query() gql.QueryResolver {
 }
 
 func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation schema.ServerInvocationInput) (*bool, error) {
-	invokeSrv := invoke.NewInvokeSrv(r.repos)
+	invokeSrv := invoke.New(r.repos)
 	data := invokeSrv.Create(invocation.Method, invocation.URL)
 	if err := invokeSrv.Invoke(&data); err != nil {
 		return nil, err

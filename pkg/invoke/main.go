@@ -4,7 +4,7 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func NewInvokeSrv(repos repository.Repos) InvokeSrv {
+func New(repos repository.Repos) InvokeSrv {
 	return InvokeSrv{
 		repos: repos,
 	}
