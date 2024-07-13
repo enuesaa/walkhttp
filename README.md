@@ -26,10 +26,6 @@ FLAGS:
   --version, -v             print the version
 ```
 
-## Development Plan
-- [x] [prompt] create `get`, `post`, `put`, `delete`, `options` subcommand. These commands start prompt with received method.
-- [ ] [prompt] implement rich prompt using go-prompt or huh.
-
 ### Background
 - 「1セッションでなんでもできる」必要はない
 - サブコマンドを定義して、それぞれがプロンプトを立ち上げられればいい

@@ -25,9 +25,6 @@ func Prompt(repos repository.Repos, method string, conf invoke.Config) error {
 		return err
 	}
 
-	// config file modified
-	// do you save?
-
 	// リクエストが終わったら prompt でクエリできる
 	// headers
 	// headers.Accept
