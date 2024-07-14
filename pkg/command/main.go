@@ -18,15 +18,15 @@ func New(repos repository.Repos) *cli.App {
 		Usage:   "A CLI tool to call http endpoint with browser or prompt.",
 		Flags: []cli.Flag{
 			&cli.IntFlag{
-				Name:     "port",
-				Usage:    "Serve port",
-				Value:    3000,
+				Name:  "port",
+				Usage: "Serve port",
+				Value: 3000,
 			},
 			&cli.StringFlag{
-				Name:     "config",
+				Name:    "config",
 				Aliases: []string{"c"},
-				Usage:    "config file path",
-				Value:    "walkhttp.json",
+				Usage:   "config file path",
+				Value:   "walkhttp.json",
 			},
 		},
 		Commands: []*cli.Command{

@@ -5,14 +5,14 @@ import (
 	"time"
 
 	"github.com/enuesaa/walkhttp/pkg/invoke"
+	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/enuesaa/walkhttp/pkg/serve/gql"
 	"github.com/enuesaa/walkhttp/pkg/serve/schema"
-	"github.com/enuesaa/walkhttp/pkg/repository"
 	"github.com/google/uuid"
 )
 
 type Resolver struct {
-	repos repository.Repos
+	repos   repository.Repos
 	baseUrl string
 }
 
@@ -28,7 +28,7 @@ type subscriptionResolver struct {
 	*Resolver
 }
 
-//TODO refactor
+// TODO refactor
 func (r *queryResolver) AppConfig(ctx context.Context) (*schema.AppConfig, error) {
 	config := schema.AppConfig{
 		BaseURL: r.baseUrl,

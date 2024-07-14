@@ -19,7 +19,7 @@ func ServeGQ(repos repository.Repos, baseUrl string, port int) echo.HandlerFunc 
 	// see https://github.com/99designs/gqlgen/issues/2826
 	gqhandle := handler.New(gql.NewExecutableSchema(gql.Config{
 		Resolvers: &Resolver{
-			repos: repos,
+			repos:   repos,
 			baseUrl: baseUrl,
 		},
 	}))

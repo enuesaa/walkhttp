@@ -3,8 +3,8 @@ package usecase
 import (
 	"fmt"
 
-	"github.com/enuesaa/walkhttp/pkg/serve/schema"
 	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/pkg/serve/schema"
 )
 
 func PromptReq(repos repository.Repos, invocation *schema.Invocation) error {

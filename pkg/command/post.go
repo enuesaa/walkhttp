@@ -12,10 +12,10 @@ func NewPostCommand(repos repository.Repos) *cli.Command {
 		Usage: "make http POST request",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:     "config",
+				Name:    "config",
 				Aliases: []string{"c"},
-				Usage:    "config file path",
-				Value:    "walkhttp.json",
+				Usage:   "config file path",
+				Value:   "walkhttp.json",
 			},
 		},
 		Action: func(c *cli.Context) error {

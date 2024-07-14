@@ -22,7 +22,7 @@ func (srv *InvokeSrv) Write(path string, config Config) error {
 		return err
 	}
 	if err := srv.repos.Fs.Create(path, fbytes); err != nil {
-		return  err
+		return err
 	}
 	return nil
 }
