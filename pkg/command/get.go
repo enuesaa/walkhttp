@@ -7,7 +7,7 @@ import (
 )
 
 func NewGetCommand(repos repository.Repos) *cli.Command {
-	app := &cli.Command{
+	cmd := &cli.Command{
 		Name:  "get",
 		Usage: "make http GET request",
 		Flags: []cli.Flag{
@@ -26,5 +26,5 @@ func NewGetCommand(repos repository.Repos) *cli.Command {
 		},
 	}
 
-	return app
+	return cmd
 }

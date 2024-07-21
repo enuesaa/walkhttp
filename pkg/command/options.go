@@ -7,7 +7,7 @@ import (
 )
 
 func NewOptionsCommand(repos repository.Repos) *cli.Command {
-	app := &cli.Command{
+	cmd := &cli.Command{
 		Name:  "options",
 		Usage: "make http OPTIONS request",
 		Flags: []cli.Flag{
@@ -26,5 +26,5 @@ func NewOptionsCommand(repos repository.Repos) *cli.Command {
 		},
 	}
 
-	return app
+	return cmd
 }

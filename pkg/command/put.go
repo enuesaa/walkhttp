@@ -7,7 +7,7 @@ import (
 )
 
 func NewPutCommand(repos repository.Repos) *cli.Command {
-	app := &cli.Command{
+	cmd := &cli.Command{
 		Name:  "put",
 		Usage: "make http PUT request",
 		Flags: []cli.Flag{
@@ -26,5 +26,5 @@ func NewPutCommand(repos repository.Repos) *cli.Command {
 		},
 	}
 
-	return app
+	return cmd
 }

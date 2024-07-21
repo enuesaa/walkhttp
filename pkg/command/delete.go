@@ -7,7 +7,7 @@ import (
 )
 
 func NewDeleteCommand(repos repository.Repos) *cli.Command {
-	app := &cli.Command{
+	cmd := &cli.Command{
 		Name:  "delete",
 		Usage: "make http DELETE request",
 		Flags: []cli.Flag{
@@ -26,5 +26,5 @@ func NewDeleteCommand(repos repository.Repos) *cli.Command {
 		},
 	}
 
-	return app
+	return cmd
 }

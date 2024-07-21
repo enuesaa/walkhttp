@@ -7,7 +7,7 @@ import (
 )
 
 func NewPostCommand(repos repository.Repos) *cli.Command {
-	app := &cli.Command{
+	cmd := &cli.Command{
 		Name:  "post",
 		Usage: "make http POST request",
 		Flags: []cli.Flag{
@@ -26,5 +26,5 @@ func NewPostCommand(repos repository.Repos) *cli.Command {
 		},
 	}
 
-	return app
+	return cmd
 }

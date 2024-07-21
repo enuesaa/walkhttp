@@ -12,7 +12,7 @@ import (
 )
 
 func New(repos repository.Repos) *cli.App {
-	app := &cli.App{
+	cmd := &cli.App{
 		Name:    "walkhttp",
 		Version: "0.0.9",
 		Usage:   "A CLI tool to call http endpoint with browser or prompt.",
@@ -56,10 +56,10 @@ func New(repos repository.Repos) *cli.App {
 	}
 
 	// disable default
-	app.OnUsageError = func(c *cli.Context, err error, isSubcommand bool) error {
+	cmd.OnUsageError = func(c *cli.Context, err error, isSubcommand bool) error {
 		return err
 	}
-	app.HideHelpCommand = true
+	cmd.HideHelpCommand = true
 	cli.AppHelpTemplate = `{{.Usage}}
 
 USAGE:
@@ -74,5 +74,5 @@ FLAGS:{{range .Flags}}
 	{{.}}{{end}}
 {{end}}`
 
-	return app
+	return cmd
 }
