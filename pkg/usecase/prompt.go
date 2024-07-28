@@ -21,14 +21,5 @@ func Prompt(repos repository.Repos, method string, conf invoke.Workspace) error 
 	repos.Log.Printf("***\n")
 	repos.Log.Printf("\n")
 
-	if err := repos.DB.Save(invocation.ID, invocation); err != nil {
-		return err
-	}
-
-	// リクエストが終わったら prompt でクエリできる
-	// headers
-	// headers.Accept
-	// body
-
-	return nil
+	return invokeSrv.Save(invocation)
 }
