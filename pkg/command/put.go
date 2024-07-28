@@ -12,14 +12,14 @@ func NewPutCommand(repos repository.Repos) *cli.Command {
 		Usage: "make http PUT request",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:    "config",
-				Aliases: []string{"c"},
-				Usage:   "config file path",
+				Name:    "workspace",
+				Aliases: []string{"w"},
+				Usage:   "workspace file path",
 				Value:   "walkhttp.json",
 			},
 		},
 		Action: func(c *cli.Context) error {
-			configpath := c.String("config")
+			configpath := c.String("workspace")
 			conf := usecase.LoadConfig(repos, configpath)
 
 			return usecase.Prompt(repos, "PUT", conf)

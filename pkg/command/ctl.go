@@ -22,15 +22,15 @@ func NewCtlCommand(repos repository.Repos) *cli.Command {
 				Value: 3000,
 			},
 			&cli.StringFlag{
-				Name:    "config",
-				Aliases: []string{"c"},
-				Usage:   "config file path",
+				Name:    "workspace",
+				Aliases: []string{"w"},
+				Usage:   "workspace file path",
 				Value:   "walkhttp.json",
 			},
 		},
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
-			configpath := c.String("config")
+			configpath := c.String("workspace")
 			conf := usecase.LoadConfig(repos, configpath)
 
 			usecase.PrintBanner(repos)
