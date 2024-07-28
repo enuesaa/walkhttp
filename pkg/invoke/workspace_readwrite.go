@@ -4,19 +4,19 @@ import (
 	"encoding/json"
 )
 
-func (srv *InvokeSrv) Read(path string) (Config, error) {
+func (srv *InvokeSrv) Read(path string) (Workspace, error) {
 	fbytes, err := srv.repos.Fs.Read(path)
 	if err != nil {
-		return Config{}, err
+		return Workspace{}, err
 	}
-	var config Config
+	var config Workspace
 	if err := json.Unmarshal(fbytes, &config); err != nil {
-		return Config{}, err
+		return Workspace{}, err
 	}
 	return config, nil
 }
 
-func (srv *InvokeSrv) Write(path string, config Config) error {
+func (srv *InvokeSrv) Write(path string, config Workspace) error {
 	fbytes, err := json.MarshalIndent(config, "", "  ")
 	if err != nil {
 		return err

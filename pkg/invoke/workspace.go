@@ -4,13 +4,13 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/serve/schema"
 )
 
-func NewConfig() Config {
-	return Config{
+func NewConfig() Workspace {
+	return Workspace{
 		BaseUrl: "https://",
 	}
 }
 
-type Config struct {
+type Workspace struct {
 	BaseUrl string `json:"baseUrl"` // like `https://example.com`
 	// Histories []History `json:"histories"`
 }

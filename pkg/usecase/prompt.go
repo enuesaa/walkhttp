@@ -5,7 +5,7 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func Prompt(repos repository.Repos, method string, conf invoke.Config) error {
+func Prompt(repos repository.Repos, method string, conf invoke.Workspace) error {
 	invokeSrv := invoke.New(repos)
 	invocation := invokeSrv.Create(method, conf.BaseUrl)
 	repos.Log.Printf("***\n")

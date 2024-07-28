@@ -5,7 +5,7 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
 )
 
-func LoadConfig(repos repository.Repos, path string) invoke.Config {
+func LoadConfig(repos repository.Repos, path string) invoke.Workspace {
 	if path == "" {
 		return invoke.NewConfig()
 	}
@@ -17,7 +17,7 @@ func LoadConfig(repos repository.Repos, path string) invoke.Config {
 	return conf
 }
 
-func WriteConfig(repos repository.Repos, path string, conf invoke.Config) error {
+func WriteConfig(repos repository.Repos, path string, conf invoke.Workspace) error {
 	configSrv := invoke.New(repos)
 	return configSrv.Write(path, conf)
 }
