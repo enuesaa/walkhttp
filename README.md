@@ -20,8 +20,8 @@ COMMANDS:
    options  make http OPTIONS request
 
 FLAGS:
-  --port value              Serve port (default: 3000)
-  --config value, -c value  config file path (default: "walkhttp.json")
-  --help, -h                show help
-  --version, -v             print the version
+  --port value                Serve port (default: 3000)
+  --workspace value, -w value workspace file path (default: "walkhttp.json")
+  --help, -h                  show help
+  --version, -v               print the version
 ```
