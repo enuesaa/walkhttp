@@ -31,7 +31,7 @@ func (srv *InvokeSrv) Invoke(invocation *Invocation) error {
 	invocation.Status = res.StatusCode
 	for key, value := range res.Header {
 		if len(value) == 0 {
-			return fmt.Errorf("failed to map response header because there is no value supplied.")
+			return fmt.Errorf("failed to map response header because there is no value supplied")
 		}
 		invocation.ResponseHeaders = append(invocation.ResponseHeaders, &Header{
 			Name:  key,
