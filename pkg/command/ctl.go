@@ -14,7 +14,7 @@ import (
 func NewCtlCommand(repos repository.Repos) *cli.Command {
 	cmd := &cli.Command{
 		Name:  "ctl",
-		Usage: "Serve web console",
+		Usage: "serve web console",
 		Flags: []cli.Flag{
 			&cli.IntFlag{
 				Name:  "port",

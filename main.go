@@ -17,6 +17,7 @@ func main() {
 		Version: "0.0.9",
 		Usage:   "A CLI tool to call http endpoint with browser or prompt.",
 		Commands: []*cli.Command{
+			command.NewCtlCommand(repos),
 			command.NewGetCommand(repos),
 			command.NewPostCommand(repos),
 			command.NewPutCommand(repos),
