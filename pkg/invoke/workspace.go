@@ -12,10 +12,10 @@ func NewConfig() Config {
 
 type Config struct {
 	BaseUrl string `json:"baseUrl"` // like `https://example.com`
-	// Endpoints []Endpoint `json:"endpoints"`
+	// Histories []History `json:"histories"`
 }
 
-type Endpoint struct {
+type History struct {
 	Path    string          `json:"path"`    // like `/aaa`
 	Method  string          `json:"method"`  // like `GET`
 	Headers []schema.Header `json:"headers"` // default headers
