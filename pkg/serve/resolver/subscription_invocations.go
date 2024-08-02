@@ -1,4 +1,4 @@
-package serve
+package resolver
 
 import (
 	"context"
@@ -7,11 +7,6 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/invoke"
 	"github.com/enuesaa/walkhttp/pkg/serve/schema"
 )
-
-
-type subscriptionResolver struct {
-	*Resolver
-}
 
 func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*schema.Invocation, error) {
 	ch := make(chan []*schema.Invocation)
@@ -22,9 +17,9 @@ func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*schem
 			time.Sleep(1 * time.Second)
 
 			invocations := make([]*schema.Invocation, 0)
-			ids := r.repos.DB.List()
+			ids := r.Repos.DB.List()
 			for _, id := range ids {
-				data, err := r.repos.DB.Get(id)
+				data, err := r.Repos.DB.Get(id)
 				if err != nil {
 					continue
 				}

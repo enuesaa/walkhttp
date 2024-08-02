@@ -1,4 +1,4 @@
-package serve
+package resolver
 
 import (
 	"github.com/enuesaa/walkhttp/pkg/repository"
@@ -6,8 +6,8 @@ import (
 )
 
 type Resolver struct {
-	repos   repository.Repos
-	baseUrl string
+	Repos   repository.Repos
+	BaseUrl string
 }
 
 func (r *Resolver) Query() gql.QueryResolver {
