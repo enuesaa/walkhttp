@@ -74,8 +74,18 @@ func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*schem
 				if err != nil {
 					continue
 				}
-				invocation := data.(schema.Invocation)
-				invocations = append(invocations, &invocation)
+				invocation := data.(invoke.Invocation)
+				invocations = append(invocations, &schema.Invocation{
+					ID: invocation.ID,
+					Status: invocation.Status,
+					Method: invocation.Method,
+					URL: invocation.URL,
+					RequestHeaders: make([]*schema.Header, 0),
+					ResponseHeaders: make([]*schema.Header, 0),
+					RequestBody: invocation.RequestBody,
+					ResponseBody: invocation.ResponseBody,
+					Created: invocation.Created,
+				})
 			}
 			select {
 			case <-ctx.Done():
