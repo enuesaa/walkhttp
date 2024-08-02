@@ -1,0 +1,6 @@
+input ServerInvocationInput {
+  method: String!
+  url: String!
+  requestHeaders: [HeaderInput]
+  requestBody: String!
+}

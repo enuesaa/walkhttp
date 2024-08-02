@@ -383,7 +383,31 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../schema/schema.graphqls", Input: `type Invocation {
+	{Name: "../schema/appconfig.graphql", Input: `type AppConfig {
+  baseUrl: String!
+}
+`, BuiltIn: false},
+	{Name: "../schema/browser_invocation_input.graphql", Input: `input BrowserInvocationInput {
+  status: Int!
+  method: String!
+  url: String!
+  requestHeaders: [HeaderInput]
+  responseHeaders: [HeaderInput]
+  requestBody: String!
+  responseBody: String!
+}
+`, BuiltIn: false},
+	{Name: "../schema/header.graphql", Input: `type Header {
+  name: String!
+  value: String!
+}
+`, BuiltIn: false},
+	{Name: "../schema/header_input.graphql", Input: `input HeaderInput {
+  name: String!
+  value: String!
+}
+`, BuiltIn: false},
+	{Name: "../schema/invocation.graphql", Input: `type Invocation {
   id: ID!
   status: Int!
   method: String!
@@ -394,48 +418,32 @@ var sources = []*ast.Source{
   responseBody: String!
   created: String!
 }
-
-type Header {
-  name: String!
-  value: String!
+`, BuiltIn: false},
+	{Name: "../schema/mutation.graphql", Input: `type Mutation {
+  makeServerInvocation(invocation: ServerInvocationInput!): Boolean
+  makeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
 }
-
-type AppConfig {
-  baseUrl: String!
-}
-
-type Query {
+`, BuiltIn: false},
+	{Name: "../schema/query.graphql", Input: `type Query {
   appConfig: AppConfig!
   invocations: [Invocation!]!
   invocation(id: ID!): Invocation
 }
-
-input HeaderInput {
-  name: String!
-  value: String!
+`, BuiltIn: false},
+	{Name: "../schema/schema.graphql", Input: `schema {
+  query: Query
+  mutation: Mutation
+  subscription: Subscription
 }
-input ServerInvocationInput {
+`, BuiltIn: false},
+	{Name: "../schema/server_invocation_input.graphql", Input: `input ServerInvocationInput {
   method: String!
   url: String!
   requestHeaders: [HeaderInput]
   requestBody: String!
 }
-input BrowserInvocationInput {
-  status: Int!
-  method: String!
-  url: String!
-  requestHeaders: [HeaderInput]
-  responseHeaders: [HeaderInput]
-  requestBody: String!
-  responseBody: String!
-}
-
-type Mutation {
-  makeServerInvocation(invocation: ServerInvocationInput!): Boolean
-  makeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
-}
-
-type Subscription {
+`, BuiltIn: false},
+	{Name: "../schema/subscription.graphql", Input: `type Subscription {
   invocations: [Invocation!]!
 }
 `, BuiltIn: false},

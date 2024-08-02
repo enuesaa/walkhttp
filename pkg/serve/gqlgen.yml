@@ -1,8 +1,10 @@
 # see https://tech.layerx.co.jp/entry/2021/10/22/171242
 # run `go run github.com/99designs/gqlgen generate`
 
+# see https://qiita.com/__m/items/e4df77e5f58f862db644
+
 schema:
-  - 'schema/*.graphqls'
+  - 'schema/*.graphql'
 
 exec:
   filename: gql/exec.go

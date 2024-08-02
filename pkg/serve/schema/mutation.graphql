@@ -1,0 +1,4 @@
+type Mutation {
+  makeServerInvocation(invocation: ServerInvocationInput!): Boolean
+  makeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
+}

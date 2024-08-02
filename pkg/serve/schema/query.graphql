@@ -1,0 +1,5 @@
+type Query {
+  appConfig: AppConfig!
+  invocations: [Invocation!]!
+  invocation(id: ID!): Invocation
+}

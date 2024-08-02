@@ -1,0 +1,11 @@
+type Invocation {
+  id: ID!
+  status: Int!
+  method: String!
+  url: String!
+  requestHeaders: [Header]
+  responseHeaders: [Header]
+  requestBody: String!
+  responseBody: String!
+  created: String!
+}

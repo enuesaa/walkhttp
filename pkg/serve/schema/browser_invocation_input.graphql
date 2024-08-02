@@ -1,0 +1,9 @@
+input BrowserInvocationInput {
+  status: Int!
+  method: String!
+  url: String!
+  requestHeaders: [HeaderInput]
+  responseHeaders: [HeaderInput]
+  requestBody: String!
+  responseBody: String!
+}
