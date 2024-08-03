@@ -5,16 +5,16 @@
     "dev": "rm -rf .next && next dev --port 3001",
     "build": "next build",
     "format": "prettier --write \"src/**/*.{ts,tsx}\"",
-    "gqlgen": "graphql-codegen --config graph.config.ts"
+    "gen:gql": "graphql-codegen --config graph.config.ts"
   },
   "dependencies": {
     "@radix-ui/themes": "^3.1.1",
     "@vanilla-extract/css": "^1.15.3",
     "graphql-ws": "^5.16.0",
-    "next": "^14.2.4",
+    "next": "^14.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-hook-form": "^7.52.0",
+    "react-hook-form": "^7.52.2",
     "react-icons": "^5.2.1",
     "urql": "^4.1.0"
   },
@@ -23,8 +23,8 @@
     "@types/node": "20.11.1",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
-    "@vanilla-extract/next-plugin": "^2.4.2",
-    "prettier": "^3.3.2",
+    "@vanilla-extract/next-plugin": "^2.4.3",
+    "prettier": "^3.3.3",
     "typescript": "5.3.3"
   },
   "prettier": {
