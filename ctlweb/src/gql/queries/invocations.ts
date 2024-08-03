@@ -3,7 +3,7 @@ import { Query } from '@/gql/types'
 
 const query = gql`
   query ListInvocations {
-    invocations {
+    listInvocations {
       id
       status
       method

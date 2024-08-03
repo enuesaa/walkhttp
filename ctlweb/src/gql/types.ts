@@ -14,11 +14,6 @@ export type Scalars = {
   Float: { input: number; output: number }
 }
 
-export type AppConfig = {
-  __typename?: 'AppConfig'
-  baseUrl: Scalars['String']['output']
-}
-
 export type BrowserInvocationInput = {
   method: Scalars['String']['input']
   requestBody: Scalars['String']['input']
@@ -27,6 +22,11 @@ export type BrowserInvocationInput = {
   responseHeaders?: InputMaybe<Array<InputMaybe<HeaderInput>>>
   status: Scalars['Int']['input']
   url: Scalars['String']['input']
+}
+
+export type Config = {
+  __typename?: 'Config'
+  baseUrl: Scalars['String']['output']
 }
 
 export type Header = {
@@ -60,21 +60,21 @@ export type Mutation = {
 }
 
 export type MutationMakeBrowserInvocationArgs = {
-  invocation: BrowserInvocationInput
+  input: BrowserInvocationInput
 }
 
 export type MutationMakeServerInvocationArgs = {
-  invocation: ServerInvocationInput
+  input: ServerInvocationInput
 }
 
 export type Query = {
   __typename?: 'Query'
-  appConfig: AppConfig
-  invocation?: Maybe<Invocation>
-  invocations: Array<Invocation>
+  getConfig: Config
+  getInvocation?: Maybe<Invocation>
+  listInvocations: Array<Invocation>
 }
 
-export type QueryInvocationArgs = {
+export type QueryGetInvocationArgs = {
   id: Scalars['ID']['input']
 }
 
@@ -87,5 +87,5 @@ export type ServerInvocationInput = {
 
 export type Subscription = {
   __typename?: 'Subscription'
-  invocations: Array<Invocation>
+  subscribeInvocations: Array<Invocation>
 }

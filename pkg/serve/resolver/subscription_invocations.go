@@ -8,7 +8,7 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/serve/schema"
 )
 
-func (r *subscriptionResolver) Invocations(ctx context.Context) (<-chan []*schema.Invocation, error) {
+func (r *subscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan []*schema.Invocation, error) {
 	ch := make(chan []*schema.Invocation)
 
 	go func() {

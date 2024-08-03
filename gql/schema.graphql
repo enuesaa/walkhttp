@@ -5,16 +5,16 @@ schema {
 }
 
 type Query {
-  appConfig: AppConfig!
-  invocations: [Invocation!]!
-  invocation(id: ID!): Invocation
+  getConfig: Config!
+  listInvocations: [Invocation!]!
+  getInvocation(id: ID!): Invocation
 }
 
 type Mutation {
-  makeServerInvocation(invocation: ServerInvocationInput!): Boolean
-  makeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
+  makeServerInvocation(input: ServerInvocationInput!): Boolean
+  makeBrowserInvocation(input: BrowserInvocationInput!): Boolean
 }
 
 type Subscription {
-  invocations: [Invocation!]!
+  subscribeInvocations: [Invocation!]!
 }

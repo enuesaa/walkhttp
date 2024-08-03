@@ -6,7 +6,7 @@ import (
 	"github.com/enuesaa/walkhttp/pkg/serve/schema"
 )
 
-func (r *queryResolver) Invocations(ctx context.Context) ([]*schema.Invocation, error) {
+func (r *queryResolver) ListInvocations(ctx context.Context) ([]*schema.Invocation, error) {
 	list := make([]*schema.Invocation, 0)
 	ids := r.Repos.DB.List()
 	for _, id := range ids {

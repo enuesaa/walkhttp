@@ -2,7 +2,7 @@ import { Select, TextField, Button, TextArea } from '@radix-ui/themes'
 import styles from './MakeForm.css'
 import { useMakeServerInvocation } from '@/gql/queries/makeServerInvocation'
 import { useForm, Controller } from 'react-hook-form'
-import { ServerInvocationInput } from '@/graph/types'
+import { ServerInvocationInput } from '@/gql/types'
 import { useGetAppConfig } from '@/gql/queries/appConfig'
 
 export const MakeServerForm = () => {
@@ -34,7 +34,7 @@ export const MakeServerForm = () => {
       </div>
 
       <div className={styles.url}>
-        <TextField.Root defaultValue={appConfig.data?.appConfig.baseUrl} size='3' {...register('url')} />
+        <TextField.Root defaultValue={appConfig.data?.getConfig.baseUrl} size='3' {...register('url')} />
       </div>
 
       <div className={styles.body}>

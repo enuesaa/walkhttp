@@ -3,7 +3,7 @@ import { Query, ServerInvocationInput } from '@/gql/types'
 
 const query = gql`
   mutation MakeServerInvocation($invocation: ServerInvocationInput!) {
-    makeServerInvocation(invocation: $invocation)
+    makeServerInvocation(input: $invocation)
   }
 `
 

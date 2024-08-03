@@ -2,10 +2,6 @@
 
 package schema
 
-type AppConfig struct {
-	BaseURL string `json:"baseUrl"`
-}
-
 type BrowserInvocationInput struct {
 	Status          int            `json:"status"`
 	Method          string         `json:"method"`
@@ -14,6 +10,10 @@ type BrowserInvocationInput struct {
 	ResponseHeaders []*HeaderInput `json:"responseHeaders,omitempty"`
 	RequestBody     string         `json:"requestBody"`
 	ResponseBody    string         `json:"responseBody"`
+}
+
+type Config struct {
+	BaseURL string `json:"baseUrl"`
 }
 
 type Header struct {

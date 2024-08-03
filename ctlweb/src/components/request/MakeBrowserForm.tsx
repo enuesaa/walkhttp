@@ -2,7 +2,7 @@ import { Select, TextField, Button, TextArea } from '@radix-ui/themes'
 import styles from './MakeForm.css'
 import { useMakeBrowserInvocation } from '@/gql/queries/makeBrowserInvocation'
 import { Controller, useForm } from 'react-hook-form'
-import { BrowserInvocationInput } from '@/graph/types'
+import { BrowserInvocationInput } from '@/gql/types'
 import { useGetAppConfig } from '@/gql/queries/appConfig'
 
 export const MakeBrowserForm = () => {
@@ -51,7 +51,7 @@ export const MakeBrowserForm = () => {
       </div>
 
       <div className={styles.url}>
-        <TextField.Root defaultValue={appConfig.data?.appConfig.baseUrl} size='3' {...register('url')} />
+        <TextField.Root defaultValue={appConfig.data?.getConfig.baseUrl} size='3' {...register('url')} />
       </div>
 
       <div className={styles.body}>

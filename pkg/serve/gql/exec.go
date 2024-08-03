@@ -48,7 +48,7 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
-	AppConfig struct {
+	Config struct {
 		BaseURL func(childComplexity int) int
 	}
 
@@ -70,32 +70,32 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		MakeBrowserInvocation func(childComplexity int, invocation schema.BrowserInvocationInput) int
-		MakeServerInvocation  func(childComplexity int, invocation schema.ServerInvocationInput) int
+		MakeBrowserInvocation func(childComplexity int, input schema.BrowserInvocationInput) int
+		MakeServerInvocation  func(childComplexity int, input schema.ServerInvocationInput) int
 	}
 
 	Query struct {
-		AppConfig   func(childComplexity int) int
-		Invocation  func(childComplexity int, id string) int
-		Invocations func(childComplexity int) int
+		GetConfig       func(childComplexity int) int
+		GetInvocation   func(childComplexity int, id string) int
+		ListInvocations func(childComplexity int) int
 	}
 
 	Subscription struct {
-		Invocations func(childComplexity int) int
+		SubscribeInvocations func(childComplexity int) int
 	}
 }
 
 type MutationResolver interface {
-	MakeServerInvocation(ctx context.Context, invocation schema.ServerInvocationInput) (*bool, error)
-	MakeBrowserInvocation(ctx context.Context, invocation schema.BrowserInvocationInput) (*bool, error)
+	MakeServerInvocation(ctx context.Context, input schema.ServerInvocationInput) (*bool, error)
+	MakeBrowserInvocation(ctx context.Context, input schema.BrowserInvocationInput) (*bool, error)
 }
 type QueryResolver interface {
-	AppConfig(ctx context.Context) (*schema.AppConfig, error)
-	Invocations(ctx context.Context) ([]*schema.Invocation, error)
-	Invocation(ctx context.Context, id string) (*schema.Invocation, error)
+	GetConfig(ctx context.Context) (*schema.Config, error)
+	ListInvocations(ctx context.Context) ([]*schema.Invocation, error)
+	GetInvocation(ctx context.Context, id string) (*schema.Invocation, error)
 }
 type SubscriptionResolver interface {
-	Invocations(ctx context.Context) (<-chan []*schema.Invocation, error)
+	SubscribeInvocations(ctx context.Context) (<-chan []*schema.Invocation, error)
 }
 
 type executableSchema struct {
@@ -117,12 +117,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	_ = ec
 	switch typeName + "." + field {
 
-	case "AppConfig.baseUrl":
-		if e.complexity.AppConfig.BaseURL == nil {
+	case "Config.baseUrl":
+		if e.complexity.Config.BaseURL == nil {
 			break
 		}
 
-		return e.complexity.AppConfig.BaseURL(childComplexity), true
+		return e.complexity.Config.BaseURL(childComplexity), true
 
 	case "Header.name":
 		if e.complexity.Header.Name == nil {
@@ -211,7 +211,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.MakeBrowserInvocation(childComplexity, args["invocation"].(schema.BrowserInvocationInput)), true
+		return e.complexity.Mutation.MakeBrowserInvocation(childComplexity, args["input"].(schema.BrowserInvocationInput)), true
 
 	case "Mutation.makeServerInvocation":
 		if e.complexity.Mutation.MakeServerInvocation == nil {
@@ -223,40 +223,40 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.MakeServerInvocation(childComplexity, args["invocation"].(schema.ServerInvocationInput)), true
+		return e.complexity.Mutation.MakeServerInvocation(childComplexity, args["input"].(schema.ServerInvocationInput)), true
 
-	case "Query.appConfig":
-		if e.complexity.Query.AppConfig == nil {
+	case "Query.getConfig":
+		if e.complexity.Query.GetConfig == nil {
 			break
 		}
 
-		return e.complexity.Query.AppConfig(childComplexity), true
+		return e.complexity.Query.GetConfig(childComplexity), true
 
-	case "Query.invocation":
-		if e.complexity.Query.Invocation == nil {
+	case "Query.getInvocation":
+		if e.complexity.Query.GetInvocation == nil {
 			break
 		}
 
-		args, err := ec.field_Query_invocation_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_getInvocation_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Query.Invocation(childComplexity, args["id"].(string)), true
+		return e.complexity.Query.GetInvocation(childComplexity, args["id"].(string)), true
 
-	case "Query.invocations":
-		if e.complexity.Query.Invocations == nil {
+	case "Query.listInvocations":
+		if e.complexity.Query.ListInvocations == nil {
 			break
 		}
 
-		return e.complexity.Query.Invocations(childComplexity), true
+		return e.complexity.Query.ListInvocations(childComplexity), true
 
-	case "Subscription.invocations":
-		if e.complexity.Subscription.Invocations == nil {
+	case "Subscription.subscribeInvocations":
+		if e.complexity.Subscription.SubscribeInvocations == nil {
 			break
 		}
 
-		return e.complexity.Subscription.Invocations(childComplexity), true
+		return e.complexity.Subscription.SubscribeInvocations(childComplexity), true
 
 	}
 	return 0, false
@@ -383,7 +383,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../../../gql/appconfig.graphql", Input: `type AppConfig {
+	{Name: "../../../gql/config.graphql", Input: `type Config {
   baseUrl: String!
 }
 `, BuiltIn: false},
@@ -404,7 +404,7 @@ type Header {
   value: String!
 }
 `, BuiltIn: false},
-	{Name: "../../../gql/invocation_input.graphql", Input: `input BrowserInvocationInput {
+	{Name: "../../../gql/invocationInput.graphql", Input: `input BrowserInvocationInput {
   status: Int!
   method: String!
   url: String!
@@ -433,18 +433,18 @@ input HeaderInput {
 }
 
 type Query {
-  appConfig: AppConfig!
-  invocations: [Invocation!]!
-  invocation(id: ID!): Invocation
+  getConfig: Config!
+  listInvocations: [Invocation!]!
+  getInvocation(id: ID!): Invocation
 }
 
 type Mutation {
-  makeServerInvocation(invocation: ServerInvocationInput!): Boolean
-  makeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
+  makeServerInvocation(input: ServerInvocationInput!): Boolean
+  makeBrowserInvocation(input: BrowserInvocationInput!): Boolean
 }
 
 type Subscription {
-  invocations: [Invocation!]!
+  subscribeInvocations: [Invocation!]!
 }
 `, BuiltIn: false},
 }
@@ -458,14 +458,14 @@ func (ec *executionContext) field_Mutation_makeBrowserInvocation_args(ctx contex
 	var err error
 	args := map[string]interface{}{}
 	var arg0 schema.BrowserInvocationInput
-	if tmp, ok := rawArgs["invocation"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("invocation"))
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNBrowserInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐBrowserInvocationInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["invocation"] = arg0
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -473,14 +473,14 @@ func (ec *executionContext) field_Mutation_makeServerInvocation_args(ctx context
 	var err error
 	args := map[string]interface{}{}
 	var arg0 schema.ServerInvocationInput
-	if tmp, ok := rawArgs["invocation"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("invocation"))
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNServerInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐServerInvocationInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["invocation"] = arg0
+	args["input"] = arg0
 	return args, nil
 }
 
@@ -499,7 +499,7 @@ func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs
 	return args, nil
 }
 
-func (ec *executionContext) field_Query_invocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Query_getInvocation_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 string
@@ -552,8 +552,8 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _AppConfig_baseUrl(ctx context.Context, field graphql.CollectedField, obj *schema.AppConfig) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_AppConfig_baseUrl(ctx, field)
+func (ec *executionContext) _Config_baseUrl(ctx context.Context, field graphql.CollectedField, obj *schema.Config) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Config_baseUrl(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -583,9 +583,9 @@ func (ec *executionContext) _AppConfig_baseUrl(ctx context.Context, field graphq
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_AppConfig_baseUrl(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Config_baseUrl(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "AppConfig",
+		Object:     "Config",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -1100,7 +1100,7 @@ func (ec *executionContext) _Mutation_makeServerInvocation(ctx context.Context, 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().MakeServerInvocation(rctx, fc.Args["invocation"].(schema.ServerInvocationInput))
+		return ec.resolvers.Mutation().MakeServerInvocation(rctx, fc.Args["input"].(schema.ServerInvocationInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1152,7 +1152,7 @@ func (ec *executionContext) _Mutation_makeBrowserInvocation(ctx context.Context,
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().MakeBrowserInvocation(rctx, fc.Args["invocation"].(schema.BrowserInvocationInput))
+		return ec.resolvers.Mutation().MakeBrowserInvocation(rctx, fc.Args["input"].(schema.BrowserInvocationInput))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1190,8 +1190,8 @@ func (ec *executionContext) fieldContext_Mutation_makeBrowserInvocation(ctx cont
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_appConfig(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_appConfig(ctx, field)
+func (ec *executionContext) _Query_getConfig(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_getConfig(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1204,7 +1204,7 @@ func (ec *executionContext) _Query_appConfig(ctx context.Context, field graphql.
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().AppConfig(rctx)
+		return ec.resolvers.Query().GetConfig(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1216,12 +1216,12 @@ func (ec *executionContext) _Query_appConfig(ctx context.Context, field graphql.
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*schema.AppConfig)
+	res := resTmp.(*schema.Config)
 	fc.Result = res
-	return ec.marshalNAppConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐAppConfig(ctx, field.Selections, res)
+	return ec.marshalNConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐConfig(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_appConfig(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_getConfig(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1230,16 +1230,16 @@ func (ec *executionContext) fieldContext_Query_appConfig(_ context.Context, fiel
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "baseUrl":
-				return ec.fieldContext_AppConfig_baseUrl(ctx, field)
+				return ec.fieldContext_Config_baseUrl(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type AppConfig", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type Config", field.Name)
 		},
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_invocations(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_invocations(ctx, field)
+func (ec *executionContext) _Query_listInvocations(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_listInvocations(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1252,7 +1252,7 @@ func (ec *executionContext) _Query_invocations(ctx context.Context, field graphq
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Invocations(rctx)
+		return ec.resolvers.Query().ListInvocations(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1269,7 +1269,7 @@ func (ec *executionContext) _Query_invocations(ctx context.Context, field graphq
 	return ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐInvocationᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_invocations(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_listInvocations(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1302,8 +1302,8 @@ func (ec *executionContext) fieldContext_Query_invocations(_ context.Context, fi
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_invocation(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_invocation(ctx, field)
+func (ec *executionContext) _Query_getInvocation(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_getInvocation(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1316,7 +1316,7 @@ func (ec *executionContext) _Query_invocation(ctx context.Context, field graphql
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Invocation(rctx, fc.Args["id"].(string))
+		return ec.resolvers.Query().GetInvocation(rctx, fc.Args["id"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1330,7 +1330,7 @@ func (ec *executionContext) _Query_invocation(ctx context.Context, field graphql
 	return ec.marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐInvocation(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_invocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_getInvocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -1367,7 +1367,7 @@ func (ec *executionContext) fieldContext_Query_invocation(ctx context.Context, f
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_invocation_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Query_getInvocation_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return fc, err
 	}
@@ -1503,8 +1503,8 @@ func (ec *executionContext) fieldContext_Query___schema(_ context.Context, field
 	return fc, nil
 }
 
-func (ec *executionContext) _Subscription_invocations(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
-	fc, err := ec.fieldContext_Subscription_invocations(ctx, field)
+func (ec *executionContext) _Subscription_subscribeInvocations(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
+	fc, err := ec.fieldContext_Subscription_subscribeInvocations(ctx, field)
 	if err != nil {
 		return nil
 	}
@@ -1517,7 +1517,7 @@ func (ec *executionContext) _Subscription_invocations(ctx context.Context, field
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Subscription().Invocations(rctx)
+		return ec.resolvers.Subscription().SubscribeInvocations(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1548,7 +1548,7 @@ func (ec *executionContext) _Subscription_invocations(ctx context.Context, field
 	}
 }
 
-func (ec *executionContext) fieldContext_Subscription_invocations(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Subscription_subscribeInvocations(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Subscription",
 		Field:      field,
@@ -3513,19 +3513,19 @@ func (ec *executionContext) unmarshalInputServerInvocationInput(ctx context.Cont
 
 // region    **************************** object.gotpl ****************************
 
-var appConfigImplementors = []string{"AppConfig"}
+var configImplementors = []string{"Config"}
 
-func (ec *executionContext) _AppConfig(ctx context.Context, sel ast.SelectionSet, obj *schema.AppConfig) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, appConfigImplementors)
+func (ec *executionContext) _Config(ctx context.Context, sel ast.SelectionSet, obj *schema.Config) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, configImplementors)
 
 	out := graphql.NewFieldSet(fields)
 	deferred := make(map[string]*graphql.FieldSet)
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("AppConfig")
+			out.Values[i] = graphql.MarshalString("Config")
 		case "baseUrl":
-			out.Values[i] = ec._AppConfig_baseUrl(ctx, field, obj)
+			out.Values[i] = ec._Config_baseUrl(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
@@ -3738,7 +3738,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Query")
-		case "appConfig":
+		case "getConfig":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -3747,7 +3747,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_appConfig(ctx, field)
+				res = ec._Query_getConfig(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -3760,7 +3760,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "invocations":
+		case "listInvocations":
 			field := field
 
 			innerFunc := func(ctx context.Context, fs *graphql.FieldSet) (res graphql.Marshaler) {
@@ -3769,7 +3769,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_invocations(ctx, field)
+				res = ec._Query_listInvocations(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&fs.Invalids, 1)
 				}
@@ -3782,7 +3782,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			}
 
 			out.Concurrently(i, func(ctx context.Context) graphql.Marshaler { return rrm(innerCtx) })
-		case "invocation":
+		case "getInvocation":
 			field := field
 
 			innerFunc := func(ctx context.Context, _ *graphql.FieldSet) (res graphql.Marshaler) {
@@ -3791,7 +3791,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_invocation(ctx, field)
+				res = ec._Query_getInvocation(ctx, field)
 				return res
 			}
 
@@ -3845,8 +3845,8 @@ func (ec *executionContext) _Subscription(ctx context.Context, sel ast.Selection
 	}
 
 	switch fields[0].Name {
-	case "invocations":
-		return ec._Subscription_invocations(ctx, fields[0])
+	case "subscribeInvocations":
+		return ec._Subscription_subscribeInvocations(ctx, fields[0])
 	default:
 		panic("unknown field " + strconv.Quote(fields[0].Name))
 	}
@@ -4178,20 +4178,6 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) marshalNAppConfig2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐAppConfig(ctx context.Context, sel ast.SelectionSet, v schema.AppConfig) graphql.Marshaler {
-	return ec._AppConfig(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNAppConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐAppConfig(ctx context.Context, sel ast.SelectionSet, v *schema.AppConfig) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._AppConfig(ctx, sel, v)
-}
-
 func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
 	res, err := graphql.UnmarshalBoolean(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -4210,6 +4196,20 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 func (ec *executionContext) unmarshalNBrowserInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐBrowserInvocationInput(ctx context.Context, v interface{}) (schema.BrowserInvocationInput, error) {
 	res, err := ec.unmarshalInputBrowserInvocationInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNConfig2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐConfig(ctx context.Context, sel ast.SelectionSet, v schema.Config) graphql.Marshaler {
+	return ec._Config(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐConfig(ctx context.Context, sel ast.SelectionSet, v *schema.Config) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Config(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {

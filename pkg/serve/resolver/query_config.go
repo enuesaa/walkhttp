@@ -7,8 +7,8 @@ import (
 )
 
 // TODO refactor
-func (r *queryResolver) AppConfig(ctx context.Context) (*schema.AppConfig, error) {
-	config := schema.AppConfig{
+func (r *queryResolver) GetConfig(ctx context.Context) (*schema.Config, error) {
+	config := schema.Config{
 		BaseURL: r.BaseUrl,
 	}
 	return &config, nil

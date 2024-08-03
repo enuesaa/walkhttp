@@ -3,6 +3,7 @@
 
 # see https://qiita.com/__m/items/e4df77e5f58f862db644
 # see https://github.com/stashapp/stash-box
+# see https://www.ragate.co.jp/blog/articles/6018
 
 schema:
   - 'gql/*.graphql'
