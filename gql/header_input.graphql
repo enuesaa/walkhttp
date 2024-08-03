@@ -1,4 +1,0 @@
-input HeaderInput {
-  name: String!
-  value: String!
-}

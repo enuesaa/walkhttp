@@ -1,4 +1,0 @@
-type Header {
-  name: String!
-  value: String!
-}

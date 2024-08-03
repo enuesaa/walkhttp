@@ -9,3 +9,8 @@ type Invocation {
   responseBody: String!
   created: String!
 }
+
+type Header {
+  name: String!
+  value: String!
+}

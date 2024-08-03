@@ -7,3 +7,15 @@ input BrowserInvocationInput {
   requestBody: String!
   responseBody: String!
 }
+
+input ServerInvocationInput {
+  method: String!
+  url: String!
+  requestHeaders: [HeaderInput]
+  requestBody: String!
+}
+
+input HeaderInput {
+  name: String!
+  value: String!
+}

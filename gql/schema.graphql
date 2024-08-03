@@ -3,3 +3,18 @@ schema {
   mutation: Mutation
   subscription: Subscription
 }
+
+type Query {
+  appConfig: AppConfig!
+  invocations: [Invocation!]!
+  invocation(id: ID!): Invocation
+}
+
+type Mutation {
+  makeServerInvocation(invocation: ServerInvocationInput!): Boolean
+  makeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
+}
+
+type Subscription {
+  invocations: [Invocation!]!
+}
