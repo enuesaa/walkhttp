@@ -383,11 +383,11 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "../schema/appconfig.graphql", Input: `type AppConfig {
+	{Name: "../../../gql/appconfig.graphql", Input: `type AppConfig {
   baseUrl: String!
 }
 `, BuiltIn: false},
-	{Name: "../schema/browser_invocation_input.graphql", Input: `input BrowserInvocationInput {
+	{Name: "../../../gql/browser_invocation_input.graphql", Input: `input BrowserInvocationInput {
   status: Int!
   method: String!
   url: String!
@@ -397,17 +397,17 @@ var sources = []*ast.Source{
   responseBody: String!
 }
 `, BuiltIn: false},
-	{Name: "../schema/header.graphql", Input: `type Header {
+	{Name: "../../../gql/header.graphql", Input: `type Header {
   name: String!
   value: String!
 }
 `, BuiltIn: false},
-	{Name: "../schema/header_input.graphql", Input: `input HeaderInput {
+	{Name: "../../../gql/header_input.graphql", Input: `input HeaderInput {
   name: String!
   value: String!
 }
 `, BuiltIn: false},
-	{Name: "../schema/invocation.graphql", Input: `type Invocation {
+	{Name: "../../../gql/invocation.graphql", Input: `type Invocation {
   id: ID!
   status: Int!
   method: String!
@@ -419,31 +419,31 @@ var sources = []*ast.Source{
   created: String!
 }
 `, BuiltIn: false},
-	{Name: "../schema/mutation.graphql", Input: `type Mutation {
+	{Name: "../../../gql/mutation.graphql", Input: `type Mutation {
   makeServerInvocation(invocation: ServerInvocationInput!): Boolean
   makeBrowserInvocation(invocation: BrowserInvocationInput!): Boolean
 }
 `, BuiltIn: false},
-	{Name: "../schema/query.graphql", Input: `type Query {
+	{Name: "../../../gql/query.graphql", Input: `type Query {
   appConfig: AppConfig!
   invocations: [Invocation!]!
   invocation(id: ID!): Invocation
 }
 `, BuiltIn: false},
-	{Name: "../schema/schema.graphql", Input: `schema {
+	{Name: "../../../gql/schema.graphql", Input: `schema {
   query: Query
   mutation: Mutation
   subscription: Subscription
 }
 `, BuiltIn: false},
-	{Name: "../schema/server_invocation_input.graphql", Input: `input ServerInvocationInput {
+	{Name: "../../../gql/server_invocation_input.graphql", Input: `input ServerInvocationInput {
   method: String!
   url: String!
   requestHeaders: [HeaderInput]
   requestBody: String!
 }
 `, BuiltIn: false},
-	{Name: "../schema/subscription.graphql", Input: `type Subscription {
+	{Name: "../../../gql/subscription.graphql", Input: `type Subscription {
   invocations: [Invocation!]!
 }
 `, BuiltIn: false},

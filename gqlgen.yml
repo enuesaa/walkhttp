@@ -2,14 +2,15 @@
 # run `go run github.com/99designs/gqlgen generate`
 
 # see https://qiita.com/__m/items/e4df77e5f58f862db644
+# see https://github.com/stashapp/stash-box
 
 schema:
-  - 'schema/*.graphql'
+  - 'gql/*.graphql'
 
 exec:
-  filename: gql/exec.go
+  filename: pkg/serve/gql/exec.go
   package: gql
 
 model:
-  filename: schema/schema.go
+  filename: pkg/serve/schema/schema.go
   package: schema
