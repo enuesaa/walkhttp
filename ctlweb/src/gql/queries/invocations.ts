@@ -2,7 +2,7 @@ import { gql, useQuery } from 'urql'
 import { Query } from '@/gql/types'
 
 const query = gql`
-  query {
+  query ListInvocations {
     invocations {
       id
       status

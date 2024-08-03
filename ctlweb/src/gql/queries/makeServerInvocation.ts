@@ -2,7 +2,7 @@ import { gql, useMutation } from 'urql'
 import { Query, ServerInvocationInput } from '@/gql/types'
 
 const query = gql`
-  mutation ($invocation: ServerInvocationInput!) {
+  mutation MakeServerInvocation($invocation: ServerInvocationInput!) {
     makeServerInvocation(invocation: $invocation)
   }
 `

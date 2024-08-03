@@ -2,7 +2,7 @@ import { gql, useMutation } from 'urql'
 import { BrowserInvocationInput, Query } from '@/gql/types'
 
 const query = gql`
-  mutation ($invocation: BrowserInvocationInput!) {
+  mutation MakeBrowserInvocation($invocation: BrowserInvocationInput!) {
     makeBrowserInvocation(invocation: $invocation)
   }
 `

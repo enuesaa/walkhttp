@@ -3,7 +3,7 @@ import { gql } from 'urql'
 import { Query } from '@/gql/types'
 
 export const query = gql`
-  subscription {
+  subscription SubscribeInvocations {
     invocations {
       id
       status
