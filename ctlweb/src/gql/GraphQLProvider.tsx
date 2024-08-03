@@ -5,7 +5,7 @@ import { ReactNode } from 'react'
 type Props = {
   children: ReactNode
 }
-export const GraphProvider = ({ children }: Props) => {
+export const GraphQLProvider = ({ children }: Props) => {
   const endpoint = process.env.NEXT_PUBLIC_GRAPH_ENDPOINT as string
   const wsclient = createWSClient({
     url: `ws://${endpoint}`,

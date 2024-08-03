@@ -1,5 +1,5 @@
 import { ScrollArea } from '@radix-ui/themes'
-import { useSubscribeInvocations } from '@/graph/invocations-subscribe'
+import { useSubscribeInvocations } from '@/gql/queries/invocationsSubscribe'
 import { HistroiesItem } from './HistoriesItem'
 
 export const Histories = () => {

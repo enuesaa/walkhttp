@@ -3,16 +3,16 @@ import '@radix-ui/themes/styles.css'
 import { Theme } from '@radix-ui/themes'
 import '@/styles/app.css'
 import { Layout } from '@/components/common/Layout'
-import { GraphProvider } from '@/graph/GraphProvider'
+import { GraphQLProvider } from '@/gql/GraphQLProvider'
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <GraphProvider>
+    <GraphQLProvider>
       <Theme appearance='dark' accentColor='cyan'>
         <Layout>
           <Component {...pageProps} />
         </Layout>
       </Theme>
-    </GraphProvider>
+    </GraphQLProvider>
   )
 }

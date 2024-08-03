@@ -1,9 +1,9 @@
 import { Select, TextField, Button, TextArea } from '@radix-ui/themes'
 import styles from './MakeForm.css'
-import { useMakeBrowserInvocation } from '@/graph/make-browser-invocation'
+import { useMakeBrowserInvocation } from '@/gql/queries/makeBrowserInvocation'
 import { Controller, useForm } from 'react-hook-form'
 import { BrowserInvocationInput } from '@/graph/types'
-import { useGetAppConfig } from '@/graph/appconfig'
+import { useGetAppConfig } from '@/gql/queries/appConfig'
 
 export const MakeBrowserForm = () => {
   const appConfig = useGetAppConfig()

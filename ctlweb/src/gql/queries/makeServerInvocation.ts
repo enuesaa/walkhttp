@@ -1,5 +1,5 @@
 import { gql, useMutation } from 'urql'
-import { Query, ServerInvocationInput } from './types'
+import { Query, ServerInvocationInput } from '@/gql/types'
 
 const query = gql`
   mutation ($invocation: ServerInvocationInput!) {

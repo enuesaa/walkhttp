@@ -1,5 +1,5 @@
 import { gql, useQuery } from 'urql'
-import { Query } from './types'
+import { Query } from '@/gql/types'
 
 const query = gql`
   query {

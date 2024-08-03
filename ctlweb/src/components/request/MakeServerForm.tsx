@@ -1,9 +1,9 @@
 import { Select, TextField, Button, TextArea } from '@radix-ui/themes'
 import styles from './MakeForm.css'
-import { useMakeServerInvocation } from '@/graph/make-server-invocation'
+import { useMakeServerInvocation } from '@/gql/queries/makeServerInvocation'
 import { useForm, Controller } from 'react-hook-form'
 import { ServerInvocationInput } from '@/graph/types'
-import { useGetAppConfig } from '@/graph/appconfig'
+import { useGetAppConfig } from '@/gql/queries/appConfig'
 
 export const MakeServerForm = () => {
   const appConfig = useGetAppConfig()
