@@ -3,9 +3,10 @@ package usecase
 import (
 	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
+	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 )
 
-func Prompt(repos repository.Repos, method string, conf invoke.Workspace) error {
+func Prompt(repos repository.Repos, method string, conf workspace.Workspace) error {
 	invokeSrv := invoke.New(repos)
 	invocation := invokeSrv.Create(method, conf.BaseUrl)
 	repos.Log.Printf("***\n")

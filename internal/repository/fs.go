@@ -1,9 +1,12 @@
 package repository
 
 import (
+	"encoding/json"
 	"io"
 	"os"
 	"path/filepath"
+
+	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 )
 
 type FsRepositoryInterface interface {
@@ -15,6 +18,8 @@ type FsRepositoryInterface interface {
 	WorkDir() (string, error)
 	Remove(path string) error
 	Read(path string) ([]byte, error)
+	ReadWorkspace(path string) (workspace.Workspace, error)
+	WriteWorkspace(path string, ws workspace.Workspace) error
 	ListDirs(path string) ([]string, error)
 	ListFiles(path string) ([]string, error)
 }
@@ -70,6 +75,26 @@ func (repo *FsRepository) Read(path string) ([]byte, error) {
 	}
 	defer f.Close()
 	return io.ReadAll(f)
+}
+
+func (repo *FsRepository) ReadWorkspace(path string) (workspace.Workspace, error) {
+	var ws workspace.Workspace
+	fbytes, err := repo.Read(path)
+	if err != nil {
+		return ws, err
+	}
+	if err := json.Unmarshal(fbytes, &ws); err != nil {
+		return ws, err
+	}
+	return ws, nil
+}
+
+func (repo *FsRepository) WriteWorkspace(path string, ws workspace.Workspace) error {
+	fbytes, err := json.MarshalIndent(ws, "", "  ")
+	if err != nil {
+		return err
+	}
+	return repo.Create(path, fbytes)
 }
 
 func (repo *FsRepository) ListDirs(path string) ([]string, error) {

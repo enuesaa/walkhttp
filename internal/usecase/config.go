@@ -1,23 +1,21 @@
 package usecase
 
 import (
-	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
+	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 )
 
-func LoadConfig(repos repository.Repos, path string) invoke.Workspace {
+func LoadConfig(repos repository.Repos, path string) workspace.Workspace {
 	if path == "" {
-		return invoke.NewConfig()
+		return workspace.New()
 	}
-	configSrv := invoke.New(repos)
-	conf, err := configSrv.Read(path)
+	ws, err := repos.Fs.ReadWorkspace(path)
 	if err != nil {
-		return invoke.NewConfig()
+		return workspace.New()
 	}
-	return conf
+	return ws
 }
 
-func WriteConfig(repos repository.Repos, path string, conf invoke.Workspace) error {
-	configSrv := invoke.New(repos)
-	return configSrv.Write(path, conf)
+func WriteConfig(repos repository.Repos, path string, ws workspace.Workspace) error {
+	return repos.Fs.WriteWorkspace(path, ws)
 }

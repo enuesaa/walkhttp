@@ -1,14 +1,15 @@
-package invoke
+package workspace
 
-func NewConfig() Workspace {
+func New() Workspace {
 	return Workspace{
-		BaseUrl: "https://",
+		BaseUrl: "https://example.com/",
+		Entries: make([]Entry, 0),
 	}
 }
 
 type Workspace struct {
 	BaseUrl string `json:"baseUrl"` // like `https://example.com`
-	// Entries []Entry `json:"entries"`
+	Entries []Entry `json:"entries"`
 }
 
 type Entry struct {
