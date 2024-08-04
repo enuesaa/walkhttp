@@ -11,6 +11,7 @@ import (
 )
 
 //go:generate pnpm install
+//go:generate pnpm gen:gql
 //go:generate pnpm build
 
 //go:embed all:dist/*

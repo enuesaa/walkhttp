@@ -24,9 +24,3 @@ jobs:
       - run: go generate ./...
       - run: go install
       - run: go test ./...
-
-      - working-directory: ctlweb
-        run: pnpm install
-      - name: validate graphql documents
-        working-directory: ctlweb
-        run: pnpm gen:gql
