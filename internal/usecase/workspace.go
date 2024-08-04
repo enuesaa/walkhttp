@@ -9,7 +9,7 @@ func ReadWorkspace(repos repository.Repos, path string) workspace.Workspace {
 	if path == "" {
 		return workspace.New()
 	}
-	ws, err := repos.Fs.ReadWorkspace(path)
+	ws, err := repos.Ws.Read(path)
 	if err != nil {
 		return workspace.New()
 	}
@@ -17,5 +17,5 @@ func ReadWorkspace(repos repository.Repos, path string) workspace.Workspace {
 }
 
 func WriteWorkspace(repos repository.Repos, path string, ws workspace.Workspace) error {
-	return repos.Fs.WriteWorkspace(path, ws)
+	return repos.Ws.Write(path, ws)
 }

@@ -4,11 +4,13 @@ import (
 	"github.com/oklog/ulid/v2"
 )
 
+//Deprecated
 type Header struct {
 	Name  string `json:"name"`
 	Value string `json:"value"`
 }
 
+//Deprecated
 type Invocation struct {
 	ID              string    `json:"id"`
 	Status          int       `json:"status"`
@@ -21,6 +23,7 @@ type Invocation struct {
 	Created         string    `json:"created"`
 }
 
+//Deprecated
 func (srv *InvokeSrv) Create(method string, url string) Invocation {
 	return Invocation{
 		ID:              ulid.Make().String(),

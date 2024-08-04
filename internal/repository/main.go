@@ -1,6 +1,7 @@
 package repository
 
 type Repos struct {
+	Ws     WsRepositoryInterface
 	DB     DBRepositoryInterface
 	Fs     FsRepositoryInterface
 	Prompt PromptInterface
@@ -9,6 +10,9 @@ type Repos struct {
 
 func New() Repos {
 	return Repos{
+		Ws: &WsRepository{
+			path: "walkhttp.json",
+		},
 		DB: &InmemoryDB{
 			data: make(map[string]interface{}),
 		},
