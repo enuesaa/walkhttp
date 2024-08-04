@@ -5,7 +5,7 @@ import (
 	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 )
 
-func LoadConfig(repos repository.Repos, path string) workspace.Workspace {
+func ReadWorkspace(repos repository.Repos, path string) workspace.Workspace {
 	if path == "" {
 		return workspace.New()
 	}
@@ -16,6 +16,6 @@ func LoadConfig(repos repository.Repos, path string) workspace.Workspace {
 	return ws
 }
 
-func WriteConfig(repos repository.Repos, path string, ws workspace.Workspace) error {
+func WriteWorkspace(repos repository.Repos, path string, ws workspace.Workspace) error {
 	return repos.Fs.WriteWorkspace(path, ws)
 }
