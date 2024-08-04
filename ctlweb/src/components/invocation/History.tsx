@@ -1,4 +1,4 @@
-import { Invocation } from '@/graph/types'
+import { Invocation } from '@/gql/types'
 import { Code, DataList, Heading } from '@radix-ui/themes'
 
 type Props = {

@@ -1,4 +1,4 @@
-import { Invocation } from '@/graph/types'
+import { Invocation } from '@/gql/types'
 import { Badge, Button, Dialog, Flex } from '@radix-ui/themes'
 import { History } from './History'
 import styles from './HistoriesItem.css'

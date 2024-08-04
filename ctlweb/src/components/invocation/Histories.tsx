@@ -10,7 +10,7 @@ export const Histories = () => {
 
   return (
     <ScrollArea type='hover' scrollbars='vertical' style={{ maxHeight: '700px', padding: '0 15px 0 0' }}>
-      {invocations.data?.invocations.map((v, i) => <HistroiesItem key={i} invocation={v} />)}
+      {invocations.data?.listInvocations.map((v, i) => <HistroiesItem key={i} invocation={v} />)}
     </ScrollArea>
   )
 }
