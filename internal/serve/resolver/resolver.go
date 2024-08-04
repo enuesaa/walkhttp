@@ -1,8 +1,8 @@
 package resolver
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/repository"
-	"github.com/enuesaa/walkhttp/pkg/serve/gql"
+	"github.com/enuesaa/walkhttp/internal/repository"
+	"github.com/enuesaa/walkhttp/internal/serve/gql"
 )
 
 type Resolver struct {

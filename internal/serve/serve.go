@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/enuesaa/walkhttp/ctlweb"
-	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )

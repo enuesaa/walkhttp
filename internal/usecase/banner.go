@@ -1,7 +1,7 @@
 package usecase
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/internal/repository"
 )
 
 func PrintBanner(repos repository.Repos) {

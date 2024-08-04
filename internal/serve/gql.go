@@ -4,9 +4,9 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/enuesaa/walkhttp/pkg/repository"
-	"github.com/enuesaa/walkhttp/pkg/serve/gql"
-	"github.com/enuesaa/walkhttp/pkg/serve/resolver"
+	"github.com/enuesaa/walkhttp/internal/repository"
+	"github.com/enuesaa/walkhttp/internal/serve/gql"
+	"github.com/enuesaa/walkhttp/internal/serve/resolver"
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/enuesaa/walkhttp/pkg/serve/schema"
+	"github.com/enuesaa/walkhttp/internal/serve/schema"
 	"github.com/google/uuid"
 )
 

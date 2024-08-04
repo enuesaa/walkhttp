@@ -3,7 +3,7 @@ package resolver
 import (
 	"context"
 
-	"github.com/enuesaa/walkhttp/pkg/serve/schema"
+	"github.com/enuesaa/walkhttp/internal/serve/schema"
 )
 
 // TODO refactor

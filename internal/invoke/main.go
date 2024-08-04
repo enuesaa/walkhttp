@@ -1,7 +1,7 @@
 package invoke
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/internal/repository"
 )
 
 func New(repos repository.Repos) InvokeSrv {

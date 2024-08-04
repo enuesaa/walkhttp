@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/enuesaa/walkhttp/pkg/repository"
-	"github.com/enuesaa/walkhttp/pkg/serve"
-	"github.com/enuesaa/walkhttp/pkg/usecase"
+	"github.com/enuesaa/walkhttp/internal/repository"
+	"github.com/enuesaa/walkhttp/internal/serve"
+	"github.com/enuesaa/walkhttp/internal/usecase"
 	"github.com/pkg/browser"
 	"github.com/urfave/cli/v2"
 )

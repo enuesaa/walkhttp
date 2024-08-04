@@ -3,8 +3,8 @@ package usecase
 import (
 	"fmt"
 
-	"github.com/enuesaa/walkhttp/pkg/invoke"
-	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/internal/invoke"
+	"github.com/enuesaa/walkhttp/internal/repository"
 )
 
 func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {

@@ -1,8 +1,8 @@
 package usecase
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/invoke"
-	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/internal/invoke"
+	"github.com/enuesaa/walkhttp/internal/repository"
 )
 
 func LoadConfig(repos repository.Repos, path string) invoke.Workspace {

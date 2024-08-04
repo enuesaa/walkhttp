@@ -14,7 +14,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/enuesaa/walkhttp/pkg/serve/schema"
+	"github.com/enuesaa/walkhttp/internal/serve/schema"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -460,7 +460,7 @@ func (ec *executionContext) field_Mutation_makeBrowserInvocation_args(ctx contex
 	var arg0 schema.BrowserInvocationInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNBrowserInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐBrowserInvocationInput(ctx, tmp)
+		arg0, err = ec.unmarshalNBrowserInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐBrowserInvocationInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -475,7 +475,7 @@ func (ec *executionContext) field_Mutation_makeServerInvocation_args(ctx context
 	var arg0 schema.ServerInvocationInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNServerInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐServerInvocationInput(ctx, tmp)
+		arg0, err = ec.unmarshalNServerInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐServerInvocationInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -885,7 +885,7 @@ func (ec *executionContext) _Invocation_requestHeaders(ctx context.Context, fiel
 	}
 	res := resTmp.([]*schema.Header)
 	fc.Result = res
-	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeader(ctx, field.Selections, res)
+	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Invocation_requestHeaders(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -932,7 +932,7 @@ func (ec *executionContext) _Invocation_responseHeaders(ctx context.Context, fie
 	}
 	res := resTmp.([]*schema.Header)
 	fc.Result = res
-	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeader(ctx, field.Selections, res)
+	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Invocation_responseHeaders(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1218,7 +1218,7 @@ func (ec *executionContext) _Query_getConfig(ctx context.Context, field graphql.
 	}
 	res := resTmp.(*schema.Config)
 	fc.Result = res
-	return ec.marshalNConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐConfig(ctx, field.Selections, res)
+	return ec.marshalNConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐConfig(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_getConfig(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1266,7 +1266,7 @@ func (ec *executionContext) _Query_listInvocations(ctx context.Context, field gr
 	}
 	res := resTmp.([]*schema.Invocation)
 	fc.Result = res
-	return ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐInvocationᚄ(ctx, field.Selections, res)
+	return ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐInvocationᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_listInvocations(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1327,7 +1327,7 @@ func (ec *executionContext) _Query_getInvocation(ctx context.Context, field grap
 	}
 	res := resTmp.(*schema.Invocation)
 	fc.Result = res
-	return ec.marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐInvocation(ctx, field.Selections, res)
+	return ec.marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐInvocation(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_getInvocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1539,7 +1539,7 @@ func (ec *executionContext) _Subscription_subscribeInvocations(ctx context.Conte
 				w.Write([]byte{'{'})
 				graphql.MarshalString(field.Alias).MarshalGQL(w)
 				w.Write([]byte{':'})
-				ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐInvocationᚄ(ctx, field.Selections, res).MarshalGQL(w)
+				ec.marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐInvocationᚄ(ctx, field.Selections, res).MarshalGQL(w)
 				w.Write([]byte{'}'})
 			})
 		case <-ctx.Done():
@@ -3391,14 +3391,14 @@ func (ec *executionContext) unmarshalInputBrowserInvocationInput(ctx context.Con
 			it.URL = data
 		case "requestHeaders":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("requestHeaders"))
-			data, err := ec.unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeaderInput(ctx, v)
+			data, err := ec.unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderInput(ctx, v)
 			if err != nil {
 				return it, err
 			}
 			it.RequestHeaders = data
 		case "responseHeaders":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("responseHeaders"))
-			data, err := ec.unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeaderInput(ctx, v)
+			data, err := ec.unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderInput(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3487,7 +3487,7 @@ func (ec *executionContext) unmarshalInputServerInvocationInput(ctx context.Cont
 			it.URL = data
 		case "requestHeaders":
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("requestHeaders"))
-			data, err := ec.unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeaderInput(ctx, v)
+			data, err := ec.unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderInput(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4193,16 +4193,16 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNBrowserInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐBrowserInvocationInput(ctx context.Context, v interface{}) (schema.BrowserInvocationInput, error) {
+func (ec *executionContext) unmarshalNBrowserInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐBrowserInvocationInput(ctx context.Context, v interface{}) (schema.BrowserInvocationInput, error) {
 	res, err := ec.unmarshalInputBrowserInvocationInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNConfig2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐConfig(ctx context.Context, sel ast.SelectionSet, v schema.Config) graphql.Marshaler {
+func (ec *executionContext) marshalNConfig2githubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐConfig(ctx context.Context, sel ast.SelectionSet, v schema.Config) graphql.Marshaler {
 	return ec._Config(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐConfig(ctx context.Context, sel ast.SelectionSet, v *schema.Config) graphql.Marshaler {
+func (ec *executionContext) marshalNConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐConfig(ctx context.Context, sel ast.SelectionSet, v *schema.Config) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -4242,7 +4242,7 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
-func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐInvocationᚄ(ctx context.Context, sel ast.SelectionSet, v []*schema.Invocation) graphql.Marshaler {
+func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐInvocationᚄ(ctx context.Context, sel ast.SelectionSet, v []*schema.Invocation) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -4266,7 +4266,7 @@ func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwa
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐInvocation(ctx, sel, v[i])
+			ret[i] = ec.marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐInvocation(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -4286,7 +4286,7 @@ func (ec *executionContext) marshalNInvocation2ᚕᚖgithubᚗcomᚋenuesaaᚋwa
 	return ret
 }
 
-func (ec *executionContext) marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *schema.Invocation) graphql.Marshaler {
+func (ec *executionContext) marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *schema.Invocation) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -4296,7 +4296,7 @@ func (ec *executionContext) marshalNInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkh
 	return ec._Invocation(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNServerInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐServerInvocationInput(ctx context.Context, v interface{}) (schema.ServerInvocationInput, error) {
+func (ec *executionContext) unmarshalNServerInvocationInput2githubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐServerInvocationInput(ctx context.Context, v interface{}) (schema.ServerInvocationInput, error) {
 	res, err := ec.unmarshalInputServerInvocationInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
@@ -4595,7 +4595,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeader(ctx context.Context, sel ast.SelectionSet, v []*schema.Header) graphql.Marshaler {
+func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx context.Context, sel ast.SelectionSet, v []*schema.Header) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -4622,7 +4622,7 @@ func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkht
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeader(ctx, sel, v[i])
+			ret[i] = ec.marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -4636,14 +4636,14 @@ func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkht
 	return ret
 }
 
-func (ec *executionContext) marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeader(ctx context.Context, sel ast.SelectionSet, v *schema.Header) graphql.Marshaler {
+func (ec *executionContext) marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx context.Context, sel ast.SelectionSet, v *schema.Header) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Header(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeaderInput(ctx context.Context, v interface{}) ([]*schema.HeaderInput, error) {
+func (ec *executionContext) unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderInput(ctx context.Context, v interface{}) ([]*schema.HeaderInput, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -4655,7 +4655,7 @@ func (ec *executionContext) unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaa�
 	res := make([]*schema.HeaderInput, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalOHeaderInput2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeaderInput(ctx, vSlice[i])
+		res[i], err = ec.unmarshalOHeaderInput2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderInput(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -4663,7 +4663,7 @@ func (ec *executionContext) unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaa�
 	return res, nil
 }
 
-func (ec *executionContext) unmarshalOHeaderInput2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐHeaderInput(ctx context.Context, v interface{}) (*schema.HeaderInput, error) {
+func (ec *executionContext) unmarshalOHeaderInput2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderInput(ctx context.Context, v interface{}) (*schema.HeaderInput, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -4671,7 +4671,7 @@ func (ec *executionContext) unmarshalOHeaderInput2ᚖgithubᚗcomᚋenuesaaᚋwa
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋpkgᚋserveᚋschemaᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *schema.Invocation) graphql.Marshaler {
+func (ec *executionContext) marshalOInvocation2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐInvocation(ctx context.Context, sel ast.SelectionSet, v *schema.Invocation) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

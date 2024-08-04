@@ -1,15 +1,15 @@
 package command
 
 import (
-	"github.com/enuesaa/walkhttp/pkg/repository"
-	"github.com/enuesaa/walkhttp/pkg/usecase"
+	"github.com/enuesaa/walkhttp/internal/repository"
+	"github.com/enuesaa/walkhttp/internal/usecase"
 	"github.com/urfave/cli/v2"
 )
 
-func NewDeleteCommand(repos repository.Repos) *cli.Command {
+func NewOptionsCommand(repos repository.Repos) *cli.Command {
 	cmd := &cli.Command{
-		Name:  "delete",
-		Usage: "make http DELETE request",
+		Name:  "options",
+		Usage: "make http OPTIONS request",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
 				Name:    "workspace",
@@ -22,7 +22,7 @@ func NewDeleteCommand(repos repository.Repos) *cli.Command {
 			configpath := c.String("workspace")
 			conf := usecase.LoadConfig(repos, configpath)
 
-			return usecase.Prompt(repos, "DELETE", conf)
+			return usecase.Prompt(repos, "OPTIONS", conf)
 		},
 	}
 

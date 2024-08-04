@@ -3,8 +3,8 @@ package resolver
 import (
 	"context"
 
-	"github.com/enuesaa/walkhttp/pkg/invoke"
-	"github.com/enuesaa/walkhttp/pkg/serve/schema"
+	"github.com/enuesaa/walkhttp/internal/invoke"
+	"github.com/enuesaa/walkhttp/internal/serve/schema"
 )
 
 func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation schema.ServerInvocationInput) (*bool, error) {

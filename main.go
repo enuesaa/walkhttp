@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/enuesaa/walkhttp/pkg/command"
-	"github.com/enuesaa/walkhttp/pkg/repository"
+	"github.com/enuesaa/walkhttp/internal/command"
+	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/urfave/cli/v2"
 )
 
