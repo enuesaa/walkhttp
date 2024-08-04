@@ -3,12 +3,11 @@ package usecase
 import (
 	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
-	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 )
 
-func Prompt(repos repository.Repos, method string, conf workspace.Workspace) error {
+func Prompt(repos repository.Repos, method string) error {
 	invokeSrv := invoke.New(repos)
-	invocation := invokeSrv.Create(method, conf.BaseUrl)
+	invocation := invokeSrv.Create(method, repos.Ws.GetBaseUrl())
 	repos.Log.Printf("***\n")
 	if err := PromptReq(repos, &invocation); err != nil {
 		repos.Log.Printf("***\n")

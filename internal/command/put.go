@@ -20,9 +20,9 @@ func NewPutCommand(repos repository.Repos) *cli.Command {
 		},
 		Action: func(c *cli.Context) error {
 			wspath := c.String("workspace")
-			ws := usecase.ReadWorkspace(repos, wspath)
+			repos.Ws.Use(wspath)
 
-			return usecase.Prompt(repos, "PUT", ws)
+			return usecase.Prompt(repos, "PUT")
 		},
 	}
 

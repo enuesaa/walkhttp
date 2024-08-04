@@ -31,7 +31,7 @@ func NewCtlCommand(repos repository.Repos) *cli.Command {
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
 			wspath := c.String("workspace")
-			ws := usecase.ReadWorkspace(repos, wspath)
+			repos.Ws.Use(wspath)
 
 			usecase.PrintBanner(repos)
 
@@ -41,7 +41,7 @@ func NewCtlCommand(repos repository.Repos) *cli.Command {
 				browser.OpenURL(url)
 			}()
 
-			return serve.Serve(repos, ws.BaseUrl, port)
+			return serve.Serve(repos, port)
 		},
 	}
 
