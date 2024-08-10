@@ -10,28 +10,21 @@ import (
 
 func (r *QueryResolver) GetInvocation(ctx context.Context, id string) (*schema.Invocation, error) {
 	invokeSrv := invoke.New(r.Repos)
-
-	ws, err := invokeSrv.Read()
+	entry, err := invokeSrv.Get(id)
 	if err != nil {
-		return &schema.Invocation{}, err
-	}
-
-	for _, entry := range ws.Entries {
-		if entry.Id == id {
-			data := schema.Invocation{
-				ID: entry.Id,
-				Status: entry.Response.Status,
-				Method: entry.Request.Method,
-				URL: entry.Request.Url,
-				RequestHeaders: make([]*schema.Header, 0),
-				ResponseHeaders: make([]*schema.Header, 0),
-				RequestBody: entry.Request.Body,
-				ResponseBody: entry.Response.Body,
-				Created: fmt.Sprint(entry.Request.Started),
-			}
-			return &data, nil
-		}
+		return nil, err
 	}
 	
-	return nil, fmt.Errorf("not found")
+	invocation := schema.Invocation{
+		ID: entry.Id,
+		Status: entry.Response.Status,
+		Method: entry.Request.Method,
+		URL: entry.Request.Url,
+		RequestHeaders: make([]*schema.Header, 0),
+		ResponseHeaders: make([]*schema.Header, 0),
+		RequestBody: entry.Request.Body,
+		ResponseBody: entry.Response.Body,
+		Created: fmt.Sprint(entry.Request.Started),
+	}
+	return &invocation, nil
 }

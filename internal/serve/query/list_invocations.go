@@ -12,12 +12,12 @@ func (r *QueryResolver) ListInvocations(ctx context.Context) ([]*schema.Invocati
 	list := make([]*schema.Invocation, 0)
 	invokeSrv := invoke.New(r.Repos)
 
-	ws, err := invokeSrv.Read()
+	entries, err := invokeSrv.List()
 	if err != nil {
 		return list, err
 	}
 
-	for _, entry := range ws.Entries {
+	for _, entry := range entries {
 		list = append(list, &schema.Invocation{
 			ID: entry.Id,
 			Status: entry.Response.Status,
@@ -31,5 +31,5 @@ func (r *QueryResolver) ListInvocations(ctx context.Context) ([]*schema.Invocati
 		})
 	}
 	
-	return list, fmt.Errorf("not found")
+	return list, nil
 }
