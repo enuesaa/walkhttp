@@ -3,42 +3,43 @@ package usecase
 import (
 	"fmt"
 
-	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
+	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 )
 
-func PromptReq(repos repository.Repos, invocation *invoke.Invocation) error {
-	repos.Log.Printf("* %s\n", invocation.Method)
-	if err := repos.Prompt.Ask("Url", "", &invocation.URL); err != nil {
+func PromptReq(repos repository.Repos, invocation *workspace.Entry) error {
+	repos.Log.Printf("* %s\n", invocation.Request.Method)
+	if err := repos.Prompt.Ask("Url", "", &invocation.Request.Url); err != nil {
 		return err
 	}
-	repos.Log.Printf("* %s\n", invocation.URL)
+	repos.Log.Printf("* %s\n", invocation.Request.Url)
 	repos.Log.Printf("*\n")
 
 	for {
-		header := invoke.Header{}
+		var headerName string
+		var headerValue string
 		suggestion := []string{"content-type", "accept"}
-		if err := repos.Prompt.AskSuggest("Header Name", "(To skip, click enter)", suggestion, &header.Name); err != nil {
+		if err := repos.Prompt.AskSuggest("Header Name", "(To skip, click enter)", suggestion, &headerName); err != nil {
 			return err
 		}
-		if header.Name == "" {
+		if headerName == "" {
 			break
 		}
 
-		if err := repos.Prompt.Ask("Header Value", fmt.Sprintf(" (%s) ", header.Name), &header.Value); err != nil {
+		if err := repos.Prompt.Ask("Header Value", fmt.Sprintf(" (%s) ", headerName), &headerValue); err != nil {
 			return err
 		}
-		invocation.RequestHeaders = append(invocation.RequestHeaders, &header)
-		repos.Log.Printf("* %s: %s\n", header.Name, header.Value)
+		invocation.Request.Headers[headerName] = []string{headerValue}
+		repos.Log.Printf("* %s: %s\n", headerName, headerValue)
 	}
 
-	if invocation.Method == "POST" || invocation.Method == "PUT" {
-		if err := repos.Prompt.Text("Body", "", &invocation.RequestBody); err != nil {
+	if invocation.Request.Method == "POST" || invocation.Request.Method == "PUT" {
+		if err := repos.Prompt.Text("Body", "", &invocation.Request.Body); err != nil {
 			return err
 		}
 		repos.Log.Printf("*\n")
 		repos.Log.Printf("* [Body]\n")
-		repos.Log.Printf("* %s\n", invocation.RequestBody)
+		repos.Log.Printf("* %s\n", invocation.Request.Body)
 	}
 
 	confirm := true

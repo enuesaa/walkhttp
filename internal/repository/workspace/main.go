@@ -22,12 +22,12 @@ type EntryRequest struct {
 	Url     string `json:"url"`
 	Headers map[string][]string `json:"headers"`
 	Body    string `json:"body"`
-	Started int    `json:"started"`
+	Started int64  `json:"started"`
 }
 
 type EntryResponse struct {
 	Status  int `json:"status"`
 	Headers map[string][]string `json:"headers"`
 	Body    string `json:"body"`
-	Received int `json:"received"`
+	Received int64 `json:"received"`
 }

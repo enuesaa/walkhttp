@@ -17,7 +17,7 @@ func Prompt(repos repository.Repos, method string) error {
 		repos.Log.Printf("***\n")
 		return err
 	}
-	repos.Log.Printf("* Status: %d\n", invocation.Status)
+	repos.Log.Printf("* Status: %d\n", invocation.Response.Status)
 	repos.Log.Printf("***\n")
 	repos.Log.Printf("\n")
 

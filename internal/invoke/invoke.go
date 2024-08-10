@@ -6,19 +6,23 @@ import (
 	"io"
 	"net/http"
 	"time"
+
+	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 )
 
-func (srv *InvokeSrv) Invoke(invocation *Invocation) error {
-	invocation.Created = time.Now().Format(time.RFC3339)
+func (srv *InvokeSrv) Invoke(invocation *workspace.Entry) error {
+	invocation.Request.Started = time.Now().Unix()
 
-	reqbody := bytes.NewBuffer([]byte(invocation.RequestBody))
-	req, err := http.NewRequest(invocation.Method, invocation.URL, reqbody)
+	reqbody := bytes.NewBuffer([]byte(invocation.Request.Body))
+	req, err := http.NewRequest(invocation.Request.Method, invocation.Request.Url, reqbody)
 	if err != nil {
 		return err
 	}
 
-	for _, requestHeader := range invocation.RequestHeaders {
-		req.Header.Add(requestHeader.Name, requestHeader.Value)
+	for name, values := range invocation.Request.Headers {
+		for _, value := range values {
+			req.Header.Add(name, value)
+		}
 	}
 
 	client := http.Client{}
@@ -28,22 +32,19 @@ func (srv *InvokeSrv) Invoke(invocation *Invocation) error {
 	}
 	defer res.Body.Close()
 
-	invocation.Status = res.StatusCode
-	for key, value := range res.Header {
-		if len(value) == 0 {
+	invocation.Response.Status = res.StatusCode
+	for key, values := range res.Header {
+		if len(values) == 0 {
 			return fmt.Errorf("failed to map response header because there is no value supplied")
 		}
-		invocation.ResponseHeaders = append(invocation.ResponseHeaders, &Header{
-			Name:  key,
-			Value: value[0],
-		})
+		invocation.Response.Headers[key] = values
 	}
 
 	resbody, err := io.ReadAll(res.Body)
 	if err != nil {
 		return err
 	}
-	invocation.ResponseBody = string(resbody)
+	invocation.Response.Body = string(resbody)
 
 	return nil
 }
