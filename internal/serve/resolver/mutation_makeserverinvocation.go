@@ -8,16 +8,19 @@ import (
 )
 
 func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation schema.ServerInvocationInput) (*bool, error) {
-	invokeSrv := invoke.New(r.Repos)
+	success := false
 
+	invokeSrv := invoke.New(r.Repos)
 	data := invokeSrv.Create(invocation.Method, invocation.URL)
 	data.Request.Body = invocation.RequestBody
 
 	if err := invokeSrv.Invoke(&data); err != nil {
-		return nil, err
+		return &success, err
 	}
 	if err := invokeSrv.Save(data); err != nil {
-		return nil, err
+		return &success, err
 	}
-	return nil, nil
+	success = true
+
+	return &success, nil
 }

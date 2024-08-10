@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/enuesaa/walkhttp/ctlweb"
-	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
@@ -15,10 +14,7 @@ func Serve(repos repository.Repos, port int) error {
 	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 	}))
-
-	invokeSrv := invoke.New(repos)
-
-	app.Any("/graph", ServeGQ(repos, invokeSrv.GetBaseUrl(), port))
+	app.Any("/graph", ServeGQ(repos, port))
 	app.GET("/graph/playground", ServeGQPlayground())
 	app.Any("/*", ctlweb.Serve)
 	app.Any("/", ctlweb.Serve)

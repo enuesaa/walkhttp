@@ -8,15 +8,18 @@ import (
 )
 
 func (r *mutationResolver) MakeBrowserInvocation(ctx context.Context, invocation schema.BrowserInvocationInput) (*bool, error) {
+	success := false
+
 	invokeSrv := invoke.New(r.Repos)
 	data := invokeSrv.Create(invocation.Method, invocation.URL)
-
 	data.Request.Body = invocation.RequestBody
 	data.Response.Status = invocation.Status
 	data.Response.Body = invocation.ResponseBody
 
 	if err := invokeSrv.Save(data); err != nil {
-		return nil, err
+		return &success, err
 	}
-	return nil, nil
+	success = true
+
+	return &success, nil
 }

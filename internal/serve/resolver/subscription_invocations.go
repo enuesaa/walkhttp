@@ -10,8 +10,9 @@ import (
 )
 
 func (r *subscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan []*schema.Invocation, error) {
-	ch := make(chan []*schema.Invocation)
 	invokeSrv := invoke.New(r.Repos)
+
+	ch := make(chan []*schema.Invocation)
 
 	go func() {
 		defer close(ch)
@@ -19,7 +20,6 @@ func (r *subscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan
 			time.Sleep(1 * time.Second)
 
 			invocations := make([]*schema.Invocation, 0)
-
 			ws, err := invokeSrv.Read()
 			if err != nil {
 				continue

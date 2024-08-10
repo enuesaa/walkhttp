@@ -33,5 +33,5 @@ func (r *queryResolver) GetInvocation(ctx context.Context, id string) (*schema.I
 		}
 	}
 	
-	return &schema.Invocation{}, fmt.Errorf("not found")
+	return nil, fmt.Errorf("not found")
 }

@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/enuesaa/walkhttp/internal/serve/gql"
 	"github.com/enuesaa/walkhttp/internal/serve/resolver"
@@ -15,7 +16,10 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 )
 
-func ServeGQ(repos repository.Repos, baseUrl string, port int) echo.HandlerFunc {
+func ServeGQ(repos repository.Repos, port int) echo.HandlerFunc {
+	invokeSrv := invoke.New(repos)
+	baseUrl := invokeSrv.GetBaseUrl()
+
 	// see https://github.com/99designs/gqlgen/issues/1664
 	// see https://github.com/99designs/gqlgen/issues/2826
 	gqhandle := handler.New(gql.NewExecutableSchema(gql.Config{
