@@ -7,7 +7,7 @@ import (
 
 func Prompt(repos repository.Repos, method string) error {
 	invokeSrv := invoke.New(repos)
-	invocation := invokeSrv.Create(method, repos.Ws.GetBaseUrl())
+	invocation := invokeSrv.Create(method, invokeSrv.GetBaseUrl())
 	repos.Log.Printf("***\n")
 	if err := PromptReq(repos, &invocation); err != nil {
 		repos.Log.Printf("***\n")

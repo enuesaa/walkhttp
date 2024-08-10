@@ -13,7 +13,6 @@ type WsRepositoryInterface interface {
 	Write(path string, ws workspace.Workspace) error
 	Use(path string)
 	GetPath() string
-	GetBaseUrl() string
 }
 
 type WsRepository struct {
@@ -55,14 +54,6 @@ func (repo *WsRepository) Write(path string, ws workspace.Workspace) error {
 
 func (repo *WsRepository) Use(path string) {
 	repo.path = path
-}
-
-func (repo *WsRepository) GetBaseUrl() string {
-	ws, err := repo.Read(repo.path)
-	if err != nil {
-		return "https://example.com/"
-	}
-	return ws.BaseUrl
 }
 
 func (repo *WsRepository) GetPath() string {
