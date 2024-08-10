@@ -1,4 +1,4 @@
-package workspace
+package invoke
 
 type Workspace struct {
 	BaseUrl string `json:"baseUrl"` // like `https://example.com`

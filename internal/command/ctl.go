@@ -30,8 +30,7 @@ func NewCtlCommand(repos repository.Repos) *cli.Command {
 		},
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
-			wspath := c.String("workspace")
-			repos.Ws.Use(wspath)
+			repos.WorkspacePath = c.String("workspace")
 
 			usecase.PrintBanner(repos)
 

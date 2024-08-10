@@ -19,8 +19,7 @@ func NewDeleteCommand(repos repository.Repos) *cli.Command {
 			},
 		},
 		Action: func(c *cli.Context) error {
-			wspath := c.String("workspace")
-			repos.Ws.Use(wspath)
+			repos.WorkspacePath = c.String("workspace")
 
 			return usecase.Prompt(repos, "DELETE")
 		},

@@ -1,7 +1,7 @@
 package repository
 
 type Repos struct {
-	Ws     WsRepositoryInterface
+	WorkspacePath string
 	Fs     FsRepositoryInterface
 	Prompt PromptInterface
 	Log    LogRepositoryInterface
@@ -9,9 +9,7 @@ type Repos struct {
 
 func New() Repos {
 	return Repos{
-		Ws: &WsRepository{
-			path: "walkhttp.json",
-		},
+		WorkspacePath: "walkhttp.json",
 		Fs:     &FsRepository{},
 		Prompt: &Prompt{},
 		Log:    &LogRepository{},

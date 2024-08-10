@@ -6,11 +6,9 @@ import (
 	"io"
 	"net/http"
 	"time"
-
-	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 )
 
-func (srv *InvokeSrv) Invoke(invocation *workspace.Entry) error {
+func (srv *InvokeSrv) Invoke(invocation *Entry) error {
 	invocation.Request.Started = time.Now().Unix()
 
 	reqbody := bytes.NewBuffer([]byte(invocation.Request.Body))

@@ -3,11 +3,11 @@ package usecase
 import (
 	"fmt"
 
+	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
-	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 )
 
-func PromptReq(repos repository.Repos, invocation *workspace.Entry) error {
+func PromptReq(repos repository.Repos, invocation *invoke.Entry) error {
 	repos.Log.Printf("* %s\n", invocation.Request.Method)
 	if err := repos.Prompt.Ask("Url", "", &invocation.Request.Url); err != nil {
 		return err
