@@ -12,6 +12,7 @@ type WsRepositoryInterface interface {
 	Read(path string) (workspace.Workspace, error)
 	Write(path string, ws workspace.Workspace) error
 	Use(path string)
+	GetPath() string
 	GetBaseUrl() string
 }
 
@@ -62,4 +63,8 @@ func (repo *WsRepository) GetBaseUrl() string {
 		return "https://example.com/"
 	}
 	return ws.BaseUrl
+}
+
+func (repo *WsRepository) GetPath() string {
+	return repo.path
 }

@@ -13,7 +13,7 @@ func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation 
 	if err := invokeSrv.Invoke(&data); err != nil {
 		return nil, err
 	}
-	if err := r.Repos.DB.Save(data.ID, data); err != nil {
+	if err := invokeSrv.Save(data); err != nil {
 		return nil, err
 	}
 	return nil, nil
