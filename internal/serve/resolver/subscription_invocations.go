@@ -2,13 +2,16 @@ package resolver
 
 import (
 	"context"
+	"fmt"
 	"time"
 
+	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/serve/schema"
 )
 
 func (r *subscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan []*schema.Invocation, error) {
 	ch := make(chan []*schema.Invocation)
+	invokeSrv := invoke.New(r.Repos)
 
 	go func() {
 		defer close(ch)
@@ -16,25 +19,25 @@ func (r *subscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan
 			time.Sleep(1 * time.Second)
 
 			invocations := make([]*schema.Invocation, 0)
-			// ids := r.Repos.DB.List()
-			// for _, id := range ids {
-			// 	data, err := r.Repos.DB.Get(id)
-			// 	if err != nil {
-			// 		continue
-			// 	}
-			// 	invocation := data.(invoke.Invocation)
-			// 	invocations = append(invocations, &schema.Invocation{
-			// 		ID: invocation.ID,
-			// 		Status: invocation.Status,
-			// 		Method: invocation.Method,
-			// 		URL: invocation.URL,
-			// 		RequestHeaders: make([]*schema.Header, 0),
-			// 		ResponseHeaders: make([]*schema.Header, 0),
-			// 		RequestBody: invocation.RequestBody,
-			// 		ResponseBody: invocation.ResponseBody,
-			// 		Created: invocation.Created,
-			// 	})
-			// }
+
+			ws, err := invokeSrv.Read()
+			if err != nil {
+				continue
+			}
+			
+			for _, entry := range ws.Entries {
+				invocations = append(invocations, &schema.Invocation{
+					ID: entry.Id,
+					Status: entry.Response.Status,
+					Method: entry.Request.Method,
+					URL: entry.Request.Url,
+					RequestHeaders: make([]*schema.Header, 0),
+					ResponseHeaders: make([]*schema.Header, 0),
+					RequestBody: entry.Request.Body,
+					ResponseBody: entry.Response.Body,
+					Created: fmt.Sprint(entry.Request.Started),
+				})
+			}
 			select {
 			case <-ctx.Done():
 				return

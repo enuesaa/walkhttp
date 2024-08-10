@@ -7,12 +7,14 @@ import (
 	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 	"github.com/enuesaa/walkhttp/internal/serve/schema"
+	"github.com/google/uuid"
 )
 
 func (r *mutationResolver) MakeServerInvocation(ctx context.Context, invocation schema.ServerInvocationInput) (*bool, error) {
 	invokeSrv := invoke.New(r.Repos)
 
 	data := workspace.Entry{
+		Id: uuid.NewString(),
 		Request: workspace.EntryRequest{
 			Method: invocation.Method,
 			Url: invocation.URL,

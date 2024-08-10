@@ -2,20 +2,34 @@ package resolver
 
 import (
 	"context"
+	"fmt"
 
+	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/serve/schema"
 )
 
 func (r *queryResolver) ListInvocations(ctx context.Context) ([]*schema.Invocation, error) {
 	list := make([]*schema.Invocation, 0)
-	// ids := r.Repos.DB.List()
-	// for _, id := range ids {
-	// 	data, err := r.Repos.DB.Get(id)
-	// 	if err != nil {
-	// 		return list, err
-	// 	}
-	// 	invocation := data.(schema.Invocation)
-	// 	list = append(list, &invocation)
-	// }
-	return list, nil
+	invokeSrv := invoke.New(r.Repos)
+
+	ws, err := invokeSrv.Read()
+	if err != nil {
+		return list, err
+	}
+
+	for _, entry := range ws.Entries {
+		list = append(list, &schema.Invocation{
+			ID: entry.Id,
+			Status: entry.Response.Status,
+			Method: entry.Request.Method,
+			URL: entry.Request.Url,
+			RequestHeaders: make([]*schema.Header, 0),
+			ResponseHeaders: make([]*schema.Header, 0),
+			RequestBody: entry.Request.Body,
+			ResponseBody: entry.Response.Body,
+			Created: fmt.Sprint(entry.Request.Started),
+		})
+	}
+	
+	return list, fmt.Errorf("not found")
 }

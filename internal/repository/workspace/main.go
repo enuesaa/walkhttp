@@ -1,18 +1,12 @@
 package workspace
 
-func New() Workspace {
-	return Workspace{
-		BaseUrl: "https://example.com/",
-		Entries: make([]Entry, 0),
-	}
-}
-
 type Workspace struct {
 	BaseUrl string `json:"baseUrl"` // like `https://example.com`
 	Entries []Entry `json:"entries"`
 }
 
 type Entry struct {
+	Id string `json:"id"`
 	Request EntryRequest `json:"request"`
 	Response EntryResponse `json:"response"`
 }

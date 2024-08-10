@@ -7,11 +7,17 @@ import (
 
 func ReadWorkspace(repos repository.Repos, path string) workspace.Workspace {
 	if path == "" {
-		return workspace.New()
+		return workspace.Workspace{
+			BaseUrl: "https://example.com/",
+			Entries: make([]workspace.Entry, 0),
+		}
 	}
 	ws, err := repos.Ws.Read(path)
 	if err != nil {
-		return workspace.New()
+		return workspace.Workspace{
+			BaseUrl: "https://example.com/",
+			Entries: make([]workspace.Entry, 0),
+		}
 	}
 	return ws
 }

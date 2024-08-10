@@ -7,13 +7,12 @@ import (
 	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository/workspace"
 	"github.com/enuesaa/walkhttp/internal/serve/schema"
-	// "github.com/google/uuid"
+	"github.com/google/uuid"
 )
 
 func (r *mutationResolver) MakeBrowserInvocation(ctx context.Context, invocation schema.BrowserInvocationInput) (*bool, error) {
-	// id := uuid.NewString()
-
 	data := workspace.Entry{
+		Id: uuid.NewString(),
 		Request: workspace.EntryRequest{
 			Method: invocation.Method,
 			Url: invocation.URL,
