@@ -1,4 +1,4 @@
-package resolver
+package subscription
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 	"github.com/enuesaa/walkhttp/internal/serve/schema"
 )
 
-func (r *subscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan []*schema.Invocation, error) {
+func (r *SubscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan []*schema.Invocation, error) {
 	invokeSrv := invoke.New(r.Repos)
 
 	ch := make(chan []*schema.Invocation)

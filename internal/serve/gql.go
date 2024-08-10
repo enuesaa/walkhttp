@@ -4,10 +4,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/enuesaa/walkhttp/internal/serve/gql"
-	"github.com/enuesaa/walkhttp/internal/serve/resolver"
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 
@@ -17,15 +15,11 @@ import (
 )
 
 func ServeGQ(repos repository.Repos, port int) echo.HandlerFunc {
-	invokeSrv := invoke.New(repos)
-	baseUrl := invokeSrv.GetBaseUrl()
-
 	// see https://github.com/99designs/gqlgen/issues/1664
 	// see https://github.com/99designs/gqlgen/issues/2826
 	gqhandle := handler.New(gql.NewExecutableSchema(gql.Config{
-		Resolvers: &resolver.Resolver{
+		Resolvers: &Resolver{
 			Repos:   repos,
-			BaseUrl: baseUrl,
 		},
 	}))
 	gqhandle.AddTransport(transport.Options{})

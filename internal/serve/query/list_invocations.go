@@ -1,4 +1,4 @@
-package resolver
+package query
 
 import (
 	"context"
@@ -8,7 +8,7 @@ import (
 	"github.com/enuesaa/walkhttp/internal/serve/schema"
 )
 
-func (r *queryResolver) ListInvocations(ctx context.Context) ([]*schema.Invocation, error) {
+func (r *QueryResolver) ListInvocations(ctx context.Context) ([]*schema.Invocation, error) {
 	list := make([]*schema.Invocation, 0)
 	invokeSrv := invoke.New(r.Repos)
 
