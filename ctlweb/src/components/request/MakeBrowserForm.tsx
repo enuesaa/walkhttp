@@ -3,10 +3,10 @@ import styles from './MakeForm.css'
 import { useMakeBrowserInvocation } from '@/gql/queries/makeBrowserInvocation'
 import { Controller, useForm } from 'react-hook-form'
 import { BrowserInvocationInput } from '@/gql/types'
-import { useGetAppConfig } from '@/gql/queries/appConfig'
+import { useGetConfig } from '@/gql/queries/getConfig'
 
 export const MakeBrowserForm = () => {
-  const appConfig = useGetAppConfig()
+  const appConfig = useGetConfig()
   const [invoveBrowserData, invokeBrowser] = useMakeBrowserInvocation()
 
   const { register, handleSubmit, control } = useForm<BrowserInvocationInput>()

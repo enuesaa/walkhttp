@@ -1,6 +1,6 @@
 import { useSubscription } from 'urql'
 import { gql } from 'urql'
-import { Query } from '@/gql/types'
+import { Subscription } from '@/gql/types'
 
 export const query = gql`
   subscription SubscribeInvocations {
@@ -16,4 +16,4 @@ export const query = gql`
   }
 `
 
-export const useSubscribeInvocations = () => useSubscription<Query>({ query })[0]
+export const useSubscribeInvocations = () => useSubscription<Subscription>({ query })[0]

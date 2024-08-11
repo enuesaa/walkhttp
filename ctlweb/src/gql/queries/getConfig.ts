@@ -2,11 +2,11 @@ import { gql, useQuery } from 'urql'
 import { Query } from '@/gql/types'
 
 const query = gql`
-  query GetAppConfig {
+  query GetConfig {
     getConfig {
       baseUrl
     }
   }
 `
 
-export const useGetAppConfig = () => useQuery<Query>({ query })[0]
+export const useGetConfig = () => useQuery<Query>({ query })[0]

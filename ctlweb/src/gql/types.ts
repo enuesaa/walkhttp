@@ -55,8 +55,8 @@ export type Invocation = {
 
 export type Mutation = {
   __typename?: 'Mutation'
-  makeBrowserInvocation?: Maybe<Scalars['Boolean']['output']>
-  makeServerInvocation?: Maybe<Scalars['Boolean']['output']>
+  makeBrowserInvocation: Scalars['Boolean']['output']
+  makeServerInvocation: Scalars['Boolean']['output']
 }
 
 export type MutationMakeBrowserInvocationArgs = {
