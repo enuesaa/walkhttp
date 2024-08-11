@@ -10,10 +10,17 @@ export const query = gql`
       method
       url
       requestBody
-      requestHeaders { name, value }
+      requestHeaders {
+        name
+        value
+      }
       responseBody
-      responseHeaders { name, value }
+      responseHeaders {
+        name
+        value
+      }
       started
+      received
     }
   }
 `

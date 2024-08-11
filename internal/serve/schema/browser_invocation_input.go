@@ -11,6 +11,10 @@ func (i *BrowserInvocationInput) ToEntry() invoke.Entry {
 	if err != nil {
 		started = time.Unix(0, 0)
 	}
+	received, err := time.Parse(time.RFC3339, i.Received)
+	if err != nil {
+		started = time.Unix(0, 0)
+	}
 
 	entry := invoke.Entry{
 		Id: "",
@@ -25,7 +29,7 @@ func (i *BrowserInvocationInput) ToEntry() invoke.Entry {
 			Status:   i.Status,
 			Headers:  map[string][]string{},
 			Body:     i.ResponseBody,
-			Received: 0,
+			Received: received.Unix(),
 		},
 	}
 

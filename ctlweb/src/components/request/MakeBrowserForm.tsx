@@ -22,6 +22,7 @@ export const MakeBrowserForm = () => {
         method: invocation.method,
         body: invocation.method === 'GET' ? undefined : invocation.requestBody,
       })
+      invocation.received = new Date().toISOString()
       invocation.status = res.status
       for (const [name, value] of res.headers.entries()) {
         invocation.responseHeaders.push({ name, value })
@@ -41,7 +42,7 @@ export const MakeBrowserForm = () => {
           defaultValue='GET'
           control={control}
           // see https://github.com/orgs/react-hook-form/discussions/8015
-          render={({ field: {ref, ...field} }) => (
+          render={({ field: { ref, ...field } }) => (
             <Select.Root size='3' onValueChange={field.onChange} {...field}>
               <Select.Trigger />
               <Select.Content>

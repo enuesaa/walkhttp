@@ -30,8 +30,13 @@ export const History = ({ invocation }: Props) => {
           <DataList.Label minWidth='88px'>started</DataList.Label>
           <DataList.Value>{invocation.started}</DataList.Value>
         </DataList.Item>
+        
+        <DataList.Item align='center'>
+          <DataList.Label minWidth='88px'>received</DataList.Label>
+          <DataList.Value>{invocation.received}</DataList.Value>
+        </DataList.Item>
       </DataList.Root>
-      
+
       <Box my='7' />
 
       <HistorySectionTitle title='Request Headers' />

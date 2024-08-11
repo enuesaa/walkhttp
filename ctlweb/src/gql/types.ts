@@ -16,6 +16,7 @@ export type Scalars = {
 
 export type BrowserInvocationInput = {
   method: Scalars['String']['input']
+  received: Scalars['String']['input']
   requestBody: Scalars['String']['input']
   requestHeaders?: InputMaybe<Array<InputMaybe<HeaderInput>>>
   responseBody: Scalars['String']['input']
@@ -45,6 +46,7 @@ export type Invocation = {
   __typename?: 'Invocation'
   id: Scalars['ID']['output']
   method: Scalars['String']['output']
+  received: Scalars['String']['output']
   requestBody: Scalars['String']['output']
   requestHeaders: Array<Header>
   responseBody: Scalars['String']['output']

@@ -8,6 +8,7 @@ type Invocation {
   requestBody: String!
   responseBody: String!
   started: String!
+  received: String!
 }
 
 type Header {

@@ -11,6 +11,7 @@ type BrowserInvocationInput struct {
 	RequestBody     string         `json:"requestBody"`
 	ResponseBody    string         `json:"responseBody"`
 	Started         string         `json:"started"`
+	Received        string         `json:"received"`
 }
 
 type Config struct {
@@ -37,6 +38,7 @@ type Invocation struct {
 	RequestBody     string    `json:"requestBody"`
 	ResponseBody    string    `json:"responseBody"`
 	Started         string    `json:"started"`
+	Received        string    `json:"received"`
 }
 
 type Mutation struct {

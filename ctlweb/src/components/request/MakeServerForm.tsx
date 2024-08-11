@@ -20,7 +20,7 @@ export const MakeServerForm = () => {
           defaultValue='GET'
           control={control}
           // see https://github.com/orgs/react-hook-form/discussions/8015
-          render={({ field: {ref, ...field} }) => (
+          render={({ field: { ref, ...field } }) => (
             <Select.Root size='3' onValueChange={field.onChange} {...field}>
               <Select.Trigger />
               <Select.Content>

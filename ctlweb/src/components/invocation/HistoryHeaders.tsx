@@ -12,7 +12,7 @@ export const HistoryHeaders = ({ headers }: Props) => {
   return (
     <Table.Root variant='surface' mb='4'>
       <Table.Body>
-        {headers.map((v,i) => (
+        {headers.map((v, i) => (
           <Table.Row key={i}>
             <Table.RowHeaderCell>{v.name}</Table.RowHeaderCell>
             <Table.Cell>{v.value}</Table.Cell>

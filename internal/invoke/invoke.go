@@ -30,6 +30,7 @@ func (srv *InvokeSrv) Invoke(entry *Entry) error {
 	}
 	defer res.Body.Close()
 
+	entry.Response.Received = time.Now().Unix()
 	entry.Response.Status = res.StatusCode
 	for key, values := range res.Header {
 		if len(values) == 0 {

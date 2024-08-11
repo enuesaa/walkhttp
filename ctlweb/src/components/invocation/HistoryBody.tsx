@@ -9,7 +9,7 @@ export const HistoryBody = ({ body }: Props) => {
   }
 
   return (
-    <Code mb='4' style={{ display: 'block' }}>
+    <Code mb='4' style={{ display: 'block', overflowX: 'scroll' }}>
       <pre>{body}</pre>
     </Code>
   )
