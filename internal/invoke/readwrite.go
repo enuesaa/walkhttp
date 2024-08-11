@@ -6,7 +6,7 @@ import (
 
 func (srv *InvokeSrv) Read() (Workspace, error) {
 	var ws Workspace
-	
+
 	fbytes, err := srv.repos.Fs.Read(srv.repos.WorkspacePath)
 	if err != nil {
 		return ws, err

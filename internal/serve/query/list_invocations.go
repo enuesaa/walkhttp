@@ -20,6 +20,6 @@ func (r *QueryResolver) ListInvocations(ctx context.Context) ([]*schema.Invocati
 		invocation := schema.NewInvocationFromEntry(entry)
 		list = append(list, &invocation)
 	}
-	
+
 	return list, nil
 }

@@ -17,17 +17,17 @@ func (i *BrowserInvocationInput) ToEntry() invoke.Entry {
 	entry := invoke.Entry{
 		Id: "",
 		Request: invoke.EntryRequest{
-			Method: i.Method,
-			Url: i.URL,
+			Method:  i.Method,
+			Url:     i.URL,
 			Headers: map[string][]string{},
-			Body: i.RequestBody,
+			Body:    i.RequestBody,
 			Started: started.Unix(),
 		},
 		Response: invoke.EntryResponse{
-			Status: i.Status,
-			Headers: map[string][]string{},
-			Body: i.ResponseBody,
-			Received: 0,    
+			Status:   i.Status,
+			Headers:  map[string][]string{},
+			Body:     i.ResponseBody,
+			Received: 0,
 		},
 	}
 

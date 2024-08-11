@@ -9,13 +9,13 @@ import (
 func New(repos repository.Repos) ServeCtl {
 	return ServeCtl{
 		repos: repos,
-		port: 3000,
+		port:  3000,
 	}
 }
 
 type ServeCtl struct {
 	repos repository.Repos
-	port int
+	port  int
 }
 
 func (ctl *ServeCtl) UsePort(port int) {

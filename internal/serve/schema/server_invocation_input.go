@@ -8,17 +8,17 @@ func (i *ServerInvocationInput) ToEntry() invoke.Entry {
 	entry := invoke.Entry{
 		Id: "", // TODO
 		Request: invoke.EntryRequest{
-			Method: i.Method,
-			Url: i.URL,
+			Method:  i.Method,
+			Url:     i.URL,
 			Headers: map[string][]string{},
-			Body: i.RequestBody,
+			Body:    i.RequestBody,
 			Started: 0,
 		},
 		Response: invoke.EntryResponse{
-			Status: 0,
-			Headers: map[string][]string{},
-			Body: "",
-			Received: 0,    
+			Status:   0,
+			Headers:  map[string][]string{},
+			Body:     "",
+			Received: 0,
 		},
 	}
 

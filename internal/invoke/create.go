@@ -8,16 +8,16 @@ func (srv *InvokeSrv) Create(method string, url string) Entry {
 	data := Entry{
 		Id: uuid.NewString(),
 		Request: EntryRequest{
-			Method: method,
-			Url: url,
+			Method:  method,
+			Url:     url,
 			Headers: map[string][]string{},
-			Body: "",
+			Body:    "",
 			Started: 0,
 		},
 		Response: EntryResponse{
-			Status: 0,
-			Headers: map[string][]string{},
-			Body: "",
+			Status:   0,
+			Headers:  map[string][]string{},
+			Body:     "",
 			Received: 0,
 		},
 	}
