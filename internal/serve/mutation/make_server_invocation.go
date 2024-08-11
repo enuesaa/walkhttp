@@ -11,13 +11,12 @@ func (r *MutationResolver) MakeServerInvocation(ctx context.Context, invocation 
 	success := false
 
 	invokeSrv := invoke.New(r.Repos)
-	data := invokeSrv.Create(invocation.Method, invocation.URL)
-	data.Request.Body = invocation.RequestBody
+	entry := invocation.ToEntry()
 
-	if err := invokeSrv.Invoke(&data); err != nil {
+	if err := invokeSrv.Invoke(&entry); err != nil {
 		return &success, err
 	}
-	if err := invokeSrv.Save(data); err != nil {
+	if err := invokeSrv.Save(entry); err != nil {
 		return &success, err
 	}
 	success = true

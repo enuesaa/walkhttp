@@ -2,7 +2,6 @@ package subscription
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/enuesaa/walkhttp/internal/invoke"
@@ -26,17 +25,8 @@ func (r *SubscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan
 			}
 			
 			for _, entry := range ws.Entries {
-				invocations = append(invocations, &schema.Invocation{
-					ID: entry.Id,
-					Status: entry.Response.Status,
-					Method: entry.Request.Method,
-					URL: entry.Request.Url,
-					RequestHeaders: make([]*schema.Header, 0),
-					ResponseHeaders: make([]*schema.Header, 0),
-					RequestBody: entry.Request.Body,
-					ResponseBody: entry.Response.Body,
-					Created: fmt.Sprint(entry.Request.Started),
-				})
+				invocation := schema.NewInvocationFromEntry(entry)
+				invocations = append(invocations, &invocation)
 			}
 			select {
 			case <-ctx.Done():

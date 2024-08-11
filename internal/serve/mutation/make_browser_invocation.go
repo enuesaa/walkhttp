@@ -11,12 +11,9 @@ func (r *MutationResolver) MakeBrowserInvocation(ctx context.Context, invocation
 	success := false
 
 	invokeSrv := invoke.New(r.Repos)
-	data := invokeSrv.Create(invocation.Method, invocation.URL)
-	data.Request.Body = invocation.RequestBody
-	data.Response.Status = invocation.Status
-	data.Response.Body = invocation.ResponseBody
+	entry := invocation.ToEntry()
 
-	if err := invokeSrv.Save(data); err != nil {
+	if err := invokeSrv.Save(entry); err != nil {
 		return &success, err
 	}
 	success = true

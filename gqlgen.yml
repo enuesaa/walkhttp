@@ -13,5 +13,5 @@ exec:
   package: gql
 
 model:
-  filename: internal/serve/schema/schema.go
+  filename: internal/serve/schema/main.go
   package: schema
