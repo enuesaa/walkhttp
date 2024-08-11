@@ -14,7 +14,7 @@ func main() {
 
 	app := cli.App{
 		Name:    "walkhttp",
-		Version: "0.0.9",
+		Version: "0.0.10",
 		Usage:   "A CLI tool to call http endpoint with browser or prompt.",
 		Commands: []*cli.Command{
 			command.NewCtlCommand(repos),
