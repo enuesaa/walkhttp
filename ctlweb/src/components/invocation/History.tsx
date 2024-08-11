@@ -37,6 +37,13 @@ export const History = ({ invocation }: Props) => {
       <HistoryRequestHeaders headers={invocation.requestHeaders} />
 
       <Heading m='1' mt='5' size='3'>
+        Request Body
+      </Heading>
+      <Code style={{ display: 'block' }}>
+        <pre>{invocation.requestBody}</pre>
+      </Code>
+
+      <Heading m='1' mt='5' size='3'>
         Response Headers
       </Heading>
       <HistoryResponseHeaders headers={invocation.responseHeaders} />

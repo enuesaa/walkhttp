@@ -4,9 +4,7 @@ import "github.com/google/uuid"
 
 func (srv *InvokeSrv) Save(entry Entry) error {
 	if !srv.repos.Fs.IsExist(srv.repos.WorkspacePath) {
-		ws := Workspace{
-			BaseUrl: "",
-		}
+		ws := Workspace{}
 		if err := srv.Write(ws); err != nil {
 			return err
 		}

@@ -1,7 +1,7 @@
 package invoke
 
 type Workspace struct {
-	BaseUrl string  `json:"baseUrl"` // like `https://example.com`
+	// BaseUrl string  `json:"baseUrl"` // like `https://example.com`
 	Entries []Entry `json:"entries"`
 }
 

@@ -15,8 +15,8 @@ func (ctl *ServeCtl) Serve() error {
 	}))
 
 	// routes
-	app.Any("/graph", ctl.handleGql())
-	app.GET("/graph/playground", ctl.handleGqlPlayground())
+	app.Any("/graphql", ctl.handleGql())
+	app.GET("/graphql/playground", ctl.handleGqlPlayground())
 	app.Any("/*", ctlweb.Serve)
 	app.Any("/", ctlweb.Serve)
 

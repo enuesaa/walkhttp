@@ -6,5 +6,5 @@ import (
 )
 
 func (ctl *ServeCtl) handleGqlPlayground() echo.HandlerFunc {
-	return echo.WrapHandler(playground.Handler("graph", "/graph"))
+	return echo.WrapHandler(playground.Handler("graphql", "/graphql"))
 }

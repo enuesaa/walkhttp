@@ -1,6 +1,8 @@
 package schema
 
 import (
+	"cmp"
+	"slices"
 	"time"
 
 	"github.com/enuesaa/walkhttp/internal/invoke"
@@ -37,6 +39,13 @@ func NewInvocationFromEntry(entry invoke.Entry) Invocation {
 			})
 		}
 	}
+
+	slices.SortFunc(invocation.RequestHeaders, func(a *Header, b *Header) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
+	slices.SortFunc(invocation.ResponseHeaders, func(a *Header, b *Header) int {
+		return cmp.Compare(a.Name, b.Name)
+	})
 
 	return invocation
 }
