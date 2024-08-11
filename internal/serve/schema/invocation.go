@@ -14,11 +14,11 @@ func NewInvocationFromEntry(entry invoke.Entry) Invocation {
 		Status:          entry.Response.Status,
 		Method:          entry.Request.Method,
 		URL:             entry.Request.Url,
-		RequestHeaders:  make([]*Header, 0),
-		ResponseHeaders: make([]*Header, 0),
+		RequestHeaders:  []*Header{},
+		ResponseHeaders: []*Header{},
 		RequestBody:     entry.Request.Body,
 		ResponseBody:    entry.Response.Body,
-		Created:         created,
+		Started:         created,
 	}
 
 	for name, values := range entry.Request.Headers {

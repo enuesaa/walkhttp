@@ -7,12 +7,10 @@ import (
 )
 
 func (i *BrowserInvocationInput) ToEntry() invoke.Entry {
-	// TODO
-	// started, err := time.Parse(time.RFC3339, i.Created)
-	// if err != nil {
-	// 	started = time.Unix(0, 0)
-	// }
-	started := time.Unix(0, 0)
+	started, err := time.Parse(time.RFC3339, i.Started)
+	if err != nil {
+		started = time.Unix(0, 0)
+	}
 
 	entry := invoke.Entry{
 		Id: "",
@@ -37,6 +35,7 @@ func (i *BrowserInvocationInput) ToEntry() invoke.Entry {
 		}
 		entry.Request.Headers[h.Name] = append(entry.Request.Headers[h.Name], h.Value)
 	}
+
 	for _, h := range i.ResponseHeaders {
 		if _, ok := entry.Response.Headers[h.Name]; !ok {
 			entry.Response.Headers[h.Name] = []string{}

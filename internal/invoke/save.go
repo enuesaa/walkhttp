@@ -1,5 +1,7 @@
 package invoke
 
+import "github.com/google/uuid"
+
 func (srv *InvokeSrv) Save(entry Entry) error {
 	if !srv.repos.Fs.IsExist(srv.repos.WorkspacePath) {
 		ws := Workspace{
@@ -9,6 +11,8 @@ func (srv *InvokeSrv) Save(entry Entry) error {
 			return err
 		}
 	}
+
+	entry.Id = uuid.NewString()
 
 	ws, err := srv.Read()
 	if err != nil {

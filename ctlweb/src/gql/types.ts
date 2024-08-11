@@ -20,6 +20,7 @@ export type BrowserInvocationInput = {
   requestHeaders?: InputMaybe<Array<InputMaybe<HeaderInput>>>
   responseBody: Scalars['String']['input']
   responseHeaders?: InputMaybe<Array<InputMaybe<HeaderInput>>>
+  started: Scalars['String']['input']
   status: Scalars['Int']['input']
   url: Scalars['String']['input']
 }
@@ -42,13 +43,13 @@ export type HeaderInput = {
 
 export type Invocation = {
   __typename?: 'Invocation'
-  created: Scalars['String']['output']
   id: Scalars['ID']['output']
   method: Scalars['String']['output']
   requestBody: Scalars['String']['output']
   requestHeaders?: Maybe<Array<Maybe<Header>>>
   responseBody: Scalars['String']['output']
   responseHeaders?: Maybe<Array<Maybe<Header>>>
+  started: Scalars['String']['output']
   status: Scalars['Int']['output']
   url: Scalars['String']['output']
 }

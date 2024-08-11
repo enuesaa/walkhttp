@@ -13,14 +13,14 @@ export const HistroiesItem = ({ invocation }: Props) => {
     minute: 'numeric',
     second: 'numeric',
   })
-  const created = datefmt.format(new Date(invocation.created))
+  const started = datefmt.format(new Date(invocation.started))
 
   return (
     <Dialog.Root>
       <Dialog.Trigger>
         <Button variant='ghost' className={styles.main}>
           <Badge color='green'>{invocation.method}</Badge> {invocation.url}
-          <div className={styles.created}>{created}</div>
+          <div className={styles.created}>{started}</div>
         </Button>
       </Dialog.Trigger>
       <Dialog.Content maxWidth='1000px' aria-description='Invocation' style={{ position: 'relative' }}>

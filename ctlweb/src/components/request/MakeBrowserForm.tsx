@@ -15,6 +15,7 @@ export const MakeBrowserForm = () => {
     invocation.status = 0
     invocation.responseHeaders = []
     invocation.responseBody = ''
+    invocation.started = new Date().toISOString()
 
     try {
       const res = await fetch(invocation.url, {

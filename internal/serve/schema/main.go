@@ -10,6 +10,7 @@ type BrowserInvocationInput struct {
 	ResponseHeaders []*HeaderInput `json:"responseHeaders,omitempty"`
 	RequestBody     string         `json:"requestBody"`
 	ResponseBody    string         `json:"responseBody"`
+	Started         string         `json:"started"`
 }
 
 type Config struct {
@@ -35,7 +36,7 @@ type Invocation struct {
 	ResponseHeaders []*Header `json:"responseHeaders,omitempty"`
 	RequestBody     string    `json:"requestBody"`
 	ResponseBody    string    `json:"responseBody"`
-	Created         string    `json:"created"`
+	Started         string    `json:"started"`
 }
 
 type Mutation struct {

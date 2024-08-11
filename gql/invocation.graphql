@@ -7,7 +7,7 @@ type Invocation {
   responseHeaders: [Header]
   requestBody: String!
   responseBody: String!
-  created: String!
+  started: String!
 }
 
 type Header {

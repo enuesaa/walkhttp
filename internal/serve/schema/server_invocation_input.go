@@ -6,7 +6,7 @@ import (
 
 func (i *ServerInvocationInput) ToEntry() invoke.Entry {
 	entry := invoke.Entry{
-		Id: "", // TODO
+		Id: "",
 		Request: invoke.EntryRequest{
 			Method:  i.Method,
 			Url:     i.URL,

@@ -24,8 +24,8 @@ export const History = ({ invocation }: Props) => {
         </DataList.Item>
 
         <DataList.Item align='center'>
-          <DataList.Label minWidth='88px'>created</DataList.Label>
-          <DataList.Value>{invocation.created}</DataList.Value>
+          <DataList.Label minWidth='88px'>started</DataList.Label>
+          <DataList.Value>{invocation.started}</DataList.Value>
         </DataList.Item>
       </DataList.Root>
 

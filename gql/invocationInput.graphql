@@ -6,6 +6,7 @@ input BrowserInvocationInput {
   responseHeaders: [HeaderInput]
   requestBody: String!
   responseBody: String!
+  started: String!
 }
 
 input ServerInvocationInput {

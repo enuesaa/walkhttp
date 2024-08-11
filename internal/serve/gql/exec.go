@@ -58,13 +58,13 @@ type ComplexityRoot struct {
 	}
 
 	Invocation struct {
-		Created         func(childComplexity int) int
 		ID              func(childComplexity int) int
 		Method          func(childComplexity int) int
 		RequestBody     func(childComplexity int) int
 		RequestHeaders  func(childComplexity int) int
 		ResponseBody    func(childComplexity int) int
 		ResponseHeaders func(childComplexity int) int
+		Started         func(childComplexity int) int
 		Status          func(childComplexity int) int
 		URL             func(childComplexity int) int
 	}
@@ -138,13 +138,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Header.Value(childComplexity), true
 
-	case "Invocation.created":
-		if e.complexity.Invocation.Created == nil {
-			break
-		}
-
-		return e.complexity.Invocation.Created(childComplexity), true
-
 	case "Invocation.id":
 		if e.complexity.Invocation.ID == nil {
 			break
@@ -186,6 +179,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Invocation.ResponseHeaders(childComplexity), true
+
+	case "Invocation.started":
+		if e.complexity.Invocation.Started == nil {
+			break
+		}
+
+		return e.complexity.Invocation.Started(childComplexity), true
 
 	case "Invocation.status":
 		if e.complexity.Invocation.Status == nil {
@@ -396,7 +396,7 @@ var sources = []*ast.Source{
   responseHeaders: [Header]
   requestBody: String!
   responseBody: String!
-  created: String!
+  started: String!
 }
 
 type Header {
@@ -412,6 +412,7 @@ type Header {
   responseHeaders: [HeaderInput]
   requestBody: String!
   responseBody: String!
+  started: String!
 }
 
 input ServerInvocationInput {
@@ -1042,8 +1043,8 @@ func (ec *executionContext) fieldContext_Invocation_responseBody(_ context.Conte
 	return fc, nil
 }
 
-func (ec *executionContext) _Invocation_created(ctx context.Context, field graphql.CollectedField, obj *schema.Invocation) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Invocation_created(ctx, field)
+func (ec *executionContext) _Invocation_started(ctx context.Context, field graphql.CollectedField, obj *schema.Invocation) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Invocation_started(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -1056,7 +1057,7 @@ func (ec *executionContext) _Invocation_created(ctx context.Context, field graph
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Created, nil
+		return obj.Started, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1073,7 +1074,7 @@ func (ec *executionContext) _Invocation_created(ctx context.Context, field graph
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Invocation_created(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Invocation_started(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Invocation",
 		Field:      field,
@@ -1299,8 +1300,8 @@ func (ec *executionContext) fieldContext_Query_listInvocations(_ context.Context
 				return ec.fieldContext_Invocation_requestBody(ctx, field)
 			case "responseBody":
 				return ec.fieldContext_Invocation_responseBody(ctx, field)
-			case "created":
-				return ec.fieldContext_Invocation_created(ctx, field)
+			case "started":
+				return ec.fieldContext_Invocation_started(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Invocation", field.Name)
 		},
@@ -1360,8 +1361,8 @@ func (ec *executionContext) fieldContext_Query_getInvocation(ctx context.Context
 				return ec.fieldContext_Invocation_requestBody(ctx, field)
 			case "responseBody":
 				return ec.fieldContext_Invocation_responseBody(ctx, field)
-			case "created":
-				return ec.fieldContext_Invocation_created(ctx, field)
+			case "started":
+				return ec.fieldContext_Invocation_started(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Invocation", field.Name)
 		},
@@ -1578,8 +1579,8 @@ func (ec *executionContext) fieldContext_Subscription_subscribeInvocations(_ con
 				return ec.fieldContext_Invocation_requestBody(ctx, field)
 			case "responseBody":
 				return ec.fieldContext_Invocation_responseBody(ctx, field)
-			case "created":
-				return ec.fieldContext_Invocation_created(ctx, field)
+			case "started":
+				return ec.fieldContext_Invocation_started(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type Invocation", field.Name)
 		},
@@ -3367,7 +3368,7 @@ func (ec *executionContext) unmarshalInputBrowserInvocationInput(ctx context.Con
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"status", "method", "url", "requestHeaders", "responseHeaders", "requestBody", "responseBody"}
+	fieldsInOrder := [...]string{"status", "method", "url", "requestHeaders", "responseHeaders", "requestBody", "responseBody", "started"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -3423,6 +3424,13 @@ func (ec *executionContext) unmarshalInputBrowserInvocationInput(ctx context.Con
 				return it, err
 			}
 			it.ResponseBody = data
+		case "started":
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("started"))
+			data, err := ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+			it.Started = data
 		}
 	}
 
@@ -3647,8 +3655,8 @@ func (ec *executionContext) _Invocation(ctx context.Context, sel ast.SelectionSe
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
-		case "created":
-			out.Values[i] = ec._Invocation_created(ctx, field, obj)
+		case "started":
+			out.Values[i] = ec._Invocation_started(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
 				out.Invalids++
 			}
