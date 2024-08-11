@@ -25,13 +25,3 @@ func (srv *InvokeSrv) Write(ws Workspace) error {
 	}
 	return srv.repos.Fs.Create(srv.repos.WorkspacePath, fbytes)
 }
-
-func (srv *InvokeSrv) Save(entry Entry) error {
-	ws, err := srv.Read()
-	if err != nil {
-		return err
-	}
-	ws.Entries = append(ws.Entries, entry)
-
-	return srv.Write(ws)
-}
