@@ -18,4 +18,13 @@ export default {
     fontSize: '13px',
     color: 'rgba(255,255,255,0.3)',
   }),
+  content: style({
+    padding: '30px',
+    position: 'relative',
+  }),
+  closeButton: style({
+    position: 'absolute',
+    top: '20px',
+    right: '20px',
+  }),
 }

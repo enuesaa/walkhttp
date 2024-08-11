@@ -23,10 +23,10 @@ export const HistroiesItem = ({ invocation }: Props) => {
           <div className={styles.created}>{started}</div>
         </Button>
       </Dialog.Trigger>
-      <Dialog.Content maxWidth='1000px' aria-description='Invocation' style={{ position: 'relative' }}>
-        <Dialog.Title>Invocation</Dialog.Title>
+      <Dialog.Content maxWidth='700px' aria-describedby={undefined} className={styles.content}>
+        <Dialog.Title size='5'>Invocation</Dialog.Title>
         <Dialog.Close>
-          <Button variant='soft' color='gray' style={{ position: 'absolute', top: '20px', right: '20px' }}>
+          <Button variant='soft' color='gray' className={styles.closeButton}>
             Close
           </Button>
         </Dialog.Close>

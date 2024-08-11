@@ -1,12 +1,16 @@
 import { Header } from '@/gql/types'
-import { Table } from '@radix-ui/themes'
+import { Box, Table } from '@radix-ui/themes'
 
 type Props = {
   headers: Header[]
 }
-export const HistoryRequestHeaders = ({ headers }: Props) => {
+export const HistoryHeaders = ({ headers }: Props) => {
+  if (headers.length === 0) {
+    return <Box mb='4' />
+  }
+
   return (
-    <Table.Root variant='surface'>
+    <Table.Root variant='surface' mb='4'>
       <Table.Body>
         {headers.map((v,i) => (
           <Table.Row key={i}>

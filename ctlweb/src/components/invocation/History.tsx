@@ -1,7 +1,8 @@
 import { Invocation } from '@/gql/types'
-import { Code, DataList, Heading } from '@radix-ui/themes'
-import { HistoryRequestHeaders } from './HistoryRequestHeaders'
-import { HistoryResponseHeaders } from './HistoryResponseHeaders'
+import { Box, DataList, Heading, Separator } from '@radix-ui/themes'
+import { HistoryHeaders } from './HistoryHeaders'
+import { HistoryBody } from './HistoryBody'
+import { HistorySectionTitle } from './HistorySectionTitle'
 
 type Props = {
   invocation: Invocation
@@ -9,7 +10,7 @@ type Props = {
 export const History = ({ invocation }: Props) => {
   return (
     <>
-      <DataList.Root my='2' mx='5'>
+      <DataList.Root m='1' my='5'>
         <DataList.Item align='center'>
           <DataList.Label minWidth='88px'>status</DataList.Label>
           <DataList.Value>{invocation.status}</DataList.Value>
@@ -30,30 +31,20 @@ export const History = ({ invocation }: Props) => {
           <DataList.Value>{invocation.started}</DataList.Value>
         </DataList.Item>
       </DataList.Root>
+      
+      <Box my='7' />
 
-      <Heading m='1' mt='5' size='3'>
-        Request Headers
-      </Heading>
-      <HistoryRequestHeaders headers={invocation.requestHeaders} />
+      <HistorySectionTitle title='Request Headers' />
+      <HistoryHeaders headers={invocation.requestHeaders} />
 
-      <Heading m='1' mt='5' size='3'>
-        Request Body
-      </Heading>
-      <Code style={{ display: 'block' }}>
-        <pre>{invocation.requestBody}</pre>
-      </Code>
+      <HistorySectionTitle title='Request Body' />
+      <HistoryBody body={invocation.requestBody} />
 
-      <Heading m='1' mt='5' size='3'>
-        Response Headers
-      </Heading>
-      <HistoryResponseHeaders headers={invocation.responseHeaders} />
+      <HistorySectionTitle title='Response Headers' />
+      <HistoryHeaders headers={invocation.responseHeaders} />
 
-      <Heading m='1' mt='5' size='3'>
-        Response Body
-      </Heading>
-      <Code style={{ display: 'block' }}>
-        <pre>{invocation.responseBody}</pre>
-      </Code>
+      <HistorySectionTitle title='Response Body' />
+      <HistoryBody body={invocation.responseBody} />
     </>
   )
 }
