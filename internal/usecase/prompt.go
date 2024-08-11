@@ -7,19 +7,18 @@ import (
 
 func Prompt(repos repository.Repos, method string) error {
 	invokeSrv := invoke.New(repos)
-	invocation := invokeSrv.Create(method, invokeSrv.GetBaseUrl())
-	repos.Log.Printf("***\n")
-	if err := PromptReq(repos, &invocation); err != nil {
-		repos.Log.Printf("***\n")
-		return err
-	}
-	if err := Invoke(repos, &invocation); err != nil {
-		repos.Log.Printf("***\n")
-		return err
-	}
-	repos.Log.Printf("* Status: %d\n", invocation.Response.Status)
-	repos.Log.Printf("***\n")
-	repos.Log.Printf("\n")
+	entry := invokeSrv.NewEntry(method)
 
-	return invokeSrv.Save(invocation)
+	repos.Log.Printf("***\n")
+	defer repos.Log.Printf("***\n")
+	if err := PromptReq(repos, &entry); err != nil {
+		return err
+	}
+
+	if err := Invoke(repos, &entry); err != nil {
+		return err
+	}
+	repos.Log.Printf("* Status: %d\n", entry.Response.Status)
+
+	return invokeSrv.Save(entry)
 }

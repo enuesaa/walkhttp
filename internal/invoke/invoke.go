@@ -6,9 +6,12 @@ import (
 	"io"
 	"net/http"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 func (srv *InvokeSrv) Invoke(invocation *Entry) error {
+	invocation.Id = uuid.NewString()
 	invocation.Request.Started = time.Now().Unix()
 
 	reqbody := bytes.NewBuffer([]byte(invocation.Request.Body))

@@ -1,12 +1,10 @@
 package invoke
 
-import (
-	"github.com/google/uuid"
-)
+func (srv *InvokeSrv) NewEntry(method string) Entry {
+	url := srv.GetBaseUrl()
 
-func (srv *InvokeSrv) Create(method string, url string) Entry {
 	data := Entry{
-		Id: uuid.NewString(),
+		Id: "",
 		Request: EntryRequest{
 			Method:  method,
 			Url:     url,
@@ -21,6 +19,5 @@ func (srv *InvokeSrv) Create(method string, url string) Entry {
 			Received: 0,
 		},
 	}
-
 	return data
 }
