@@ -11,8 +11,8 @@ type Query {
 }
 
 type Mutation {
-  makeServerInvocation(input: ServerInvocationInput!): Boolean
-  makeBrowserInvocation(input: BrowserInvocationInput!): Boolean
+  makeServerInvocation(input: ServerInvocationInput!): Boolean!
+  makeBrowserInvocation(input: BrowserInvocationInput!): Boolean!
 }
 
 type Subscription {

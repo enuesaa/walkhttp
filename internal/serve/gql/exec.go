@@ -86,8 +86,8 @@ type ComplexityRoot struct {
 }
 
 type MutationResolver interface {
-	MakeServerInvocation(ctx context.Context, input schema.ServerInvocationInput) (*bool, error)
-	MakeBrowserInvocation(ctx context.Context, input schema.BrowserInvocationInput) (*bool, error)
+	MakeServerInvocation(ctx context.Context, input schema.ServerInvocationInput) (bool, error)
+	MakeBrowserInvocation(ctx context.Context, input schema.BrowserInvocationInput) (bool, error)
 }
 type QueryResolver interface {
 	GetConfig(ctx context.Context) (*schema.Config, error)
@@ -439,8 +439,8 @@ type Query {
 }
 
 type Mutation {
-  makeServerInvocation(input: ServerInvocationInput!): Boolean
-  makeBrowserInvocation(input: BrowserInvocationInput!): Boolean
+  makeServerInvocation(input: ServerInvocationInput!): Boolean!
+  makeBrowserInvocation(input: BrowserInvocationInput!): Boolean!
 }
 
 type Subscription {
@@ -1107,11 +1107,14 @@ func (ec *executionContext) _Mutation_makeServerInvocation(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_makeServerInvocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -1159,11 +1162,14 @@ func (ec *executionContext) _Mutation_makeBrowserInvocation(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_makeBrowserInvocation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3692,10 +3698,16 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_makeServerInvocation(ctx, field)
 			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "makeBrowserInvocation":
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_makeBrowserInvocation(ctx, field)
 			})
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

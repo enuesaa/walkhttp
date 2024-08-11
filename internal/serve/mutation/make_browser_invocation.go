@@ -7,16 +7,12 @@ import (
 	"github.com/enuesaa/walkhttp/internal/serve/schema"
 )
 
-func (r *MutationResolver) MakeBrowserInvocation(ctx context.Context, invocation schema.BrowserInvocationInput) (*bool, error) {
-	success := false
-
+func (r *MutationResolver) MakeBrowserInvocation(ctx context.Context, invocation schema.BrowserInvocationInput) (bool, error) {
 	invokeSrv := invoke.New(r.Repos)
 	entry := invocation.ToEntry()
 
 	if err := invokeSrv.Save(entry); err != nil {
-		return &success, err
+		return false, err
 	}
-	success = true
-
-	return &success, nil
+	return true, nil
 }
