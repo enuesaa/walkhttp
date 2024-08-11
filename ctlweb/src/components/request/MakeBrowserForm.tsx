@@ -20,9 +20,12 @@ export const MakeBrowserForm = () => {
     try {
       const res = await fetch(invocation.url, {
         method: invocation.method,
-        body: invocation.requestBody,
+        body: invocation.method === 'GET' ? undefined : invocation.requestBody,
       })
       invocation.status = res.status
+      for (const [name, value] of res.headers.entries()) {
+        invocation.responseHeaders.push({ name, value })
+      }
     } catch (e) {
       console.log(e)
     }
