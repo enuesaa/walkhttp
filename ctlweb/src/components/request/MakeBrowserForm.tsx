@@ -36,7 +36,8 @@ export const MakeBrowserForm = () => {
           name='method'
           defaultValue='GET'
           control={control}
-          render={({ field }) => (
+          // see https://github.com/orgs/react-hook-form/discussions/8015
+          render={({ field: {ref, ...field} }) => (
             <Select.Root size='3' onValueChange={field.onChange} {...field}>
               <Select.Trigger />
               <Select.Content>

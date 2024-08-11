@@ -3,10 +3,10 @@ import styles from './MakeForm.css'
 import { useMakeServerInvocation } from '@/gql/queries/makeServerInvocation'
 import { useForm, Controller } from 'react-hook-form'
 import { ServerInvocationInput } from '@/gql/types'
-import { useGetAppConfig } from '@/gql/queries/appConfig'
+import { useGetConfig } from '@/gql/queries/getConfig'
 
 export const MakeServerForm = () => {
-  const appConfig = useGetAppConfig()
+  const appConfig = useGetConfig()
   const [invoveServerData, invokeServer] = useMakeServerInvocation()
 
   const { register, handleSubmit, control } = useForm<ServerInvocationInput>()
@@ -19,7 +19,8 @@ export const MakeServerForm = () => {
           name='method'
           defaultValue='GET'
           control={control}
-          render={({ field }) => (
+          // see https://github.com/orgs/react-hook-form/discussions/8015
+          render={({ field: {ref, ...field} }) => (
             <Select.Root size='3' onValueChange={field.onChange} {...field}>
               <Select.Trigger />
               <Select.Content>
