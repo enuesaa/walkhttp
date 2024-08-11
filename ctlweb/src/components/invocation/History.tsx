@@ -1,5 +1,7 @@
 import { Invocation } from '@/gql/types'
 import { Code, DataList, Heading } from '@radix-ui/themes'
+import { HistoryRequestHeaders } from './HistoryRequestHeaders'
+import { HistoryResponseHeaders } from './HistoryResponseHeaders'
 
 type Props = {
   invocation: Invocation
@@ -29,20 +31,18 @@ export const History = ({ invocation }: Props) => {
         </DataList.Item>
       </DataList.Root>
 
-      <Heading m='1' mt='5' size='7'>
-        Request
+      <Heading m='1' mt='5' size='3'>
+        Request Headers
       </Heading>
-      <Heading m='3' size='3'>
-        Headers
+      <HistoryRequestHeaders headers={invocation.requestHeaders} />
+
+      <Heading m='1' mt='5' size='3'>
+        Response Headers
       </Heading>
-      <Heading m='1' mt='5' size='7'>
-        Response
-      </Heading>
-      <Heading m='3' size='3'>
-        Headers
-      </Heading>
-      <Heading m='3' size='3'>
-        Body
+      <HistoryResponseHeaders headers={invocation.responseHeaders} />
+
+      <Heading m='1' mt='5' size='3'>
+        Response Body
       </Heading>
       <Code style={{ display: 'block' }}>
         <pre>{invocation.responseBody}</pre>

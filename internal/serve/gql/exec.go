@@ -392,8 +392,8 @@ var sources = []*ast.Source{
   status: Int!
   method: String!
   url: String!
-  requestHeaders: [Header]
-  responseHeaders: [Header]
+  requestHeaders: [Header!]!
+  responseHeaders: [Header!]!
   requestBody: String!
   responseBody: String!
   started: String!
@@ -882,11 +882,14 @@ func (ec *executionContext) _Invocation_requestHeaders(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]*schema.Header)
 	fc.Result = res
-	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx, field.Selections, res)
+	return ec.marshalNHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Invocation_requestHeaders(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -929,11 +932,14 @@ func (ec *executionContext) _Invocation_responseHeaders(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]*schema.Header)
 	fc.Result = res
-	return ec.marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx, field.Selections, res)
+	return ec.marshalNHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Invocation_responseHeaders(_ context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3643,8 +3649,14 @@ func (ec *executionContext) _Invocation(ctx context.Context, sel ast.SelectionSe
 			}
 		case "requestHeaders":
 			out.Values[i] = ec._Invocation_requestHeaders(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "responseHeaders":
 			out.Values[i] = ec._Invocation_responseHeaders(ctx, field, obj)
+			if out.Values[i] == graphql.Null {
+				out.Invalids++
+			}
 		case "requestBody":
 			out.Values[i] = ec._Invocation_requestBody(ctx, field, obj)
 			if out.Values[i] == graphql.Null {
@@ -4232,6 +4244,60 @@ func (ec *executionContext) marshalNConfig2ᚖgithubᚗcomᚋenuesaaᚋwalkhttp�
 	return ec._Config(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderᚄ(ctx context.Context, sel ast.SelectionSet, v []*schema.Header) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx context.Context, sel ast.SelectionSet, v *schema.Header) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._Header(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNID2string(ctx context.Context, v interface{}) (string, error) {
 	res, err := graphql.UnmarshalID(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -4613,54 +4679,6 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	}
 	res := graphql.MarshalBoolean(*v)
 	return res
-}
-
-func (ec *executionContext) marshalOHeader2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx context.Context, sel ast.SelectionSet, v []*schema.Header) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	return ret
-}
-
-func (ec *executionContext) marshalOHeader2ᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeader(ctx context.Context, sel ast.SelectionSet, v *schema.Header) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._Header(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOHeaderInput2ᚕᚖgithubᚗcomᚋenuesaaᚋwalkhttpᚋinternalᚋserveᚋschemaᚐHeaderInput(ctx context.Context, v interface{}) ([]*schema.HeaderInput, error) {

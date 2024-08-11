@@ -22,10 +22,20 @@ func NewInvocationFromEntry(entry invoke.Entry) Invocation {
 	}
 
 	for name, values := range entry.Request.Headers {
-		entry.Request.Headers[name] = values
+		for _, value := range values {
+			invocation.RequestHeaders = append(invocation.RequestHeaders, &Header{
+				Name: name,
+				Value: value,
+			})
+		}
 	}
 	for name, values := range entry.Response.Headers {
-		entry.Response.Headers[name] = values
+		for _, value := range values {
+			invocation.ResponseHeaders = append(invocation.ResponseHeaders, &Header{
+				Name: name,
+				Value: value,
+			})
+		}
 	}
 
 	return invocation

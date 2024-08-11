@@ -3,8 +3,8 @@ type Invocation {
   status: Int!
   method: String!
   url: String!
-  requestHeaders: [Header]
-  responseHeaders: [Header]
+  requestHeaders: [Header!]!
+  responseHeaders: [Header!]!
   requestBody: String!
   responseBody: String!
   started: String!

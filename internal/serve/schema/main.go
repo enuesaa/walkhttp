@@ -32,8 +32,8 @@ type Invocation struct {
 	Status          int       `json:"status"`
 	Method          string    `json:"method"`
 	URL             string    `json:"url"`
-	RequestHeaders  []*Header `json:"requestHeaders,omitempty"`
-	ResponseHeaders []*Header `json:"responseHeaders,omitempty"`
+	RequestHeaders  []*Header `json:"requestHeaders"`
+	ResponseHeaders []*Header `json:"responseHeaders"`
 	RequestBody     string    `json:"requestBody"`
 	ResponseBody    string    `json:"responseBody"`
 	Started         string    `json:"started"`

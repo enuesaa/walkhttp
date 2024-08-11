@@ -46,9 +46,9 @@ export type Invocation = {
   id: Scalars['ID']['output']
   method: Scalars['String']['output']
   requestBody: Scalars['String']['output']
-  requestHeaders?: Maybe<Array<Maybe<Header>>>
+  requestHeaders: Array<Header>
   responseBody: Scalars['String']['output']
-  responseHeaders?: Maybe<Array<Maybe<Header>>>
+  responseHeaders: Array<Header>
   started: Scalars['String']['output']
   status: Scalars['Int']['output']
   url: Scalars['String']['output']

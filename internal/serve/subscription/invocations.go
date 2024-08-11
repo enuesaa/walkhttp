@@ -16,13 +16,13 @@ func (r *SubscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan
 		defer close(ch)
 		for {
 			time.Sleep(1 * time.Second)
-			ws, err := invokeSrv.Read()
+			entries, err := invokeSrv.List()
 			if err != nil {
 				continue
 			}
 
 			list := make([]*schema.Invocation, 0)
-			for _, entry := range ws.Entries {
+			for _, entry := range entries {
 				invocation := schema.NewInvocationFromEntry(entry)
 				list = append(list, &invocation)
 			}
