@@ -10,28 +10,27 @@ import (
 
 func (r *SubscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan []*schema.Invocation, error) {
 	invokeSrv := invoke.New(r.Repos)
-
 	ch := make(chan []*schema.Invocation)
 
 	go func() {
 		defer close(ch)
 		for {
 			time.Sleep(1 * time.Second)
-
-			invocations := make([]*schema.Invocation, 0)
 			ws, err := invokeSrv.Read()
 			if err != nil {
 				continue
 			}
-			
+
+			list := make([]*schema.Invocation, 0)
 			for _, entry := range ws.Entries {
 				invocation := schema.NewInvocationFromEntry(entry)
-				invocations = append(invocations, &invocation)
+				list = append(list, &invocation)
 			}
+
 			select {
 			case <-ctx.Done():
 				return
-			case ch <- invocations:
+			case ch <- list:
 			}
 		}
 	}()

@@ -5,6 +5,6 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func ServeGQPlayground() echo.HandlerFunc {
+func (ctl *ServeCtl) handleGqlPlayground() echo.HandlerFunc {
 	return echo.WrapHandler(playground.Handler("graph", "/graph"))
 }

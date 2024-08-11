@@ -4,7 +4,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/enuesaa/walkhttp/internal/serve/gql"
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
@@ -14,12 +13,12 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 )
 
-func ServeGQ(repos repository.Repos, port int) echo.HandlerFunc {
+func (ctl *ServeCtl) handleGql() echo.HandlerFunc {
 	// see https://github.com/99designs/gqlgen/issues/1664
 	// see https://github.com/99designs/gqlgen/issues/2826
 	gqhandle := handler.New(gql.NewExecutableSchema(gql.Config{
-		Resolvers: &Resolver{
-			Repos:   repos,
+		Resolvers: &gql.Resolver{
+			Repos: ctl.repos,
 		},
 	}))
 	gqhandle.AddTransport(transport.Options{})

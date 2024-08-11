@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/enuesaa/walkhttp/internal/repository"
-	"github.com/enuesaa/walkhttp/internal/serve"
 	"github.com/enuesaa/walkhttp/internal/usecase"
 	"github.com/pkg/browser"
 	"github.com/urfave/cli/v2"
@@ -40,7 +39,7 @@ func NewCtlCommand(repos repository.Repos) *cli.Command {
 				browser.OpenURL(url)
 			}()
 
-			return serve.Serve(repos, port)
+			return usecase.Serve(repos, port)
 		},
 	}
 
