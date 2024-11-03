@@ -29,17 +29,9 @@ func New(repos repository.Repos) *cli.App {
 				Usage: "Serve port",
 				Value: 3000,
 			},
-			&cli.StringFlag{
-				Name:    "workspace",
-				Aliases: []string{"w"},
-				Usage:   "workspace file path",
-				Value:   "walkhttp.json",
-			},
 		},
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
-			repos.WorkspacePath = c.String("workspace")
-
 			usecase.PrintBanner(repos)
 
 			go func() {
