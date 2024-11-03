@@ -5,7 +5,7 @@ tasks:
   init:
     cmds:
       - go generate ./...
-  
+
   gqlgen:
     cmds:
       - cd pkg/serve/schema && go run github.com/99designs/gqlgen generate

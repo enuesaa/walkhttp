@@ -18,7 +18,6 @@ COMMANDS:
 
 FLAGS:
   --port value                 Serve port (default: 3000)
-  --workspace value, -w value  workspace file path (default: "walkhttp.json")
   --help, -h                   show help
   --version, -v                print the version
 ```

@@ -12,6 +12,3 @@ node_modules
 dist
 next-env.d.ts
 .env*.local
-
-# app
-walkhttp.json
