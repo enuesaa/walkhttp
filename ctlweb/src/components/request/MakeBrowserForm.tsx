@@ -1,5 +1,4 @@
 import { Select, TextField, Button, TextArea } from '@radix-ui/themes'
-import styles from './MakeForm.css'
 import { useMakeBrowserInvocation } from '@/gql/queries/makeBrowserInvocation'
 import { Controller, useForm } from 'react-hook-form'
 import { BrowserInvocationInput } from '@/gql/types'
@@ -35,8 +34,8 @@ export const MakeBrowserForm = () => {
   })
 
   return (
-    <form className={styles.form} onSubmit={onSubmit}>
-      <div className={styles.method}>
+    <form className='max-w-[700px] mx-auto text-lg leading-relaxed' onSubmit={onSubmit}>
+      <div className='my-2'>
         <Controller
           name='method'
           defaultValue='GET'
@@ -56,16 +55,16 @@ export const MakeBrowserForm = () => {
         />
       </div>
 
-      <div className={styles.url}>
+      <div className='my-2'>
         <TextField.Root defaultValue={appConfig.data?.getConfig.baseUrl} size='3' {...register('url')} />
       </div>
 
-      <div className={styles.body}>
+      <div className='my-7 px-2'>
         <span>body</span>
         <TextArea placeholder='{}' {...register('requestBody')}></TextArea>
       </div>
 
-      <div className={styles.btn}>
+      <div className='text-base mt-2'>
         <Button>Call</Button>
       </div>
     </form>

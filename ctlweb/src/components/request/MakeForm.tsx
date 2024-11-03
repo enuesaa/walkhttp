@@ -1,5 +1,4 @@
 import { SegmentedControl } from '@radix-ui/themes'
-import styles from './MakeForm.css'
 import { useState } from 'react'
 import { MakeBrowserForm } from './MakeBrowserForm'
 import { MakeServerForm } from './MakeServerForm'
@@ -13,7 +12,7 @@ export const MakeForm = () => {
 
   return (
     <>
-      <div className={styles.control}>
+      <div className='text-center'>
         <SegmentedControl.Root defaultValue='Server' size='3' radius='full' onValueChange={handleChangeFrom}>
           <SegmentedControl.Item value='Server'>Server</SegmentedControl.Item>
           <SegmentedControl.Item value='Browser'>Browser</SegmentedControl.Item>

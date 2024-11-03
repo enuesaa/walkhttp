@@ -1,7 +1,6 @@
 import type { AppProps } from 'next/app'
-import '@radix-ui/themes/styles.css'
 import { Theme } from '@radix-ui/themes'
-import '@/styles/app.css'
+import '../styles/app.css'
 import { Layout } from '@/components/common/Layout'
 import { GraphQLProvider } from '@/gql/GraphQLProvider'
 import Head from 'next/head'
