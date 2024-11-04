@@ -1,10 +1,10 @@
-package serve
+package router
 
 import (
 	"net/http"
 	"time"
 
-	"github.com/enuesaa/walkhttp/internal/serve/gql"
+	"github.com/enuesaa/walkhttp/internal/router/gql"
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 

@@ -1,4 +1,4 @@
-package serve
+package router
 
 import (
 	"github.com/enuesaa/walkhttp/ctlweb"

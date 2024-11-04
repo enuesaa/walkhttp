@@ -6,7 +6,7 @@ import (
 
 	"github.com/enuesaa/walkhttp/internal/command/prompt"
 	"github.com/enuesaa/walkhttp/internal/repository"
-	"github.com/enuesaa/walkhttp/internal/serve"
+	"github.com/enuesaa/walkhttp/internal/router"
 	"github.com/pkg/browser"
 	"github.com/urfave/cli/v2"
 )
@@ -41,10 +41,10 @@ func New(repos repository.Repos) *cli.App {
 				browser.OpenURL(url)
 			}()
 
-			serveCtl := serve.New(repos)
-			serveCtl.UsePort(port)
+			ctl := router.New(repos)
+			ctl.UsePort(port)
 
-			return serveCtl.Serve()
+			return ctl.Serve()
 		},
 	}
 

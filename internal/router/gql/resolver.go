@@ -2,9 +2,9 @@ package gql
 
 import (
 	"github.com/enuesaa/walkhttp/internal/repository"
-	"github.com/enuesaa/walkhttp/internal/serve/mutation"
-	"github.com/enuesaa/walkhttp/internal/serve/query"
-	"github.com/enuesaa/walkhttp/internal/serve/subscription"
+	"github.com/enuesaa/walkhttp/internal/router/mutation"
+	"github.com/enuesaa/walkhttp/internal/router/query"
+	"github.com/enuesaa/walkhttp/internal/router/subscription"
 )
 
 type Resolver struct {

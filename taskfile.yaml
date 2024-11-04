@@ -8,7 +8,7 @@ tasks:
 
   gqlgen:
     cmds:
-      - cd pkg/serve/schema && go run github.com/99designs/gqlgen generate
+      - cd pkg/router/schema && go run github.com/99designs/gqlgen generate
       - cd ctlweb && pnpm gqlgen
 
   fmt:

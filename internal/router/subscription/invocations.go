@@ -5,7 +5,7 @@ import (
 	"time"
 
 	"github.com/enuesaa/walkhttp/internal/invoke"
-	"github.com/enuesaa/walkhttp/internal/serve/schema"
+	"github.com/enuesaa/walkhttp/internal/router/schema"
 )
 
 func (r *SubscriptionResolver) SubscribeInvocations(ctx context.Context) (<-chan []*schema.Invocation, error) {
