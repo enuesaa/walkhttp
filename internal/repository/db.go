@@ -1,6 +1,10 @@
 package repository
 
-import "fmt"
+import (
+	"fmt"
+	"maps"
+	"slices"
+)
 
 type DBRepositoryInterface interface {
 	Keys() []string
@@ -11,8 +15,8 @@ type DBRepository struct{
 	data map[string]interface{}
 }
 
-func (repo *DBRepository) Keys(key string) []string {
-	return nil
+func (repo *DBRepository) Keys() []string {
+	return slices.Sorted(maps.Keys(repo.data))
 }
 
 func (repo *DBRepository) Read(key string) (interface{}, error) {

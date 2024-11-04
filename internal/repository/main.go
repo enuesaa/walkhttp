@@ -12,6 +12,9 @@ func New() Repos {
 		Fs:            &FsRepository{},
 		Prompt:        &Prompt{},
 		Log:           &LogRepository{},
+		DB:            &DBRepository{
+			data: map[string]interface{}{},
+		},
 	}
 	return repos
 }

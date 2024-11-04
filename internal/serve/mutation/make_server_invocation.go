@@ -14,7 +14,7 @@ func (r *MutationResolver) MakeServerInvocation(ctx context.Context, invocation 
 	if err := invokeSrv.Invoke(&entry); err != nil {
 		return false, err
 	}
-	if err := invokeSrv.Save(entry); err != nil {
+	if err := invokeSrv.Write(entry); err != nil {
 		return false, err
 	}
 	return true, nil

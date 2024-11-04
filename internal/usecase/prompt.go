@@ -20,5 +20,5 @@ func Prompt(repos repository.Repos, method string) error {
 	}
 	repos.Log.Printf("* Status: %d\n", entry.Response.Status)
 
-	return invokeSrv.Save(entry)
+	return invokeSrv.Write(entry)
 }
