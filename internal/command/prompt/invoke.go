@@ -1,4 +1,4 @@
-package usecase
+package prompt
 
 import (
 	"github.com/enuesaa/walkhttp/internal/invoke"
@@ -7,8 +7,6 @@ import (
 
 func Invoke(repos repository.Repos, invocation *invoke.Entry) error {
 	invokeSrv := invoke.New(repos)
-	if err := invokeSrv.Invoke(invocation); err != nil {
-		return err
-	}
-	return nil
+
+	return invokeSrv.Invoke(invocation)
 }

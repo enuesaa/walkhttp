@@ -1,4 +1,4 @@
-package usecase
+package prompt
 
 import (
 	"github.com/enuesaa/walkhttp/internal/repository"

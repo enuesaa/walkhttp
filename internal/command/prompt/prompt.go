@@ -1,4 +1,4 @@
-package usecase
+package prompt
 
 import (
 	"github.com/enuesaa/walkhttp/internal/invoke"
@@ -11,7 +11,7 @@ func Prompt(repos repository.Repos, method string) error {
 
 	repos.Log.Printf("***\n")
 	defer repos.Log.Printf("***\n")
-	if err := PromptReq(repos, &entry); err != nil {
+	if err := BuildReq(repos, &entry); err != nil {
 		return err
 	}
 

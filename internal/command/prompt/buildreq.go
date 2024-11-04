@@ -1,4 +1,4 @@
-package usecase
+package prompt
 
 import (
 	"fmt"
@@ -7,7 +7,7 @@ import (
 	"github.com/enuesaa/walkhttp/internal/repository"
 )
 
-func PromptReq(repos repository.Repos, invocation *invoke.Entry) error {
+func BuildReq(repos repository.Repos, invocation *invoke.Entry) error {
 	repos.Log.Printf("* %s\n", invocation.Request.Method)
 	if err := repos.Prompt.Ask("Url", "", &invocation.Request.Url); err != nil {
 		return err

@@ -4,8 +4,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/enuesaa/walkhttp/internal/command/prompt"
 	"github.com/enuesaa/walkhttp/internal/repository"
-	"github.com/enuesaa/walkhttp/internal/usecase"
+	"github.com/enuesaa/walkhttp/internal/serve"
 	"github.com/pkg/browser"
 	"github.com/urfave/cli/v2"
 )
@@ -32,7 +33,7 @@ func New(repos repository.Repos) *cli.App {
 		},
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
-			usecase.PrintBanner(repos)
+			prompt.PrintBanner(repos)
 
 			go func() {
 				time.Sleep(1 * time.Second)
@@ -40,7 +41,10 @@ func New(repos repository.Repos) *cli.App {
 				browser.OpenURL(url)
 			}()
 
-			return usecase.Serve(repos, port)
+			serveCtl := serve.New(repos)
+			serveCtl.UsePort(port)
+
+			return serveCtl.Serve()
 		},
 	}
 
