@@ -9,9 +9,9 @@ schema:
   - 'gql/*.graphql'
 
 exec:
-  filename: internal/router/gql/exec.go
-  package: gql
+  filename: internal/routegql/exec.go
+  package: routegql
 
 model:
-  filename: internal/router/schema/main.go
+  filename: internal/routegql/schema/main.go
   package: schema

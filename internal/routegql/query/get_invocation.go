@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/enuesaa/walkhttp/internal/invoke"
-	"github.com/enuesaa/walkhttp/internal/router/schema"
+	"github.com/enuesaa/walkhttp/internal/routegql/schema"
 )
 
 func (r *QueryResolver) GetInvocation(ctx context.Context, id string) (*schema.Invocation, error) {

@@ -1,10 +1,10 @@
-package gql
+package routegql
 
 import (
 	"github.com/enuesaa/walkhttp/internal/repository"
-	"github.com/enuesaa/walkhttp/internal/router/mutation"
-	"github.com/enuesaa/walkhttp/internal/router/query"
-	"github.com/enuesaa/walkhttp/internal/router/subscription"
+	"github.com/enuesaa/walkhttp/internal/routegql/mutation"
+	"github.com/enuesaa/walkhttp/internal/routegql/query"
+	"github.com/enuesaa/walkhttp/internal/routegql/subscription"
 )
 
 type Resolver struct {

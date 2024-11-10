@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/enuesaa/walkhttp/internal/router/gql"
+	"github.com/enuesaa/walkhttp/internal/routegql"
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 
@@ -16,8 +16,8 @@ import (
 func (ctl *ServeCtl) handleGql() echo.HandlerFunc {
 	// see https://github.com/99designs/gqlgen/issues/1664
 	// see https://github.com/99designs/gqlgen/issues/2826
-	gqhandle := handler.New(gql.NewExecutableSchema(gql.Config{
-		Resolvers: &gql.Resolver{
+	gqhandle := handler.New(routegql.NewExecutableSchema(routegql.Config{
+		Resolvers: &routegql.Resolver{
 			Repos: ctl.repos,
 		},
 	}))
