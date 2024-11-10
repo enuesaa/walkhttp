@@ -37,7 +37,7 @@ func New(repos repository.Repos) *cli.App {
 
 			go func() {
 				time.Sleep(1 * time.Second)
-				url := fmt.Sprintf("http://localhost:%d", port)
+				url := fmt.Sprintf("http://localhost:%d/ctlweb", port)
 				browser.OpenURL(url)
 			}()
 
