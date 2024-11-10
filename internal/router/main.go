@@ -5,6 +5,7 @@ import (
 	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/enuesaa/walkhttp/internal/routegql"
 	"github.com/enuesaa/walkhttp/internal/routegqlplayground"
+	"github.com/enuesaa/walkhttp/internal/routeproxy"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -22,7 +23,7 @@ func New(repos repository.Repos) *echo.Echo {
 	app.GET("/graphql/playground", routegqlplayground.Handle())
 	app.Any("/ctlweb", ctlweb.Handle())
 	app.Any("/ctlweb/*", ctlweb.Handle())
-	// app.Any("/", ctlweb.Serve)
+	app.Any("/*", routeproxy.Handle(repos))
 
 	app.HideBanner = true
 	app.HidePort = true
