@@ -1,10 +1,10 @@
-package router
+package routegql
 
 import (
 	"net/http"
 	"time"
 
-	"github.com/enuesaa/walkhttp/internal/routegql"
+	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/gorilla/websocket"
 	"github.com/labstack/echo/v4"
 
@@ -13,12 +13,12 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/transport"
 )
 
-func (ctl *ServeCtl) handleGql() echo.HandlerFunc {
+func Handle(repos repository.Repos) echo.HandlerFunc {
 	// see https://github.com/99designs/gqlgen/issues/1664
 	// see https://github.com/99designs/gqlgen/issues/2826
-	gqhandle := handler.New(routegql.NewExecutableSchema(routegql.Config{
-		Resolvers: &routegql.Resolver{
-			Repos: ctl.repos,
+	gqhandle := handler.New(NewExecutableSchema(Config{
+		Resolvers: &Resolver{
+			Repos: repos,
 		},
 	}))
 	gqhandle.AddTransport(transport.Options{})

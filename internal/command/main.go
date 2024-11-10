@@ -41,10 +41,10 @@ func New(repos repository.Repos) *cli.App {
 				browser.OpenURL(url)
 			}()
 
-			ctl := router.New(repos)
-			ctl.UsePort(port)
+			server := router.New(repos)
+			address := fmt.Sprintf(":%d", port)
 
-			return ctl.Serve()
+			return server.Start(address)
 		},
 	}
 

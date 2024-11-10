@@ -1,27 +1,30 @@
 package router
 
 import (
-	"fmt"
-
+	"github.com/enuesaa/walkhttp/ctlweb"
 	"github.com/enuesaa/walkhttp/internal/repository"
+	"github.com/enuesaa/walkhttp/internal/routegql"
+	"github.com/enuesaa/walkhttp/internal/routegqlplayground"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 )
 
-func New(repos repository.Repos) ServeCtl {
-	return ServeCtl{
-		repos: repos,
-		port:  3000,
-	}
-}
+func New(repos repository.Repos) *echo.Echo {
+	app := echo.New()
 
-type ServeCtl struct {
-	repos repository.Repos
-	port  int
-}
+	// middleware
+	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"*"},
+	}))
 
-func (ctl *ServeCtl) UsePort(port int) {
-	ctl.port = port
-}
+	// routes
+	app.Any("/graphql", routegql.Handle(repos))
+	app.GET("/graphql/playground", routegqlplayground.Handle())
+	app.Any("/*", ctlweb.Serve)
+	app.Any("/", ctlweb.Serve)
 
-func (ctl *ServeCtl) Address() string {
-	return fmt.Sprintf(":%d", ctl.port)
+	app.HideBanner = true
+	app.HidePort = true
+
+	return app
 }
