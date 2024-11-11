@@ -7,7 +7,7 @@ import (
 
 func Prompt(repos repository.Repos, method string) error {
 	invokeSrv := invoke.New(repos)
-	entry := invokeSrv.NewEntry(method)
+	entry := invokeSrv.NewEntry(method, "")
 
 	repos.Log.Printf("***\n")
 	defer repos.Log.Printf("***\n")

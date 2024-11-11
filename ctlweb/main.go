@@ -37,7 +37,7 @@ func Handle() echo.HandlerFunc {
 
 		// response
 		mimeType := mime.TypeByExtension(ext)
-	
+
 		return c.Blob(200, mimeType, f)
 	}
 

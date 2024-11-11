@@ -1,8 +1,8 @@
 package command
 
 import (
-	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/enuesaa/walkhttp/internal/command/prompt"
+	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/urfave/cli/v2"
 )
 

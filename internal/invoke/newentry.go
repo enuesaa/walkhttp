@@ -1,7 +1,9 @@
 package invoke
 
-func (srv *InvokeSrv) NewEntry(method string) Entry {
-	url := srv.GetBaseUrl()
+import "fmt"
+
+func (srv *InvokeSrv) NewEntry(method string, path string) Entry {
+	url := fmt.Sprintf("%s%s", srv.BaseUrl(), path)
 
 	data := Entry{
 		Id: "",

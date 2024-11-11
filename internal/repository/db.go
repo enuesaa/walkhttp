@@ -11,7 +11,14 @@ type DBRepositoryInterface interface {
 	Read(key string) (interface{}, error)
 	Write(key string, value interface{}) error
 }
-type DBRepository struct{
+
+func NewDBRepository() *DBRepository {
+	return &DBRepository{
+		data: map[string]interface{}{},
+	}
+}
+
+type DBRepository struct {
 	data map[string]interface{}
 }
 
