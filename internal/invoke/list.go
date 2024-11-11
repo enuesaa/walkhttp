@@ -1,11 +1,16 @@
 package invoke
 
-// TODO: paginate
 func (srv *InvokeSrv) List() ([]Entry, error) {
-	ws, err := srv.Read()
-	if err != nil {
-		return []Entry{}, err
-	}
+	list := []Entry{}
 
-	return ws.Entries, nil
+	for _, key := range srv.repos.DB.Keys() {
+		data, err := srv.repos.DB.Read(key)
+		if err != nil {
+			return list, err
+		}
+		list = append(list, data.(Entry))
+	}
+	return list, nil
 }
+
+// TODO: paginate

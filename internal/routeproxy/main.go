@@ -22,7 +22,7 @@ func Handle(repos repository.Repos) echo.HandlerFunc {
 		if err := invokeSrv.Invoke(&entry); err != nil {
 			return err
 		}
-		if err := invokeSrv.Write(entry); err != nil {
+		if err := invokeSrv.Save(entry); err != nil {
 			return err
 		}
 		return nil

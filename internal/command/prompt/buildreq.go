@@ -7,12 +7,12 @@ import (
 	"github.com/enuesaa/walkhttp/internal/repository"
 )
 
-func BuildReq(repos repository.Repos, invocation *invoke.Entry) error {
-	repos.Log.Printf("* %s\n", invocation.Request.Method)
-	if err := repos.Prompt.Ask("Url", "", &invocation.Request.Url); err != nil {
+func BuildReq(repos repository.Repos, entry *invoke.Entry) error {
+	repos.Log.Printf("* %s\n", entry.Request.Method)
+	if err := repos.Prompt.Ask("Url", "", &entry.Request.Url); err != nil {
 		return err
 	}
-	repos.Log.Printf("* %s\n", invocation.Request.Url)
+	repos.Log.Printf("* %s\n", entry.Request.Url)
 	repos.Log.Printf("*\n")
 
 	for {
@@ -29,17 +29,17 @@ func BuildReq(repos repository.Repos, invocation *invoke.Entry) error {
 		if err := repos.Prompt.Ask("Header Value", fmt.Sprintf(" (%s) ", headerName), &headerValue); err != nil {
 			return err
 		}
-		invocation.Request.Headers[headerName] = []string{headerValue}
+		entry.Request.Headers[headerName] = []string{headerValue}
 		repos.Log.Printf("* %s: %s\n", headerName, headerValue)
 	}
 
-	if invocation.Request.Method == "POST" || invocation.Request.Method == "PUT" {
-		if err := repos.Prompt.Text("Body", "", &invocation.Request.Body); err != nil {
+	if entry.Request.Method == "POST" || entry.Request.Method == "PUT" {
+		if err := repos.Prompt.Text("Body", "", &entry.Request.Body); err != nil {
 			return err
 		}
 		repos.Log.Printf("*\n")
 		repos.Log.Printf("* [Body]\n")
-		repos.Log.Printf("* %s\n", invocation.Request.Body)
+		repos.Log.Printf("* %s\n", entry.Request.Body)
 	}
 
 	confirm := true
