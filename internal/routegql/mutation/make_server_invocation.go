@@ -12,24 +12,25 @@ func (r *MutationResolver) MakeServerInvocation(ctx context.Context, invocation 
 	invokeSrv := invoke.New(r.Repos)
 
 	entry := invokeSrv.NewEntry(invocation.Method, "")
-	// request
+
+	// req
 	entry.Request.Body = invocation.RequestBody
-	// TODO url should starts with WALKHTTP_URL_BASE
 	entry.Request.Url = invocation.URL
 	entry.Request.Started = time.Unix(0, 0).Unix()
 
 	for _, h := range invocation.RequestHeaders {
-		if _, ok := entry.Request.Headers[h.Name]; !ok {
-			entry.Request.Headers[h.Name] = []string{}
-		}
-		entry.Request.Headers[h.Name] = append(entry.Request.Headers[h.Name], h.Value)
+		entry.Request.Headers[h.Name] = h.Value
 	}
 
+	// invoke
 	if err := invokeSrv.Invoke(&entry); err != nil {
 		return false, err
 	}
+
+	// save
 	if err := invokeSrv.Save(entry); err != nil {
 		return false, err
 	}
+
 	return true, nil
 }

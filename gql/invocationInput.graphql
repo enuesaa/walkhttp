@@ -19,5 +19,5 @@ input ServerInvocationInput {
 
 input HeaderInput {
   name: String!
-  value: String!
+  value: [String!]!
 }

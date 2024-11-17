@@ -4,6 +4,7 @@ go 1.23.0
 
 require (
 	github.com/99designs/gqlgen v0.17.55
+	github.com/caarlos0/env/v10 v10.0.0
 	github.com/charmbracelet/bubbles v0.20.0
 	github.com/charmbracelet/huh v0.6.0
 	github.com/gorilla/websocket v1.5.3
@@ -19,7 +20,6 @@ require (
 	github.com/agnivade/levenshtein v1.2.0 // indirect
 	github.com/atotto/clipboard v0.1.4 // indirect
 	github.com/aymanbagabas/go-osc52/v2 v2.0.1 // indirect
-	github.com/caarlos0/env/v10 v10.0.0 // indirect
 	github.com/catppuccin/go v0.2.0 // indirect
 	github.com/charmbracelet/bubbletea v1.1.2 // indirect
 	github.com/charmbracelet/lipgloss v1.0.0 // indirect

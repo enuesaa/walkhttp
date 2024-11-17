@@ -26,20 +26,16 @@ func NewInvocationFromEntry(entry invoke.Entry) Invocation {
 	}
 
 	for name, values := range entry.Request.Headers {
-		for _, value := range values {
-			invocation.RequestHeaders = append(invocation.RequestHeaders, &Header{
-				Name:  name,
-				Value: value,
-			})
-		}
+		invocation.RequestHeaders = append(invocation.RequestHeaders, &Header{
+			Name:  name,
+			Value: values,
+		})
 	}
 	for name, values := range entry.Response.Headers {
-		for _, value := range values {
-			invocation.ResponseHeaders = append(invocation.ResponseHeaders, &Header{
-				Name:  name,
-				Value: value,
-			})
-		}
+		invocation.ResponseHeaders = append(invocation.ResponseHeaders, &Header{
+			Name:  name,
+			Value: values,
+		})
 	}
 
 	slices.SortFunc(invocation.RequestHeaders, func(a *Header, b *Header) int {

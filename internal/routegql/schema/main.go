@@ -19,13 +19,13 @@ type Config struct {
 }
 
 type Header struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
+	Name  string   `json:"name"`
+	Value []string `json:"value"`
 }
 
 type HeaderInput struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
+	Name  string   `json:"name"`
+	Value []string `json:"value"`
 }
 
 type Invocation struct {

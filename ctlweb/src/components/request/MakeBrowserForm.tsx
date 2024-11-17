@@ -24,7 +24,7 @@ export const MakeBrowserForm = () => {
       invocation.received = new Date().toISOString()
       invocation.status = res.status
       for (const [name, value] of res.headers.entries()) {
-        invocation.responseHeaders.push({ name, value })
+        invocation.responseHeaders.push({ name, value: [value] })
       }
     } catch (e) {
       console.log(e)

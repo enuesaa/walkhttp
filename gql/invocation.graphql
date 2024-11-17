@@ -13,5 +13,5 @@ type Invocation {
 
 type Header {
   name: String!
-  value: String!
+  value: [String!]!
 }

@@ -34,12 +34,12 @@ export type Config = {
 export type Header = {
   __typename?: 'Header'
   name: Scalars['String']['output']
-  value: Scalars['String']['output']
+  value: Array<Scalars['String']['output']>
 }
 
 export type HeaderInput = {
   name: Scalars['String']['input']
-  value: Scalars['String']['input']
+  value: Array<Scalars['String']['input']>
 }
 
 export type Invocation = {
