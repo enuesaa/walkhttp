@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { MakeFormDialog } from '../request/MakeFormDialog'
+import { MakeFormDialog } from './MakeFormDialog'
 
 export const Header = () => {
   return (

@@ -1,5 +1,5 @@
 import { Button, Dialog } from '@radix-ui/themes'
-import { MakeForm } from '@/components/request/MakeForm'
+import { MakeForm } from './MakeForm'
 import { IoClose } from 'react-icons/io5'
 
 export const MakeFormDialog = () => {

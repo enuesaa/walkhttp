@@ -17,13 +17,15 @@ export const HistroiesItem = ({ invocation }: Props) => {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button variant='ghost' className='my-2 relative cursor-pointer block p-5 w-[90%] border border-white/30 text-left'>
-          <Badge color='green'>{invocation.method}</Badge> {invocation.url}
-          <div className='absolute bottom-0 right-0 text-xs text-white/30'>
+        <Button variant='ghost' className='my-2 relative cursor-pointer block py-1 px-5 w-full border border-white/30 text-left'>
+          <div className='text-white/30 inline-block mx-2'>
             {started}
           </div>
+          <div className='text-[green] inline-block mx-2'>{invocation.method}</div>
+          {invocation.url}
         </Button>
       </Dialog.Trigger>
+
       <Dialog.Content maxWidth='700px' aria-describedby={undefined} className='relative p-8'>
         <Dialog.Title size='5'>Invocation</Dialog.Title>
         <Dialog.Close>
