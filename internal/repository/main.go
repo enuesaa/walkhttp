@@ -1,9 +1,5 @@
 package repository
 
-import (
-	"github.com/caarlos0/env/v10"
-)
-
 type Repos struct {
 	Fs     FsRepositoryInterface
 	Prompt PromptInterface
@@ -13,8 +9,8 @@ type Repos struct {
 }
 
 func New() (Repos, error) {
-	e := Env{}
-	if err := env.Parse(&e); err != nil {
+	env, err := NewEnv()
+	if err != nil {
 		return Repos{}, err
 	}
 
@@ -23,7 +19,7 @@ func New() (Repos, error) {
 		Prompt: &Prompt{},
 		Log:    &LogRepository{},
 		DB:     NewDBRepository(),
-		Env:    e,
+		Env:    env,
 	}
 	return repos, nil
 }

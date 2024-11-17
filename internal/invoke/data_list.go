@@ -12,5 +12,3 @@ func (srv *InvokeSrv) List() ([]Entry, error) {
 	}
 	return list, nil
 }
-
-// TODO: paginate

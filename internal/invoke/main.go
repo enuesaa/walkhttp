@@ -13,3 +13,7 @@ func New(repos repository.Repos) InvokeSrv {
 type InvokeSrv struct {
 	repos repository.Repos
 }
+
+func (srv *InvokeSrv) BaseUrl() string {
+	return srv.repos.Env.WALKHTTP_URL_BASE
+}
