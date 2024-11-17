@@ -65,7 +65,7 @@ export const MakeBrowserForm = () => {
       </div>
 
       <div className='text-base mt-2'>
-        <Button>Call</Button>
+        <Button variant='outline'>Call</Button>
       </div>
     </form>
   )

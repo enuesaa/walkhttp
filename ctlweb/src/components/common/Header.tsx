@@ -1,11 +1,14 @@
 import Link from 'next/link'
+import { MakeFormDialog } from '../request/MakeFormDialog'
 
 export const Header = () => {
   return (
-    <header className='h-12 leading-[50px] text-lg font-bold'>
-      <Link href='/' className='text-gray-100 mx-2 no-underline'>
+    <header className='p-2'>
+      <Link href='/' className='text-gray-100 no-underline h-12 leading-[50px] text-lg font-bold m-2'>
         walkhttp
       </Link>
+
+      <MakeFormDialog />
     </header>
   )
 }
