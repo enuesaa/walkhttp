@@ -2,6 +2,8 @@ package mutation
 
 import (
 	"context"
+	"fmt"
+	"strings"
 	"time"
 
 	"github.com/enuesaa/walkhttp/internal/invoke"
@@ -10,6 +12,11 @@ import (
 
 func (r *MutationResolver) MakeBrowserInvocation(ctx context.Context, invocation schema.BrowserInvocationInput) (bool, error) {
 	invokeSrv := invoke.New(r.Repos)
+
+	// validation
+	if !strings.HasPrefix(invocation.URL, invokeSrv.BaseUrl()) {
+		return false, fmt.Errorf("url should starts with base url")
+	}
 
 	entry := invokeSrv.NewEntry(invocation.Method, "")
 
