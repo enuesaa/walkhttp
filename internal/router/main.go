@@ -19,10 +19,10 @@ func New(repos repository.Repos) *echo.Echo {
 	}))
 
 	// routes
-	app.Any("/graphql", routegql.Handle(repos))
-	app.GET("/graphql/playground", routegqlplayground.Handle())
-	app.Any("/ctlweb", ctlweb.Handle())
-	app.Any("/ctlweb/*", ctlweb.Handle())
+	app.Any("/_/graphql", routegql.Handle(repos))
+	app.GET("/_/graphql/playground", routegqlplayground.Handle())
+	app.Any("/_", ctlweb.Handle())
+	app.Any("/_/*", ctlweb.Handle())
 	app.Any("/*", routeproxy.Handle(repos))
 
 	app.HideBanner = true

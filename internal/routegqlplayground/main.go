@@ -6,5 +6,5 @@ import (
 )
 
 func Handle() echo.HandlerFunc {
-	return echo.WrapHandler(playground.Handler("graphql", "/graphql"))
+	return echo.WrapHandler(playground.Handler("graphql", "/_/graphql"))
 }

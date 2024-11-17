@@ -1,6 +1,8 @@
 package invoke
 
 import (
+	"strings"
+
 	"github.com/enuesaa/walkhttp/internal/repository"
 )
 
@@ -15,5 +17,10 @@ type InvokeSrv struct {
 }
 
 func (srv *InvokeSrv) BaseUrl() string {
-	return srv.repos.Env.WALKHTTP_URL_BASE
+	base := srv.repos.Env.WALKHTTP_URL_BASE
+
+	if strings.HasSuffix(base, "/") {
+		return strings.TrimSuffix(base, "/")
+	}
+	return base
 }

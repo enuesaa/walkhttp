@@ -19,8 +19,8 @@ var dist embed.FS
 
 func Handle() echo.HandlerFunc {
 	handler := func(c echo.Context) error {
-		path := c.Request().URL.Path // like `/ctlweb`
-		path = strings.TrimPrefix(path, "/ctlweb")
+		path := c.Request().URL.Path // like `/_`
+		path = strings.TrimPrefix(path, "/_")
 
 		// index page
 		ext := filepath.Ext(path)

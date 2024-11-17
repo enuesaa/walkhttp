@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   distDir: 'dist',
-  basePath: '/ctlweb',
+  basePath: '/_',
 }
 
 module.exports = nextConfig

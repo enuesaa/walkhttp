@@ -1,9 +1,9 @@
 package invoke
 
 import (
-	"fmt"
 	"io"
 	"net/http"
+	"unicode/utf8"
 )
 
 func (srv *InvokeSrv) parseRes(entry *Entry, res *http.Response) error {
@@ -13,7 +13,7 @@ func (srv *InvokeSrv) parseRes(entry *Entry, res *http.Response) error {
 	// headers
 	for key, values := range res.Header {
 		if len(values) == 0 {
-			return fmt.Errorf("failed to map response header because there is no value supplied")
+			continue
 		}
 		entry.Response.Headers[key] = values
 	}
@@ -23,7 +23,9 @@ func (srv *InvokeSrv) parseRes(entry *Entry, res *http.Response) error {
 	if err != nil {
 		return err
 	}
-	entry.Response.Body = string(resbody)
+	if utf8.Valid(resbody) {
+		entry.Response.Body = string(resbody)
+	}
 
 	return nil
 }
