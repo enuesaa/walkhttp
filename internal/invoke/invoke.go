@@ -28,5 +28,12 @@ func (srv *InvokeSrv) Invoke(entry *Entry) error {
 		return err
 	}
 
+	if srv.repos.Env.WALKHTTP_REQUEST_BODY == "exclude" {
+		entry.Request.Body = ""
+	}
+	if srv.repos.Env.WALKHTTP_RESPONSE_BODY == "exclude" {
+		entry.Response.Body = ""
+	}
+
 	return nil
 }
