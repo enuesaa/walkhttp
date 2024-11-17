@@ -14,7 +14,6 @@ import (
 )
 
 func Handle(repos repository.Repos) echo.HandlerFunc {
-	// see https://github.com/99designs/gqlgen/issues/1664
 	// see https://github.com/99designs/gqlgen/issues/2826
 	gqhandle := handler.New(NewExecutableSchema(Config{
 		Resolvers: &Resolver{

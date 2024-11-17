@@ -9,7 +9,10 @@ import (
 )
 
 func main() {
-	repos := repository.New()
+	repos, err := repository.New()
+	if err != nil {
+		log.Fatalf("Error: %s", err.Error())
+	}
 	app := command.New(repos)
 
 	if err := app.Run(os.Args); err != nil {
