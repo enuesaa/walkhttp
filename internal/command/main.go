@@ -2,12 +2,10 @@ package command
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/enuesaa/walkhttp/internal/command/prompt"
 	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/enuesaa/walkhttp/internal/router"
-	"github.com/pkg/browser"
 	"github.com/urfave/cli/v2"
 )
 
@@ -34,12 +32,6 @@ func New(repos repository.Repos) *cli.App {
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
 			prompt.PrintBanner(repos)
-
-			go func() {
-				time.Sleep(1 * time.Second)
-				url := fmt.Sprintf("http://localhost:%d/_", port)
-				browser.OpenURL(url)
-			}()
 
 			server := router.New(repos)
 			address := fmt.Sprintf(":%d", port)

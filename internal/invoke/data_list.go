@@ -1,5 +1,7 @@
 package invoke
 
+import "sort"
+
 func (srv *InvokeSrv) List() ([]Entry, error) {
 	list := []Entry{}
 
@@ -10,5 +12,10 @@ func (srv *InvokeSrv) List() ([]Entry, error) {
 		}
 		list = append(list, data.(Entry))
 	}
+
+	sort.Slice(list, func(i, j int) bool {
+		return list[i].Request.Started > list[j].Request.Started
+	})
+
 	return list, nil
 }
