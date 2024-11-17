@@ -48,7 +48,6 @@ func (r *MutationResolver) MakeBrowserInvocation(ctx context.Context, invocation
 	}
 	entry.Response.Received = received.Unix()
 
-
 	// save
 	if err := invokeSrv.Save(entry); err != nil {
 		return false, err
