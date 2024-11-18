@@ -11,7 +11,7 @@ export const MakeFormServer = () => {
     e.preventDefault()
     const formdata = new FormData(e.currentTarget)
     const invocation = {
-      headers: [],
+      requestHeaders: [],
       url: `${appConfig.data?.getConfig.baseUrl}${formdata.get('path')}`,
       method: formdata.get('method'),
       requestBody: formdata.get('requestBody'),
