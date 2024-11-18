@@ -15,7 +15,9 @@ export const MakeFormDialog = () => {
         <MakeForm />
 
         <Dialog.Close className='absolute top-0 right-0'>
-          <button className='p-3 text-2xl font-bold hover:bg-stone-700'><IoClose /></button>
+          <button className='p-3 text-2xl font-bold hover:bg-stone-700'>
+            <IoClose />
+          </button>
         </Dialog.Close>
       </Dialog.Content>
     </Dialog.Root>

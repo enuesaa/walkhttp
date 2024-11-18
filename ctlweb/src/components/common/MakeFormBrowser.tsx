@@ -6,7 +6,7 @@ import { FormEventHandler } from 'react'
 
 export const MakeFormBrowser = () => {
   const appConfig = useGetConfig()
-  const [, invokeBrowser] = useMakeBrowserInvocation()
+  const [invokeStatus, invoke] = useMakeBrowserInvocation()
 
   const handleSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault()
@@ -37,7 +37,7 @@ export const MakeFormBrowser = () => {
       console.log(e)
     }
 
-    await invokeBrowser({ invocation })
+    await invoke({ invocation })
   }
 
   return (
@@ -64,7 +64,12 @@ export const MakeFormBrowser = () => {
         name='requestBody'
       />
 
-      <button type='submit' className='mt-5 py-1 px-3 border border-stone-500 rounded-lg hover:bg-stone-700'>Call</button>
+      {invokeStatus.data === undefined && (
+        <button type='submit' className='mt-5 py-1 px-3 border border-stone-500 rounded-lg hover:bg-stone-700'>
+          Invoke
+        </button>
+      )}
+      {invokeStatus.data !== undefined && <div className='mt-3'>invoked!</div>}
     </form>
   )
 }

@@ -1,4 +1,4 @@
-export const judgeStatusColor = (status: number): 'green'|'red'|'blue' => {
+export const judgeStatusColor = (status: number): 'green' | 'red' | 'blue' => {
   if (200 <= status && status < 400) {
     return 'green'
   }

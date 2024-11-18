@@ -13,18 +13,20 @@ export const HistoryDialogMeta = ({ invocation }: Props) => {
   return (
     <>
       <section className='flex w-full text-grayer text-center text-normal h-11 leading-[44px]'>
-        <div className={clsx(`px-5`, {
+        <div
+          className={clsx(`px-5`, {
             'bg-green-800': statusColor === 'green',
             'bg-red-800': statusColor === 'red',
             'bg-blue-800': statusColor === 'blue',
-          })}>{invocation.status}</div>
+          })}
+        >
+          {invocation.status}
+        </div>
         <div className='bg-stone-900 w-14'>{invocation.method}</div>
         <div className='bg-stone-900 flex-auto px-2 text-left'>{invocation.url}</div>
       </section>
 
-      <div className='text-sm text-stone-400 absolute'>
-        {started}
-      </div>
+      <div className='text-sm text-stone-400 absolute'>{started}</div>
     </>
   )
 }

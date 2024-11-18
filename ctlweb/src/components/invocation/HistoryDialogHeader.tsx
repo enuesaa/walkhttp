@@ -12,9 +12,7 @@ export const HistoryDialogHeader = ({ invocation }: Props) => {
         <Table headers={invocation.requestHeaders} />
 
         {invocation.requestHeaders.length === 0 && (
-          <div className='text-stone-400 text-center mt-16'>
-            The request has no headers.
-          </div>
+          <div className='text-stone-400 text-center m-12'>The request has no headers.</div>
         )}
       </div>
 
@@ -23,9 +21,7 @@ export const HistoryDialogHeader = ({ invocation }: Props) => {
         <Table headers={invocation.responseHeaders} />
 
         {invocation.responseHeaders.length === 0 && (
-          <div className='text-stone-400 text-center mt-16'>
-            The response has no headers.
-          </div>
+          <div className='text-stone-400 text-center m-12'>The response has no headers.</div>
         )}
       </div>
     </section>

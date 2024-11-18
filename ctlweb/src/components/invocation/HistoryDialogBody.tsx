@@ -12,9 +12,7 @@ export const HistoryDialogBody = ({ invocation }: Props) => {
         <Body body={invocation.requestBody} />
 
         {invocation.requestBody === '' && (
-          <div className='text-stone-400 text-center m-12'>
-            The request has no body.
-          </div>
+          <div className='text-stone-400 text-center m-12'>The request has no body.</div>
         )}
       </div>
 
@@ -23,9 +21,7 @@ export const HistoryDialogBody = ({ invocation }: Props) => {
         <Body body={invocation.responseBody} />
 
         {invocation.responseBody === '' && (
-          <div className='text-stone-400 text-center m-12'>
-            The response has no body.
-          </div>
+          <div className='text-stone-400 text-center m-12'>The response has no body.</div>
         )}
       </div>
     </section>
@@ -39,9 +35,7 @@ const Body = ({ body }: { body: string }) => {
 
   return (
     <pre className='text-sm p-2 text-stone-400 overflow-x-scroll'>
-      <code>
-        {body}
-      </code>
+      <code>{body}</code>
     </pre>
   )
 }

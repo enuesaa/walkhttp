@@ -20,11 +20,15 @@ export const HistoryDialog = ({ invocation }: Props) => {
       <Dialog.Trigger>
         <button className='flex cursor-pointer py-1 w-full text-grayer text-center text-base hover:bg-stone-700'>
           <div className='w-20'>{started}</div>
-          <div className={clsx(`w-10`, {
-            'bg-green-800': statusColor === 'green',
-            'bg-red-800': statusColor === 'red',
-            'bg-blue-800': statusColor === 'blue',
-          })}>{invocation.status}</div>
+          <div
+            className={clsx(`w-10`, {
+              'bg-green-800': statusColor === 'green',
+              'bg-red-800': statusColor === 'red',
+              'bg-blue-800': statusColor === 'blue',
+            })}
+          >
+            {invocation.status}
+          </div>
           <div className='w-14'>{invocation.method}</div>
           <div className='flex-auto px-2 text-left'>{invocation.url}</div>
         </button>
@@ -37,9 +41,10 @@ export const HistoryDialog = ({ invocation }: Props) => {
         <HistoryDialogBody invocation={invocation} />
 
         <Dialog.Close className='absolute top-0 right-0'>
-          <button className='p-3 text-2xl font-bold hover:bg-stone-700'><IoClose /></button>
+          <button className='px-3 py-2 text-2xl font-bold hover:bg-stone-700'>
+            <IoClose />
+          </button>
         </Dialog.Close>
-
       </Dialog.Content>
     </Dialog.Root>
   )
