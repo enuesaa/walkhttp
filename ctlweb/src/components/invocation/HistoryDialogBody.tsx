@@ -6,7 +6,7 @@ type Props = {
 }
 export const HistoryDialogBody = ({ invocation }: Props) => {
   return (
-    <section className='flex pt-2 mt-5 bg-stone-900'>
+    <section className='flex pt-2 mt-5'>
       <div className='w-1/2'>
         <HistoryDialogHeading title='Request Body' />
         <Body body={invocation.requestBody} />
@@ -38,7 +38,7 @@ const Body = ({ body }: { body: string }) => {
   }
 
   return (
-    <pre className='text-sm bg-stone-900 p-2 text-stone-400 overflow-x-scroll'>
+    <pre className='text-sm p-2 text-stone-400 overflow-x-scroll'>
       <code>
         {body}
       </code>

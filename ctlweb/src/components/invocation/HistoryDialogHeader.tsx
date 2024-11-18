@@ -38,7 +38,7 @@ const Table = ({ headers }: { headers: Header[] }) => {
       <tbody>
         {headers.map((h, i) => (
           <tr key={i} className='border-[0.5px] border-l-0 border-r-0 border-stone-700'>
-            <td className='py-2 text-center font-semibold'>{h.name}</td>
+            <td className='py-2 text-center font-semibold w-40'>{h.name}</td>
             <td className='py-2 text-stone-300'>{h.value.join(', ')}</td>
           </tr>
         ))}

@@ -5,19 +5,26 @@ import { HistoryDialogMeta } from './HistoryDialogMeta'
 import { fmtdate } from '@/lib/datefmt'
 import { HistoryDialogHeader } from './HistoryDialogHeader'
 import { HistoryDialogBody } from './HistoryDialogBody'
+import { judgeStatusColor } from '@/lib/status'
+import clsx from 'clsx'
 
 type Props = {
   invocation: Invocation
 }
 export const HistoryDialog = ({ invocation }: Props) => {
   const started = fmtdate(invocation.started)
+  const statusColor = judgeStatusColor(invocation.status)
 
   return (
     <Dialog.Root>
       <Dialog.Trigger>
         <button className='flex cursor-pointer py-1 w-full text-grayer text-center text-base hover:bg-stone-700'>
           <div className='w-20'>{started}</div>
-          <div className='bg-[green] w-10'>{invocation.status}</div>
+          <div className={clsx(`w-10`, {
+            'bg-green-800': statusColor === 'green',
+            'bg-red-800': statusColor === 'red',
+            'bg-blue-800': statusColor === 'blue',
+          })}>{invocation.status}</div>
           <div className='w-14'>{invocation.method}</div>
           <div className='flex-auto px-2 text-left'>{invocation.url}</div>
         </button>
