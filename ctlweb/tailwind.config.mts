@@ -5,15 +5,7 @@ export default {
     './src/**/*.tsx',
   ],
   theme: {
-    extend: {
-      colors: {
-        white: '#fafafa',
-        black: '#1a1a1a',
-        grayer: '#dddddd',
-        gray: '#374151',
-        green: '#008000',
-      },
-    },
+    extend: {},
   },
   plugins: [],
 } satisfies Config

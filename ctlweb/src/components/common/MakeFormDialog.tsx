@@ -6,7 +6,7 @@ export const MakeFormDialog = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <button className='inline-block h-full px-3 font-bold hover:bg-gray rounded'>invoke</button>
+        <button className='inline-block h-full px-3 font-bold hover:bg-stone-700 rounded'>invoke</button>
       </Dialog.Trigger>
 
       <Dialog.Content className='relative'>
@@ -16,7 +16,7 @@ export const MakeFormDialog = () => {
         <MakeForm />
 
         <Dialog.Close className='absolute top-1 right-1'>
-          <button className='p-3 text-2xl font-bold hover:bg-gray rounded'><IoClose /></button>
+          <button className='p-3 text-2xl font-bold hover:bg-stone-700 rounded'><IoClose /></button>
         </Dialog.Close>
 
       </Dialog.Content>

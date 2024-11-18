@@ -12,7 +12,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <title>walkhttp</title>
       </Head>
       <GraphQLProvider>
-        <Theme appearance='dark' accentColor='cyan'>
+        <Theme appearance='dark' className='bg-stone-900 text-stone-300'>
           <Layout>
             <Component {...pageProps} />
           </Layout>
