@@ -3,7 +3,7 @@ type Props = {
 }
 export const HistoryDialogHeading = ({ title }: Props) => {
   return (
-    <h4 className='block text-lg text-center py-1 font-medium text-stone-300'>
+    <h4 className='block text-lg text-center py-1 font-medium text-stone-400'>
       {title}
     </h4>
   )

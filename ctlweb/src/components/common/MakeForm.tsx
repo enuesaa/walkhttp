@@ -1,10 +1,10 @@
 import { SegmentedControl } from '@radix-ui/themes'
 import { useState } from 'react'
-import { MakeBrowserForm } from './MakeBrowserForm'
-import { MakeServerForm } from './MakeServerForm'
+import { MakeFormBrowser } from './MakeFormBrowser'
+import { MakeFormServer } from './MakeFormServer'
 
 export const MakeForm = () => {
-  const [fromServer, setFromServer] = useState<boolean>(true)
+  const [fromServer, setFromServer] = useState(true)
 
   const handleChangeFrom = (from: string) => {
     setFromServer(from === 'Server')
@@ -18,7 +18,7 @@ export const MakeForm = () => {
           <SegmentedControl.Item value='Browser'>Browser</SegmentedControl.Item>
         </SegmentedControl.Root>
       </div>
-      {fromServer ? <MakeServerForm /> : <MakeBrowserForm />}
+      {fromServer ? <MakeFormServer /> : <MakeFormBrowser />}
     </>
   )
 }

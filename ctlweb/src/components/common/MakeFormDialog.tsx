@@ -9,10 +9,7 @@ export const MakeFormDialog = () => {
         <button className='inline-block h-full px-3 font-bold hover:bg-stone-700'>invoke</button>
       </Dialog.Trigger>
 
-      <Dialog.Content className='relative'>
-        <Dialog.Title>Invoke</Dialog.Title>
-        <Dialog.Description></Dialog.Description>
-
+      <Dialog.Content className='relative bg-stone-800'>
         <MakeForm />
 
         <Dialog.Close className='absolute top-0 right-0'>

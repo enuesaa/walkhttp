@@ -11,13 +11,13 @@ export const HistoryDialogMeta = ({ invocation }: Props) => {
     <>
       <section className='flex w-full text-grayer text-center text-normal h-11 leading-[44px]'>
         <div className='bg-[green] px-5'>{invocation.status}</div>
-        <div className='w-14'>{invocation.method}</div>
-        <div className='flex-auto px-2 text-left'>{invocation.url}</div>
+        <div className='bg-stone-900 w-14'>{invocation.method}</div>
+        <div className='bg-stone-900 flex-auto px-2 text-left'>{invocation.url}</div>
       </section>
 
-      <ul className='text-sm text-stone-400'>
-        <li>started: {started}</li>
-      </ul>
+      <div className='text-sm text-stone-400'>
+        {started}
+      </div>
     </>
   )
 }
