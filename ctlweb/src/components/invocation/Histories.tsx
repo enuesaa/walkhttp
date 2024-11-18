@@ -1,6 +1,6 @@
 import { ScrollArea } from '@radix-ui/themes'
 import { useSubscribeInvocations } from '@/gql/queries/subscribeInvocations'
-import { HistroiesItem } from './HistoriesItem'
+import { HistoryDialog } from './HistoryDialog'
 
 export const Histories = () => {
   const invocations = useSubscribeInvocations()
@@ -10,7 +10,7 @@ export const Histories = () => {
 
   return (
     <ScrollArea type='hover' scrollbars='vertical'>
-      {invocations.data?.subscribeInvocations.map((v, i) => <HistroiesItem key={i} invocation={v} />)}
+      {invocations.data?.subscribeInvocations.map((v, i) => <HistoryDialog key={i} invocation={v} />)}
     </ScrollArea>
   )
 }

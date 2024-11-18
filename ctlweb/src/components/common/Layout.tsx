@@ -6,9 +6,9 @@ type Props = {
 }
 export const Layout = ({ children }: Props) => {
   return (
-    <>
+    <div className='container mx-auto'>
       <Header />
       {children}
-    </>
+    </div>
   )
 }
