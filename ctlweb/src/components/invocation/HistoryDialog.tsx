@@ -3,7 +3,8 @@ import { Dialog } from '@radix-ui/themes'
 import { IoClose } from 'react-icons/io5'
 import { HistoryDialogMeta } from './HistoryDialogMeta'
 import { fmtdate } from '@/lib/datefmt'
-import { HistoryDialogHeaders } from './HistoryDialogHeaders'
+import { HistoryDialogHeader } from './HistoryDialogHeader'
+import { HistoryDialogBody } from './HistoryDialogBody'
 
 type Props = {
   invocation: Invocation
@@ -22,9 +23,10 @@ export const HistoryDialog = ({ invocation }: Props) => {
         </button>
       </Dialog.Trigger>
 
-      <Dialog.Content maxWidth='1000px' aria-describedby={undefined} className='relative p-0 bg-stone-900'>
+      <Dialog.Content maxWidth='1400px' aria-describedby={undefined} className='relative p-0 bg-stone-800'>
         <HistoryDialogMeta invocation={invocation} />
-        <HistoryDialogHeaders invocation={invocation} />
+        <HistoryDialogHeader invocation={invocation} />
+        <HistoryDialogBody invocation={invocation} />
 
         <Dialog.Close className='absolute top-0 right-0'>
           <button className='p-3 text-2xl font-bold hover:bg-stone-700'><IoClose /></button>

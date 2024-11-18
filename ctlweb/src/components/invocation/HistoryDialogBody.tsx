@@ -1,0 +1,47 @@
+import { Invocation } from '@/gql/types'
+import { HistoryDialogHeading } from './HistoryDialogHeading'
+
+type Props = {
+  invocation: Invocation
+}
+export const HistoryDialogBody = ({ invocation }: Props) => {
+  return (
+    <section className='flex pt-1'>
+      <div className='w-1/2'>
+        <HistoryDialogHeading title='Request Body' />
+        <Body body={invocation.requestBody} />
+
+        {invocation.requestBody === '' && (
+          <div className='text-stone-400 text-center mt-24'>
+            The request has no body.
+          </div>
+        )}
+      </div>
+
+      <div className='w-1/2'>
+        <HistoryDialogHeading title='Response Body' />
+        <Body body={invocation.responseBody} />
+
+        {invocation.responseBody === '' && (
+          <div className='text-stone-400 text-center mt-24'>
+            The response has no body.
+          </div>
+        )}
+      </div>
+    </section>
+  )
+}
+
+const Body = ({ body }: { body: string }) => {
+  if (body === '') {
+    return <></>
+  }
+
+  return (
+    <pre className='text-sm bg-stone-900 p-2 text-stone-400 overflow-x-scroll'>
+      <code>
+        {body}
+      </code>
+    </pre>
+  )
+}
