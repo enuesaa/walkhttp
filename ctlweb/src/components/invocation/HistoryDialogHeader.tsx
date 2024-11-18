@@ -6,7 +6,7 @@ type Props = {
 }
 export const HistoryDialogHeader = ({ invocation }: Props) => {
   return (
-    <section className='flex pt-2'>
+    <section className='flex pt-2 gap-1'>
       <div className='w-1/2'>
         <HistoryDialogHeading title='Request Headers' />
         <Table headers={invocation.requestHeaders} />
@@ -38,8 +38,8 @@ const Table = ({ headers }: { headers: Header[] }) => {
       <tbody>
         {headers.map((h, i) => (
           <tr key={i} className='border-[0.5px] border-l-0 border-r-0 border-stone-700'>
-            <td className='py-2 text-center font-semibold w-40'>{h.name}</td>
-            <td className='py-2 text-stone-300'>{h.value.join(', ')}</td>
+            <td className='py-2 text-center font-semibold w-44'>{h.name}</td>
+            <td className='py-2 text-stone-300 break-all px-2'>{h.value.join(', ')}</td>
           </tr>
         ))}
       </tbody>
