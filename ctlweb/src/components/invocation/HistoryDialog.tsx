@@ -2,18 +2,13 @@ import { Invocation } from '@/gql/types'
 import { Dialog } from '@radix-ui/themes'
 import { History } from './History'
 import { IoClose } from 'react-icons/io5'
+import { fmtdate } from '@/lib/datefmt'
 
 type Props = {
   invocation: Invocation
 }
 export const HistoryDialog = ({ invocation }: Props) => {
-  const datefmt = new Intl.DateTimeFormat('en-US', {
-    hour: 'numeric',
-    hour12: false,
-    minute: 'numeric',
-    second: 'numeric',
-  })
-  const started = datefmt.format(new Date(invocation.started))
+  const started = fmtdate(invocation.started)
 
   return (
     <Dialog.Root>
@@ -28,12 +23,13 @@ export const HistoryDialog = ({ invocation }: Props) => {
 
       </Dialog.Trigger>
 
-      <Dialog.Content maxWidth='1000px' aria-describedby={undefined} className='relative px-8 py-2'>
-        <Dialog.Close className='absolute top-1 right-1'>
-          <button className='p-3 text-2xl font-bold hover:bg-gray rounded'><IoClose /></button>
+      <Dialog.Content maxWidth='1000px' aria-describedby={undefined} className='relative p-0'>
+        <History invocation={invocation} />
+
+        <Dialog.Close className='absolute top-0 right-0'>
+          <button className='p-3 text-2xl font-bold hover:bg-stone-700'><IoClose /></button>
         </Dialog.Close>
 
-        <History invocation={invocation} />
       </Dialog.Content>
     </Dialog.Root>
   )
