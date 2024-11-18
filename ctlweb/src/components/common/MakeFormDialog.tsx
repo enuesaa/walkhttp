@@ -1,4 +1,4 @@
-import { Button, Dialog } from '@radix-ui/themes'
+import { Dialog } from '@radix-ui/themes'
 import { MakeForm } from './MakeForm'
 import { IoClose } from 'react-icons/io5'
 
@@ -6,7 +6,7 @@ export const MakeFormDialog = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <Button variant='outline' className='m-2'>Invoke</Button>
+        <button className='inline-block h-full px-3 font-bold hover:bg-gray rounded'>invoke</button>
       </Dialog.Trigger>
 
       <Dialog.Content className='relative'>
@@ -16,7 +16,7 @@ export const MakeFormDialog = () => {
         <MakeForm />
 
         <Dialog.Close className='absolute top-1 right-1'>
-          <Button variant='outline'><IoClose /></Button>
+          <button className='p-3 text-2xl font-bold hover:bg-gray rounded'><IoClose /></button>
         </Dialog.Close>
 
       </Dialog.Content>

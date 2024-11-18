@@ -3,12 +3,16 @@ import { MakeFormDialog } from './MakeFormDialog'
 
 export const Header = () => {
   return (
-    <header className='p-2'>
-      <Link href='/' className='text-gray-100 no-underline h-12 leading-[50px] text-lg font-bold m-2'>
-        walkhttp
-      </Link>
+    <header className='container mx-auto flex'>
+      <div className='flex-auto'>
+        <Link href='/' className='inline-block text-lg font-bold px-3 py-2 hover:bg-gray rounded'>
+          walkhttp
+        </Link>
+      </div>
 
-      <MakeFormDialog />
+      <div className='w-20 text-right'>
+        <MakeFormDialog />
+      </div>
     </header>
   )
 }

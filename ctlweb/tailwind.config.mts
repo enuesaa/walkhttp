@@ -5,7 +5,11 @@ export default {
     './src/**/*.tsx',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        gray: '#374151'
+      },
+    },
   },
   plugins: [],
 } satisfies Config
