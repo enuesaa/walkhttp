@@ -10,12 +10,13 @@ export const MakeFormDialog = () => {
       </Dialog.Trigger>
 
       <Dialog.Content className='relative bg-stone-800'>
+        <Dialog.Title className='p-0 m-0' />
+
         <MakeForm />
 
         <Dialog.Close className='absolute top-0 right-0'>
           <button className='p-3 text-2xl font-bold hover:bg-stone-700'><IoClose /></button>
         </Dialog.Close>
-
       </Dialog.Content>
     </Dialog.Root>
   )

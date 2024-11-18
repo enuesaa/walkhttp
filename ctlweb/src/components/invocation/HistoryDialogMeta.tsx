@@ -15,7 +15,7 @@ export const HistoryDialogMeta = ({ invocation }: Props) => {
         <div className='bg-stone-900 flex-auto px-2 text-left'>{invocation.url}</div>
       </section>
 
-      <div className='text-sm text-stone-400'>
+      <div className='text-sm text-stone-400 absolute'>
         {started}
       </div>
     </>

@@ -24,6 +24,7 @@ export const HistoryDialog = ({ invocation }: Props) => {
       </Dialog.Trigger>
 
       <Dialog.Content maxWidth='1400px' aria-describedby={undefined} className='relative p-0 bg-stone-800'>
+        <Dialog.Title className='p-0 m-0' />
         <HistoryDialogMeta invocation={invocation} />
         <HistoryDialogHeader invocation={invocation} />
         <HistoryDialogBody invocation={invocation} />
