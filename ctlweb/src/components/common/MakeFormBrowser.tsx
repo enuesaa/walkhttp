@@ -12,7 +12,7 @@ export const MakeFormBrowser = () => {
     e.preventDefault()
     const formdata = new FormData(e.currentTarget)
     const invocation = {
-      url: formdata.get('url'),
+      url: `${appConfig.data?.getConfig.baseUrl}${formdata.get('path')}`,
       method: formdata.get('method'),
       requestHeaders: [],
       requestBody: formdata.get('requestBody'),
@@ -50,11 +50,12 @@ export const MakeFormBrowser = () => {
       </select>
 
       <MakeFormHeading title='url' />
+      <div className='text-base'>{appConfig.data?.getConfig.baseUrl}</div>
       <input
         type='text'
-        className='bg-stone-900 border-[0.5px] border-stone-700 text-base block w-full text-stone-300 py-1 px-2 outline-none'
-        defaultValue={appConfig.data?.getConfig.baseUrl}
-        name='url'
+        className='block w-full bg-stone-900 border-[0.5px] border-stone-700 text-base text-stone-300 py-1 px-2 outline-none'
+        defaultValue='/'
+        name='path'
       />
 
       <MakeFormHeading title='body' />
