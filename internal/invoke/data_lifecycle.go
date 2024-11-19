@@ -12,7 +12,7 @@ func (srv *InvokeSrv) Lifecycle() error {
 	}
 
 	for i := range overCount {
-		data := list[-i]
+		data := list[len(list)-i-1]
 		if err := srv.Delete(data.Id); err != nil {
 			return err
 		}
