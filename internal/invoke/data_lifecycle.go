@@ -16,6 +16,7 @@ func (srv *InvokeSrv) Lifecycle() error {
 		if err := srv.Delete(data.Id); err != nil {
 			return err
 		}
+		srv.repos.Log.Printf("Lifecycle: data deleted `%s`\n", data.Id)
 	}
 	return nil
 }
