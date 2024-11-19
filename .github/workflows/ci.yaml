@@ -40,12 +40,10 @@ jobs:
         with:
           name: walkhttp
       
-      - run: chmod +x ./walkhttp
-      - run: |
-          ./walkhttp > a.log 2>&1 &
-          sleep 1
+      - run: ./walkhttp > walkhttp.log 2>&1 &
+      - run: sleep 1
 
       - uses: gacts/install-hurl@v1
       - run: hurl gqle2e/basic.hurl
 
-      - run: cat a.log
+      - run: cat walkhttp.log

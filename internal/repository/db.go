@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"fmt"
 	"maps"
 	"slices"
 )
@@ -10,6 +9,8 @@ type DBRepositoryInterface interface {
 	Keys() []string
 	Read(key string) (interface{}, error)
 	Write(key string, value interface{}) error
+	Omit(key string) error
+	Count() int
 }
 
 func NewDBRepository() *DBRepository {
@@ -29,7 +30,7 @@ func (repo *DBRepository) Keys() []string {
 func (repo *DBRepository) Read(key string) (interface{}, error) {
 	data, ok := repo.data[key]
 	if !ok {
-		return nil, fmt.Errorf("no such key")
+		return nil, NewDBKeyNotFoundError(key)
 	}
 	return data, nil
 }
@@ -37,4 +38,18 @@ func (repo *DBRepository) Read(key string) (interface{}, error) {
 func (repo *DBRepository) Write(key string, value interface{}) error {
 	repo.data[key] = value
 	return nil
+}
+
+func (repo *DBRepository) Omit(key string) error {
+	_, ok := repo.data[key]
+	if !ok {
+		return NewDBKeyNotFoundError(key)
+	}
+
+	delete(repo.data, key)
+	return nil
+}
+
+func (repo *DBRepository) Count() int {
+	return len(repo.data)
 }
