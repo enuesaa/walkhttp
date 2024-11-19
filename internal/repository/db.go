@@ -30,7 +30,7 @@ func (repo *DBRepository) Keys() []string {
 func (repo *DBRepository) Read(key string) (interface{}, error) {
 	data, ok := repo.data[key]
 	if !ok {
-		return nil, DBKeyNotFoundError
+		return nil, ErrDBKeyNotFound
 	}
 	return data, nil
 }
@@ -43,7 +43,7 @@ func (repo *DBRepository) Write(key string, value interface{}) error {
 func (repo *DBRepository) Omit(key string) error {
 	_, ok := repo.data[key]
 	if !ok {
-		return DBKeyNotFoundError
+		return ErrDBKeyNotFound
 	}
 
 	delete(repo.data, key)

@@ -17,7 +17,7 @@ func (repo *LogMockRepository) Printf(format string, a ...any) {
 func (repo *LogMockRepository) Fatalf(format string, a ...any) {
 	text := fmt.Sprintf(format, a...)
 	repo.out += text
-	log.Fatalf(text)
+	log.Fatal(text)
 }
 
 func (repo *LogMockRepository) GetAll() string {

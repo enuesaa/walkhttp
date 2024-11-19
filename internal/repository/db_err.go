@@ -2,4 +2,4 @@ package repository
 
 import "errors"
 
-var DBKeyNotFoundError = errors.New("no such key")
+var ErrDBKeyNotFound = errors.New("no such key")

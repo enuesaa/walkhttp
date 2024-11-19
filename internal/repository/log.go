@@ -29,7 +29,7 @@ func (repo *LogRepository) Fatalf(format string, a ...any) {
 	text := fmt.Sprintf(format, a...)
 	repo.out += text
 	// todo print out all logs here.
-	log.Fatalf(text)
+	log.Fatal(text)
 }
 
 func (repo *LogRepository) GetAll() string {
