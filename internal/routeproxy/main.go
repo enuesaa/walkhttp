@@ -1,6 +1,8 @@
 package routeproxy
 
 import (
+	// "strings"
+
 	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/labstack/echo/v4"
@@ -12,12 +14,13 @@ func Handle(repos repository.Repos) echo.HandlerFunc {
 
 		method := c.Request().Method
 		path := c.Request().URL.Path
-		// headers := c.Request().Header
+		headers := c.Request().Header
 
 		entry := invokeSrv.NewEntry(method, path)
-		// for name, values := range headers {
-		// 	entry.Request.Headers[name] = values
-		// }
+		for name, values := range headers {
+			entry.Request.Headers[name] = values
+		}
+		delete(entry.Request.Headers, "Accept-Encoding")
 
 		if err := invokeSrv.Invoke(&entry); err != nil {
 			return err
