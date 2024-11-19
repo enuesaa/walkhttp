@@ -9,7 +9,7 @@ import (
 func (srv *InvokeSrv) Delete(id string) error {
 	err := srv.repos.DB.Omit(id)
 	if err != nil {
-		if errors.Is(err, &repository.DBKeyNotFoundError{}) {
+		if errors.Is(err, repository.DBKeyNotFoundError) {
 			return nil
 		}
 		return err
