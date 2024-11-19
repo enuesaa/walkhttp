@@ -1,5 +1,5 @@
 # walkhttp
-A CLI tool to call http endpoint with browser or prompt.
+A CLI tool to proxy HTTP request for rough observability.
 
 ## Usage
 ```console

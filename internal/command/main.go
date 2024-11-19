@@ -13,7 +13,7 @@ func New(repos repository.Repos) *cli.App {
 	app := &cli.App{
 		Name:    "walkhttp",
 		Version: "0.0.10",
-		Usage:   "A CLI tool to call http endpoint with browser or prompt.",
+		Usage:   "A CLI tool to proxy HTTP request for rough observability.",
 		Commands: []*cli.Command{
 			NewGetCommand(repos),
 			NewPostCommand(repos),
@@ -28,9 +28,25 @@ func New(repos repository.Repos) *cli.App {
 				Usage: "Serve port",
 				Value: 3000,
 			},
+			&cli.StringFlag{
+				Name:  "origin",
+				Usage: "Origin URL. Example: https://example.com/",
+			},
+			&cli.IntFlag{
+				Name:  "persist",
+				Usage: "Persist 100 records by default",
+			},
 		},
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
+			origin := c.String("origin")
+			persist := c.Int("persist")
+			if origin != "" {
+				repos.Env.WALKHTTP_URL_BASE = origin
+			}
+			if persist != 0 {
+				repos.Env.WALKHTTP_PERSIST_COUNT = persist
+			}
 			prompt.PrintBanner(repos)
 
 			server := router.New(repos)
