@@ -12,12 +12,12 @@ func Handle(repos repository.Repos) echo.HandlerFunc {
 
 		method := c.Request().Method
 		path := c.Request().URL.Path
-		headers := c.Request().Header
+		// headers := c.Request().Header
 
 		entry := invokeSrv.NewEntry(method, path)
-		for name, values := range headers {
-			entry.Request.Headers[name] = values
-		}
+		// for name, values := range headers {
+		// 	entry.Request.Headers[name] = values
+		// }
 
 		if err := invokeSrv.Invoke(&entry); err != nil {
 			return err
@@ -25,7 +25,18 @@ func Handle(repos repository.Repos) echo.HandlerFunc {
 		if err := invokeSrv.Save(entry); err != nil {
 			return err
 		}
-		return nil
+
+		for name, values := range entry.Response.Headers {
+			for i, value := range values {
+				if i == 0 {
+					c.Response().Header().Set(name, value)
+					continue
+				}
+				c.Response().Header().Add(name, value)
+			}
+		}
+
+		return c.String(entry.Response.Status, entry.Response.Body)
 	}
 
 	return handler

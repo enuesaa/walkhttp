@@ -39,11 +39,13 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: walkhttp
-      
+
+      - run: chmod +x ./walkhttp
       - run: ./walkhttp > walkhttp.log 2>&1 &
       - run: sleep 1
 
       - uses: gacts/install-hurl@v1
       - run: hurl gqle2e/basic.hurl
 
-      - run: cat walkhttp.log
+      - if: always()
+        run: cat walkhttp.log
