@@ -43,16 +43,21 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: actions/checkout@v4
       - uses: ./.github/actions/env
-      - uses: dominikh/staticcheck-action@v1
-        with:
-          version: latest
-
       - run: go generate ./...
       - run: go test ./...
-      - if: always()
-        run: |
-          echo '# staticcheck' >> $GITHUB_STEP_SUMMARY
-          staticcheck ./... >> $GITHUB_STEP_SUMMARY
+
+  staticcheck:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/env
+      - run: go install honnef.co/go/tools/cmd/staticcheck@latest
+
+      - run: go generate ./...
+      - run: echo '# staticcheck' >> $GITHUB_STEP_SUMMARY
+      - run: staticcheck ./... >> $GITHUB_STEP_SUMMARY
