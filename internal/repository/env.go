@@ -11,7 +11,7 @@ func NewEnv() (Env, error) {
 }
 
 type Env struct {
-	WALKHTTP_URL_BASE      string `env:"WALKHTTP_URL_BASE" envDefault:"https://example.com/"`
+	WALKHTTP_URL_BASE      string `env:"WALKHTTP_URL_BASE" envDefault:"https://example.com"`
 	WALKHTTP_PERSIST_COUNT int    `env:"WALKHTTP_PERSIST_COUNT" envDefault:"100"`
 	WALKHTTP_REQUEST_BODY  string `env:"WALKHTTP_REQUEST_BODY" envDefault:"include"`
 	WALKHTTP_RESPONSE_BODY string `env:"WALKHTTP_RESPONSE_BODY" envDefault:"include"`

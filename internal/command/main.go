@@ -30,7 +30,7 @@ func New(repos repository.Repos) *cli.App {
 			},
 			&cli.StringFlag{
 				Name:  "origin",
-				Usage: "Origin URL. Example: https://example.com/",
+				Usage: "Origin URL. Example: https://example.com",
 			},
 			&cli.IntFlag{
 				Name:  "persist",
