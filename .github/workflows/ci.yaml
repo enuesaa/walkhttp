@@ -11,18 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-go@v4
-        with:
-          go-version: '1.23'
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '22'
-      - uses: pnpm/action-setup@v4
-        with:
-          version: '9'
+      - uses: ./.github/actions/env
 
       - run: go generate ./...
-      - run: go test ./...
       - run: go build -o walkhttp
 
       - uses: actions/upload-artifact@v4
@@ -49,3 +40,19 @@ jobs:
 
       - if: always()
         run: cat walkhttp.log
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/env
+      - uses: dominikh/staticcheck-action@v1
+        with:
+          version: latest
+
+      - run: go generate ./...
+      - run: go test ./...
+      - if: always()
+        run: |
+          echo '# staticcheck' >> $GITHUB_STEP_SUMMARY
+          staticcheck ./... >> $GITHUB_STEP_SUMMARY
