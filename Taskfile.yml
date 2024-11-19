@@ -4,8 +4,4 @@ tasks:
   gengql:
     cmds:
       - go run github.com/99designs/gqlgen generate
-
-  gengql:ui:
-    dir: ./ctlweb
-    cmds:
-      - pnpm gengql
+      - cd ./ctlweb && pnpm gengql
