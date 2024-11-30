@@ -18,3 +18,8 @@ $ walkhttp --origin https://example.com
 - api gateway ライクなもの
 - リバースプロキシ的な立ち位置で、HTTP リクエスト/レスポンスをロギングすることで、可観測性を上げたい
 - あくまで開発用のもの。手っ取り早くトレースしたいときに使えるもの
+- めっちゃ雑に実装している
+
+## キャプチャ
+![ctlweb](./docs/ctlweb.png)
+![ctlweb-history](./docs/ctlweb-history.png)
