@@ -14,5 +14,4 @@ func printBanner(repos repository.Repos) {
 	repos.Log.Printf("└─────────────────────────────────────────────────────────────────\n")
 	repos.Log.Printf("\n")
 	repos.Log.Printf(" Try `curl http://localhost:3000/` and open the web console.\n")
-	repos.Log.Printf("\n")
 }

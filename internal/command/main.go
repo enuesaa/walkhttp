@@ -41,7 +41,8 @@ func New(repos repository.Repos) *cli.App {
 
 			if prompt {
 				go func () {
-					if err := runPrompt(repos); err != nil {
+					prompter := Prompter{repos}
+					if err := prompter.Run(); err != nil {
 						log.Fatalf("Error: %s", err.Error())
 					}
 				}()

@@ -19,6 +19,7 @@ type Prompt struct{}
 func (prompt *Prompt) Confirm(message string, value *bool) error {
 	form := huh.NewForm(
 		huh.NewGroup(
+			huh.NewNote(),
 			huh.NewConfirm().
 				Title(message).
 				Value(value),
@@ -63,6 +64,7 @@ func (prompt *Prompt) AskSuggest(message string, notice string, suggestion []str
 	}
 	form := huh.NewForm(
 		huh.NewGroup(
+			huh.NewNote(),
 			huh.NewInput().
 				Title(message).
 				Description(description).
