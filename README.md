@@ -5,6 +5,19 @@ A CLI tool to proxy HTTP requests for debugging.
 
 ## Usage
 ```console
+$ walkhttp -h
+A CLI tool to proxy HTTP requests for debugging.
+
+USAGE:
+  walkhttp [flags] [arguments...]
+
+FLAGS:
+  --port value    Port (default: 3000)
+  --origin value  Origin URL (default: https://example.com)
+  --prompt        Start prompt and call a HTTP request (default: false)
+  --help, -h      show help
+  --version, -v   print the version
+
 $ walkhttp --origin https://example.com
 ┌─────────────────────────────────────────────────────────────────
 │ walkhttp
@@ -15,7 +28,7 @@ $ walkhttp --origin https://example.com
 │ Web console: http://localhost:3000/_
 └─────────────────────────────────────────────────────────────────
 
- Try `curl http://localhost:3000/` and open the web console.
+ Open the web console and try `curl http://localhost:3000/`
 ```
 
 ## モチベーション
