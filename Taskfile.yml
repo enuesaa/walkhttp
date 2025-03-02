@@ -3,5 +3,5 @@ version: '3'
 tasks:
   gqlgen:
     cmds:
-      - go run github.com/99designs/gqlgen generate
+      - go tool github.com/99designs/gqlgen generate
       - cd ./ctlweb && pnpm gengql
