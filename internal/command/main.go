@@ -2,6 +2,7 @@ package command
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/enuesaa/walkhttp/internal/command/prompt"
 	"github.com/enuesaa/walkhttp/internal/repository"
@@ -47,7 +48,14 @@ func New(repos repository.Repos) *cli.App {
 			prompt.PrintBanner(repos)
 
 			if call {
-				go prompt.Prompt(repos)
+				go func () {
+					if err := prompt.Prompt(repos); err != nil {
+						log.Fatalf("Error: %s", err.Error())
+					}
+				}()
+			} else {
+				repos.Log.Printf("Try `curl http://localhost:3000/` and open the web console.\n")
+				repos.Log.Printf("\n")
 			}
 
 			server := router.New(repos)

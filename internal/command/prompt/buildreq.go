@@ -2,15 +2,22 @@ package prompt
 
 import (
 	"fmt"
+	"slices"
+	"strings"
 
 	"github.com/enuesaa/walkhttp/internal/invoke"
 	"github.com/enuesaa/walkhttp/internal/repository"
 )
 
 func BuildReq(repos repository.Repos, entry *invoke.Entry) error {
-	methods := []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+	methods := []string{"get", "post", "put", "delete", "options", "GET", "POST", "PUT", "DELETE", "OPTIONS"}
 	if err := repos.Prompt.AskSuggest("", "", methods, &entry.Request.Method); err != nil {
 		return err
+	}
+	entry.Request.Method = strings.ToUpper(entry.Request.Method)
+
+	if !slices.Contains(methods, entry.Request.Method) {
+		return fmt.Errorf("method `%s` is not defined", entry.Request.Method)
 	}
 	repos.Log.Printf("│ %s\n", entry.Request.Method)
 	if err := repos.Prompt.Ask("Url", "", &entry.Request.Url); err != nil {

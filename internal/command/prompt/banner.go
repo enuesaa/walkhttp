@@ -13,8 +13,6 @@ func PrintBanner(repos repository.Repos) {
 	repos.Log.Printf("│ --port   3000 \n")
 	repos.Log.Printf("│\n")
 	repos.Log.Printf("│ Web console: http://localhost:3000/_\n")
-	repos.Log.Printf("│\n")
-	repos.Log.Printf("│ Try `curl http://localhost:3000/` and open the web console.\n")
 	repos.Log.Printf("└─────────────────────────────────────────────────────────────────\n")
 	repos.Log.Printf("\n")
 }
