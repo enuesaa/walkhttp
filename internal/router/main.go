@@ -17,9 +17,6 @@ func New(repos repository.Repos) *echo.Echo {
 	app.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 		AllowOrigins: []string{"*"},
 	}))
-	app.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format: "method=${method}, uri=${uri}, status=${status}\n",
-	}))
 
 	// routes
 	app.Any("/_/graphql", routegql.Handle(repos))
