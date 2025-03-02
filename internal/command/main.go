@@ -32,19 +32,19 @@ func New(repos repository.Repos) *cli.App {
 				Usage: "Origin URL. Example: https://example.com",
 			},
 			&cli.IntFlag{
-				Name:  "persist",
+				Name:  "lifecycle",
 				Usage: "Persist 100 records by default",
 			},
 		},
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
 			origin := c.String("origin")
-			persist := c.Int("persist")
+			lifecycle := c.Int("lifecycle")
 			if origin != "" {
 				repos.Env.WALKHTTP_URL_BASE = origin
 			}
-			if persist != 0 {
-				repos.Env.WALKHTTP_PERSIST_COUNT = persist
+			if lifecycle != 0 {
+				repos.Env.WALKHTTP_PERSIST_COUNT = lifecycle
 			}
 			prompt.PrintBanner(repos)
 
