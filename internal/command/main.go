@@ -15,15 +15,15 @@ func New(repos repository.Repos) *cli.App {
 		Version: "0.0.11",
 		Usage:   "A CLI tool to proxy HTTP requests for debugging.",
 		Flags: []cli.Flag{
-			&cli.IntFlag{
-				Name:  "port",
-				Usage: "Port",
-				Value: 3000,
-			},
 			&cli.StringFlag{
 				Name:  "origin",
 				Usage: "Origin URL",
 				DefaultText: "https://example.com",
+			},
+			&cli.IntFlag{
+				Name:  "port",
+				Usage: "Port",
+				Value: 3000,
 			},
 			&cli.BoolFlag{
 				Name:  "prompt",

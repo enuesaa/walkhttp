@@ -12,8 +12,8 @@ USAGE:
   walkhttp [flags] [arguments...]
 
 FLAGS:
-  --port value    Port (default: 3000)
   --origin value  Origin URL (default: https://example.com)
+  --port value    Port (default: 3000)
   --prompt        Start prompt and call a HTTP request (default: false)
   --help, -h      show help
   --version, -v   print the version
