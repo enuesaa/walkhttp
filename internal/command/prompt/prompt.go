@@ -7,19 +7,30 @@ import (
 
 func Prompt(repos repository.Repos, method string) error {
 	invokeSrv := invoke.New(repos)
-	entry := invokeSrv.NewEntry(method, "")
 
-	repos.Log.Printf("***\n")
-	defer repos.Log.Printf("***\n")
-
-	if err := BuildReq(repos, &entry); err != nil {
-		return err
+	for {
+		entry := invokeSrv.NewEntry(method, "")
+		repos.Log.Printf("***\n")
+	
+		if err := BuildReq(repos, &entry); err != nil {
+			return err
+		}
+		confirm := true
+		if err := repos.Prompt.Confirm("Do you confirm?", &confirm); err != nil {
+			return err
+		}
+		if !confirm {
+			repos.Log.Printf("* Canceled! \n")
+			continue
+		}
+		if err := Invoke(repos, &entry); err != nil {
+			return err
+		}
+	
+		repos.Log.Printf("* Status: %d\n", entry.Response.Status)
+	
+		if err := invokeSrv.Save(entry); err != nil {
+			return err
+		}
 	}
-	if err := Invoke(repos, &entry); err != nil {
-		return err
-	}
-
-	repos.Log.Printf("* Status: %d\n", entry.Response.Status)
-
-	return invokeSrv.Save(entry)
 }

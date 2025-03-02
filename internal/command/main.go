@@ -14,13 +14,6 @@ func New(repos repository.Repos) *cli.App {
 		Name:    "walkhttp",
 		Version: "0.0.10",
 		Usage:   "A CLI tool to proxy HTTP requests for debugging.",
-		Commands: []*cli.Command{
-			NewGetCommand(repos),
-			NewPostCommand(repos),
-			NewPutCommand(repos),
-			NewDeleteCommand(repos),
-			NewOptionsCommand(repos),
-		},
 		Flags: []cli.Flag{
 			&cli.IntFlag{
 				Name:  "port",

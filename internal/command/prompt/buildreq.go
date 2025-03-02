@@ -8,6 +8,9 @@ import (
 )
 
 func BuildReq(repos repository.Repos, entry *invoke.Entry) error {
+	if err := repos.Prompt.Select([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}, &entry.Request.Method); err != nil {
+		return err
+	}
 	repos.Log.Printf("* %s\n", entry.Request.Method)
 	if err := repos.Prompt.Ask("Url", "", &entry.Request.Url); err != nil {
 		return err
@@ -41,14 +44,5 @@ func BuildReq(repos repository.Repos, entry *invoke.Entry) error {
 		repos.Log.Printf("* [Body]\n")
 		repos.Log.Printf("* %s\n", entry.Request.Body)
 	}
-
-	confirm := true
-	if err := repos.Prompt.Confirm("Do you confirm?", &confirm); err != nil {
-		return err
-	}
-	if !confirm {
-		return fmt.Errorf("unconfirmed")
-	}
-
 	return nil
 }
