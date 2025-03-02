@@ -11,14 +11,17 @@ import (
 
 func BuildReq(repos repository.Repos, entry *invoke.Entry) error {
 	methods := []string{"get", "post", "put", "delete", "options", "GET", "POST", "PUT", "DELETE", "OPTIONS"}
-	if err := repos.Prompt.AskSuggest("", "", methods, &entry.Request.Method); err != nil {
+	validate := func (value string) error {
+		if !slices.Contains(methods, strings.ToUpper(value)) {
+			return fmt.Errorf("method `%s` is not defined", entry.Request.Method)
+		}
+		return nil
+	}
+	if err := repos.Prompt.AskSuggest("", "", methods, &entry.Request.Method, validate); err != nil {
 		return err
 	}
 	entry.Request.Method = strings.ToUpper(entry.Request.Method)
 
-	if !slices.Contains(methods, entry.Request.Method) {
-		return fmt.Errorf("method `%s` is not defined", entry.Request.Method)
-	}
 	repos.Log.Printf("│ %s\n", entry.Request.Method)
 	if err := repos.Prompt.Ask("Url", "", &entry.Request.Url); err != nil {
 		return err
@@ -30,7 +33,7 @@ func BuildReq(repos repository.Repos, entry *invoke.Entry) error {
 		var headerName string
 		var headerValue string
 		suggestion := []string{"content-type", "accept"}
-		if err := repos.Prompt.AskSuggest("Header Name", "(To skip, click enter)", suggestion, &headerName); err != nil {
+		if err := repos.Prompt.AskSuggest("Header Name", "(To skip, click enter)", suggestion, &headerName, nil); err != nil {
 			return err
 		}
 		if headerName == "" {

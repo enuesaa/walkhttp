@@ -10,7 +10,7 @@ import (
 type PromptInterface interface {
 	Confirm(message string, value *bool) error
 	Ask(message string, notice string, value *string) error
-	AskSuggest(message string, notice string, suggestion []string, value *string) error
+	AskSuggest(message string, notice string, suggestion []string, value *string, validate func (string) error) error
 	Text(message string, notice string, value *string) error
 	Select(options []string, value *string) error
 }
@@ -51,10 +51,15 @@ func (prompt *Prompt) Ask(message string, notice string, value *string) error {
 	return form.Run()
 }
 
-func (prompt *Prompt) AskSuggest(message string, notice string, suggestion []string, value *string) error {
+func (prompt *Prompt) AskSuggest(message string, notice string, suggestion []string, value *string, validate func (string) error) error {
 	description := ""
 	if notice != "" {
 		description = fmt.Sprintf(" %s ", notice)
+	}
+	if validate == nil {
+		validate = func(s string) error {
+			return nil
+		}
 	}
 	form := huh.NewForm(
 		huh.NewGroup(
@@ -63,6 +68,7 @@ func (prompt *Prompt) AskSuggest(message string, notice string, suggestion []str
 				Description(description).
 				Suggestions(suggestion).
 				Value(value).
+				Validate(validate).
 				Inline(true),
 		),
 	)
