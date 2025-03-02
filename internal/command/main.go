@@ -28,11 +28,16 @@ func New(repos repository.Repos) *cli.App {
 				Name:  "lifecycle",
 				Usage: "Persist 100 records by default",
 			},
+			&cli.BoolFlag{
+				Name:  "call",
+				Usage: "Start prompt and call a HTTP request",
+			},
 		},
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
 			origin := c.String("origin")
 			lifecycle := c.Int("lifecycle")
+			call := c.Bool("call")
 			if origin != "" {
 				repos.Env.WALKHTTP_URL_BASE = origin
 			}
@@ -40,6 +45,10 @@ func New(repos repository.Repos) *cli.App {
 				repos.Env.WALKHTTP_PERSIST_COUNT = lifecycle
 			}
 			prompt.PrintBanner(repos)
+
+			if call {
+				go prompt.Prompt(repos)
+			}
 
 			server := router.New(repos)
 			address := fmt.Sprintf(":%d", port)

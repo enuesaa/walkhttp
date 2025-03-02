@@ -52,13 +52,12 @@ func (prompt *Prompt) Ask(message string, notice string, value *string) error {
 }
 
 func (prompt *Prompt) AskSuggest(message string, notice string, suggestion []string, value *string) error {
-	description := " "
+	description := ""
 	if notice != "" {
 		description = fmt.Sprintf(" %s ", notice)
 	}
 	form := huh.NewForm(
 		huh.NewGroup(
-			huh.NewNote(),
 			huh.NewInput().
 				Title(message).
 				Description(description).

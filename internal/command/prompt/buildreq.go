@@ -8,15 +8,16 @@ import (
 )
 
 func BuildReq(repos repository.Repos, entry *invoke.Entry) error {
-	if err := repos.Prompt.Select([]string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}, &entry.Request.Method); err != nil {
+	methods := []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+	if err := repos.Prompt.AskSuggest("", "", methods, &entry.Request.Method); err != nil {
 		return err
 	}
-	repos.Log.Printf("* %s\n", entry.Request.Method)
+	repos.Log.Printf("│ %s\n", entry.Request.Method)
 	if err := repos.Prompt.Ask("Url", "", &entry.Request.Url); err != nil {
 		return err
 	}
-	repos.Log.Printf("* %s\n", entry.Request.Url)
-	repos.Log.Printf("*\n")
+	repos.Log.Printf("│ %s\n", entry.Request.Url)
+	repos.Log.Printf("│\n")
 
 	for {
 		var headerName string
@@ -33,16 +34,16 @@ func BuildReq(repos repository.Repos, entry *invoke.Entry) error {
 			return err
 		}
 		entry.Request.Headers[headerName] = []string{headerValue}
-		repos.Log.Printf("* %s: %s\n", headerName, headerValue)
+		repos.Log.Printf("│ %s: %s\n", headerName, headerValue)
 	}
 
 	if entry.Request.Method == "POST" || entry.Request.Method == "PUT" {
 		if err := repos.Prompt.Text("Body", "", &entry.Request.Body); err != nil {
 			return err
 		}
-		repos.Log.Printf("*\n")
-		repos.Log.Printf("* [Body]\n")
-		repos.Log.Printf("* %s\n", entry.Request.Body)
+		repos.Log.Printf("│\n")
+		repos.Log.Printf("│ [Body]\n")
+		repos.Log.Printf("│ %s\n", entry.Request.Body)
 	}
 	return nil
 }

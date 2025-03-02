@@ -5,12 +5,12 @@ import (
 	"github.com/enuesaa/walkhttp/internal/repository"
 )
 
-func Prompt(repos repository.Repos, method string) error {
+func Prompt(repos repository.Repos) error {
 	invokeSrv := invoke.New(repos)
 
 	for {
-		entry := invokeSrv.NewEntry(method, "")
-		repos.Log.Printf("***\n")
+		entry := invokeSrv.NewEntry("GET", "")
+		repos.Log.Printf("\n")
 	
 		if err := BuildReq(repos, &entry); err != nil {
 			return err
@@ -20,14 +20,14 @@ func Prompt(repos repository.Repos, method string) error {
 			return err
 		}
 		if !confirm {
-			repos.Log.Printf("* Canceled! \n")
+			repos.Log.Printf("│ Canceled! \n")
 			continue
 		}
 		if err := Invoke(repos, &entry); err != nil {
 			return err
 		}
 	
-		repos.Log.Printf("* Status: %d\n", entry.Response.Status)
+		repos.Log.Printf("│ Status: %d\n", entry.Response.Status)
 	
 		if err := invokeSrv.Save(entry); err != nil {
 			return err
