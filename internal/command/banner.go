@@ -1,10 +1,8 @@
-package prompt
+package command
 
-import (
-	"github.com/enuesaa/walkhttp/internal/repository"
-)
+import "github.com/enuesaa/walkhttp/internal/repository"
 
-func PrintBanner(repos repository.Repos) {
+func printBanner(repos repository.Repos) {
 	// print planning like fiber v2 message
 	repos.Log.Printf("┌─────────────────────────────────────────────────────────────────\n")
 	repos.Log.Printf("│ walkhttp\n")
@@ -14,5 +12,7 @@ func PrintBanner(repos repository.Repos) {
 	repos.Log.Printf("│\n")
 	repos.Log.Printf("│ Web console: http://localhost:3000/_\n")
 	repos.Log.Printf("└─────────────────────────────────────────────────────────────────\n")
+	repos.Log.Printf("\n")
+	repos.Log.Printf(" Try `curl http://localhost:3000/` and open the web console.\n")
 	repos.Log.Printf("\n")
 }

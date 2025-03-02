@@ -13,9 +13,9 @@ $ walkhttp --origin https://example.com
 │ --port   3000
 │
 │ Web console: http://localhost:3000/_
-│
-│ Try `curl http://localhost:3000/` and open the web console.
 └─────────────────────────────────────────────────────────────────
+
+ Try `curl http://localhost:3000/` and open the web console.
 ```
 
 ## モチベーション

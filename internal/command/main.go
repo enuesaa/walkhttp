@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/enuesaa/walkhttp/internal/command/prompt"
 	"github.com/enuesaa/walkhttp/internal/repository"
 	"github.com/enuesaa/walkhttp/internal/router"
 	"github.com/urfave/cli/v2"
@@ -18,46 +17,35 @@ func New(repos repository.Repos) *cli.App {
 		Flags: []cli.Flag{
 			&cli.IntFlag{
 				Name:  "port",
-				Usage: "Serve port",
+				Usage: "Port",
 				Value: 3000,
 			},
 			&cli.StringFlag{
 				Name:  "origin",
-				Usage: "Origin URL. Example: https://example.com",
-			},
-			&cli.IntFlag{
-				Name:  "lifecycle",
-				Usage: "Persist 100 records by default",
+				Usage: "Origin URL",
+				DefaultText: "https://example.com",
 			},
 			&cli.BoolFlag{
-				Name:  "call",
+				Name:  "prompt",
 				Usage: "Start prompt and call a HTTP request",
 			},
 		},
 		Action: func(c *cli.Context) error {
 			port := c.Int("port")
 			origin := c.String("origin")
-			lifecycle := c.Int("lifecycle")
-			call := c.Bool("call")
+			prompt := c.Bool("prompt")
 			if origin != "" {
 				repos.Env.WALKHTTP_URL_BASE = origin
 			}
-			if lifecycle != 0 {
-				repos.Env.WALKHTTP_PERSIST_COUNT = lifecycle
-			}
-			prompt.PrintBanner(repos)
+			printBanner(repos)
 
-			if call {
+			if prompt {
 				go func () {
-					if err := prompt.Prompt(repos); err != nil {
+					if err := runPrompt(repos); err != nil {
 						log.Fatalf("Error: %s", err.Error())
 					}
 				}()
-			} else {
-				repos.Log.Printf("Try `curl http://localhost:3000/` and open the web console.\n")
-				repos.Log.Printf("\n")
 			}
-
 			server := router.New(repos)
 			address := fmt.Sprintf(":%d", port)
 
