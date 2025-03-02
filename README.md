@@ -1,5 +1,5 @@
 # walkhttp
-A CLI tool to proxy HTTP request for rough observability.
+A CLI tool to proxy HTTP requests for debugging.
 
 [![ci](https://github.com/enuesaa/walkhttp/actions/workflows/ci.yaml/badge.svg)](https://github.com/enuesaa/walkhttp/actions/workflows/ci.yaml)
 
@@ -9,10 +9,12 @@ $ walkhttp --origin https://example.com
 ┌─────────────────────────────────────────────────────────────────
 │ walkhttp
 │
-│ Web console: http://localhost:3000/_
-│ Origin URL: https://example.com
+│ --origin https://example.com
+│ --port   3000
 │
-│ Try `curl http://localhost:3000/` and open web console.
+│ Web console: http://localhost:3000/_
+│
+│ Try `curl http://localhost:3000/` and open the web console.
 └─────────────────────────────────────────────────────────────────
 ```
 

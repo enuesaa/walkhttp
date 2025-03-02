@@ -13,7 +13,7 @@ func New(repos repository.Repos) *cli.App {
 	app := &cli.App{
 		Name:    "walkhttp",
 		Version: "0.0.10",
-		Usage:   "A CLI tool to proxy HTTP request for rough observability.",
+		Usage:   "A CLI tool to proxy HTTP requests for debugging.",
 		Commands: []*cli.Command{
 			NewGetCommand(repos),
 			NewPostCommand(repos),
@@ -21,7 +21,6 @@ func New(repos repository.Repos) *cli.App {
 			NewDeleteCommand(repos),
 			NewOptionsCommand(repos),
 		},
-		Suggest: true,
 		Flags: []cli.Flag{
 			&cli.IntFlag{
 				Name:  "port",
@@ -61,6 +60,7 @@ func New(repos repository.Repos) *cli.App {
 		return err
 	}
 	app.HideHelpCommand = true
+	app.Suggest = false
 	cli.AppHelpTemplate = `{{.Usage}}
 
 USAGE:
