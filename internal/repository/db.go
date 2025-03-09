@@ -7,21 +7,21 @@ import (
 
 type DBRepositoryInterface interface {
 	Keys() []string
-	Read(key string) (interface{}, error)
-	Write(key string, value interface{}) error
+	Read(key string) (any, error)
+	Write(key string, value any) error
 	Omit(key string) error
 	Count() int
 }
 
 type DBRepository struct {
-	data map[string]interface{}
+	data map[string]any
 }
 
 func (repo *DBRepository) Keys() []string {
 	return slices.Sorted(maps.Keys(repo.data))
 }
 
-func (repo *DBRepository) Read(key string) (interface{}, error) {
+func (repo *DBRepository) Read(key string) (any, error) {
 	data, ok := repo.data[key]
 	if !ok {
 		return nil, ErrDBKeyNotFound
@@ -29,7 +29,7 @@ func (repo *DBRepository) Read(key string) (interface{}, error) {
 	return data, nil
 }
 
-func (repo *DBRepository) Write(key string, value interface{}) error {
+func (repo *DBRepository) Write(key string, value any) error {
 	repo.data[key] = value
 	return nil
 }
