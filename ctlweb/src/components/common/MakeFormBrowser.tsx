@@ -35,6 +35,7 @@ export const MakeFormBrowser = () => {
       }
     } catch (e) {
       console.log(e)
+      invocation.received = new Date().toISOString()
     }
 
     await invoke({ invocation })

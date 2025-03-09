@@ -28,11 +28,11 @@ func (r *MutationResolver) MakeBrowserInvocation(ctx context.Context, invocation
 		entry.Request.Headers[h.Name] = h.Value
 	}
 
-	started, err := time.Parse(time.RFC3339, invocation.Started)
+	started, err := time.Parse(time.RFC3339Nano, invocation.Started)
 	if err != nil {
 		started = time.Unix(0, 0)
 	}
-	entry.Request.Started = started.Unix()
+	entry.Request.Started = started.UnixMilli()
 
 	// res
 	entry.Response.Status = invocation.Status
@@ -42,11 +42,11 @@ func (r *MutationResolver) MakeBrowserInvocation(ctx context.Context, invocation
 		entry.Response.Headers[h.Name] = h.Value
 	}
 
-	received, err := time.Parse(time.RFC3339, invocation.Received)
+	received, err := time.Parse(time.RFC3339Nano, invocation.Received)
 	if err != nil {
 		received = time.Unix(0, 0)
 	}
-	entry.Response.Received = received.Unix()
+	entry.Response.Received = received.UnixMilli()
 
 	// save
 	if err := invokeSrv.Save(entry); err != nil {
