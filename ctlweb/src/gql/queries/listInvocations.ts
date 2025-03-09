@@ -9,9 +9,18 @@ const query = gql`
       method
       url
       requestBody
+      requestHeaders {
+        name
+        value
+      }
       responseBody
+      responseHeaders {
+        name
+        value
+      }
       started
       received
+      httpVersion
     }
   }
 `

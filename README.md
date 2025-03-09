@@ -43,6 +43,5 @@ $ walkhttp --origin https://example.com
 
 ## Future plan
 - export
-- restore
 - diff
 - json syntax highlight

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { MakeFormDialog } from './MakeFormDialog'
+import { ExportButton } from './ExportButton'
 
 export const Header = () => {
   return (
@@ -10,8 +11,9 @@ export const Header = () => {
         </Link>
       </div>
 
-      <div className='w-20 text-right'>
+      <div className='w-32 text-right'>
         <MakeFormDialog />
+        <ExportButton />
       </div>
     </header>
   )
