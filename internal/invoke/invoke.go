@@ -1,12 +1,13 @@
 package invoke
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 )
 
 func (srv *InvokeSrv) Invoke(entry *Entry) error {
-	entry.Request.Started = time.Now().Unix()
+	entry.Request.Started = time.Now().UnixMilli()
 
 	// req
 	req, err := srv.buildReq(entry)
@@ -23,7 +24,8 @@ func (srv *InvokeSrv) Invoke(entry *Entry) error {
 	defer res.Body.Close()
 
 	// res
-	entry.Response.Received = time.Now().Unix()
+	entry.Response.Received = time.Now().UnixMilli()
+	fmt.Printf("%+v\n", entry)
 	if err := srv.parseRes(entry, res); err != nil {
 		return err
 	}

@@ -9,8 +9,8 @@ import (
 )
 
 func NewInvocationFromEntry(entry invoke.Entry) Invocation {
-	created := time.Unix(entry.Request.Started, 0).Format(time.RFC3339)
-	received := time.Unix(entry.Response.Received, 0).Format(time.RFC3339)
+	created := time.UnixMilli(entry.Request.Started).Format(time.RFC3339Nano)
+	received := time.UnixMilli(entry.Response.Received).Format(time.RFC3339Nano)
 
 	invocation := Invocation{
 		ID:              entry.Id,
