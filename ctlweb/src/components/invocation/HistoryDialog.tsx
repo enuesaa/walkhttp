@@ -2,7 +2,7 @@ import { Invocation } from '@/gql/types'
 import { Dialog } from '@radix-ui/themes'
 import { IoClose } from 'react-icons/io5'
 import { HistoryDialogMeta } from './HistoryDialogMeta'
-import { fmtdate } from '@/lib/datefmt'
+import { fmttime } from '@/lib/datefmt'
 import { HistoryDialogHeader } from './HistoryDialogHeader'
 import { HistoryDialogBody } from './HistoryDialogBody'
 import { judgeStatusColor } from '@/lib/status'
@@ -12,7 +12,7 @@ type Props = {
   invocation: Invocation
 }
 export const HistoryDialog = ({ invocation }: Props) => {
-  const started = fmtdate(invocation.started)
+  const started = fmttime(invocation.started)
   const statusColor = judgeStatusColor(invocation.status)
 
   return (

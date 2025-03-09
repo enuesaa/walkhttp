@@ -1,5 +1,5 @@
 import { Invocation } from '@/gql/types'
-import { calcDuration, fmtdate } from '@/lib/datefmt'
+import { calcDuration, fmtdatetime } from '@/lib/datefmt'
 import { judgeStatusColor } from '@/lib/status'
 import clsx from 'clsx'
 import { HistoryDialogMetaCard } from './HistoryDialogMetaCard'
@@ -8,7 +8,7 @@ type Props = {
   invocation: Invocation
 }
 export const HistoryDialogMeta = ({ invocation }: Props) => {
-  const started = fmtdate(invocation.started)
+  const started = fmtdatetime(invocation.started)
   const duration = calcDuration(invocation.started, invocation.received)
   const httpVersion = invocation.httpVersion === '' ? '-' : invocation.httpVersion
   const statusColor = judgeStatusColor(invocation.status)
