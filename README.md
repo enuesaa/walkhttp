@@ -40,3 +40,9 @@ $ walkhttp --origin https://example.com
 ## キャプチャ
 ![ctlweb](./docs/ctlweb.png)
 ![ctlweb-history](./docs/ctlweb-history.png)
+
+## Future plan
+- export
+- restore
+- diff
+- json syntax highlight
