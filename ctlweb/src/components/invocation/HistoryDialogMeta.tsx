@@ -1,13 +1,15 @@
 import { Invocation } from '@/gql/types'
-import { fmtdate } from '@/lib/datefmt'
+import { calcDuration, fmtdate } from '@/lib/datefmt'
 import { judgeStatusColor } from '@/lib/status'
 import clsx from 'clsx'
+import { HistoryDialogMetaCard } from './HistoryDialogMetaCard'
 
 type Props = {
   invocation: Invocation
 }
 export const HistoryDialogMeta = ({ invocation }: Props) => {
   const started = fmtdate(invocation.started)
+  const duration = calcDuration(invocation.started, invocation.received)
   const statusColor = judgeStatusColor(invocation.status)
 
   return (
@@ -30,12 +32,8 @@ export const HistoryDialogMeta = ({ invocation }: Props) => {
         backgroundImage: 'radial-gradient(#57534e 1px, transparent 1px)',
         backgroundSize: '20px 20px',
       }}>
-        <div className='bg-stone-800 rounded-lg w-fit min-w-24 h-[50px] mx-3 px-1 text-sm border border-stone-600 text-stone-400'>
-          <span className='font-semibold'>Started</span>
-          <div className='w-full text-center text-stone-300 mt-[2px]'>
-            {started}
-          </div>
-        </div>
+        <HistoryDialogMetaCard label='Started' value={started} />
+        <HistoryDialogMetaCard label='Duration' value={duration.toString()} />
       </div>
     </>
   )
