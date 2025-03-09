@@ -23,6 +23,7 @@ func NewInvocationFromEntry(entry invoke.Entry) Invocation {
 		ResponseBody:    entry.Response.Body,
 		Started:         created,
 		Received:        received,
+		HTTPVersion:     entry.HttpVersion,
 	}
 
 	for name, values := range entry.Request.Headers {

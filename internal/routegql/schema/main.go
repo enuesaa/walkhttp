@@ -39,6 +39,7 @@ type Invocation struct {
 	ResponseBody    string    `json:"responseBody"`
 	Started         string    `json:"started"`
 	Received        string    `json:"received"`
+	HTTPVersion     string    `json:"httpVersion"`
 }
 
 type Mutation struct {

@@ -7,9 +7,10 @@ import (
 )
 
 type Entry struct {
-	Id       string        `json:"id"`
-	Request  EntryRequest  `json:"request"`
-	Response EntryResponse `json:"response"`
+	Id          string        `json:"id"`
+	Request     EntryRequest  `json:"request"`
+	Response    EntryResponse `json:"response"`
+	HttpVersion string        `json:"httpVersion"`
 }
 
 type EntryRequest struct {

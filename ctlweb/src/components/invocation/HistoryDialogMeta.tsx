@@ -10,6 +10,7 @@ type Props = {
 export const HistoryDialogMeta = ({ invocation }: Props) => {
   const started = fmtdate(invocation.started)
   const duration = calcDuration(invocation.started, invocation.received)
+  const httpVersion = invocation.httpVersion === '' ? '-' : invocation.httpVersion
   const statusColor = judgeStatusColor(invocation.status)
 
   return (
@@ -33,7 +34,8 @@ export const HistoryDialogMeta = ({ invocation }: Props) => {
         backgroundSize: '20px 20px',
       }}>
         <HistoryDialogMetaCard label='Started' value={started} />
-        <HistoryDialogMetaCard label='Duration' value={duration.toString()} />
+        <HistoryDialogMetaCard label='Duration' value={`${duration.toString()} ms`} />
+        <HistoryDialogMetaCard label='HTTP Version' value={httpVersion} />
       </div>
     </>
   )

@@ -9,6 +9,7 @@ type Invocation {
   responseBody: String!
   started: String!
   received: String!
+  httpVersion: String!
 }
 
 type Header {

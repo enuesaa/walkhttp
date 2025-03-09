@@ -44,6 +44,7 @@ export type HeaderInput = {
 
 export type Invocation = {
   __typename?: 'Invocation'
+  httpVersion: Scalars['String']['output']
   id: Scalars['ID']['output']
   method: Scalars['String']['output']
   received: Scalars['String']['output']

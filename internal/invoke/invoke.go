@@ -1,31 +1,29 @@
 package invoke
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 )
 
 func (srv *InvokeSrv) Invoke(entry *Entry) error {
-	entry.Request.Started = time.Now().UnixMilli()
+	client := http.Client{}
 
-	// req
 	req, err := srv.buildReq(entry)
 	if err != nil {
 		return err
 	}
 
 	// do
-	client := http.Client{}
+	entry.Request.Started = time.Now().UnixMilli()
 	res, err := client.Do(req)
 	if err != nil {
 		return err
 	}
 	defer res.Body.Close()
 
-	// res
 	entry.Response.Received = time.Now().UnixMilli()
-	fmt.Printf("%+v\n", entry)
+	entry.HttpVersion = req.Proto
+
 	if err := srv.parseRes(entry, res); err != nil {
 		return err
 	}
