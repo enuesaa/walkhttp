@@ -42,6 +42,4 @@ $ walkhttp --origin https://example.com
 ![ctlweb-history](./docs/ctlweb-history.png)
 
 ## Future plan
-- export
 - diff
-- json syntax highlight

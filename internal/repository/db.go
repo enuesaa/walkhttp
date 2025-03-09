@@ -13,12 +13,6 @@ type DBRepositoryInterface interface {
 	Count() int
 }
 
-func NewDBRepository() *DBRepository {
-	return &DBRepository{
-		data: map[string]interface{}{},
-	}
-}
-
 type DBRepository struct {
 	data map[string]interface{}
 }
