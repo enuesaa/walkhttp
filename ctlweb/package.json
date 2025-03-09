@@ -8,24 +8,24 @@
     "gengql": "graphql-codegen --config gql.config.ts"
   },
   "dependencies": {
-    "@radix-ui/themes": "^3.1.4",
+    "@radix-ui/themes": "^3.2.1",
     "clsx": "^2.1.1",
-    "graphql-ws": "^5.16.0",
-    "next": "^14.2.16",
+    "graphql-ws": "^5.16.2",
+    "next": "^14.2.24",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-icons": "^5.3.0",
-    "urql": "^4.2.0"
+    "react-icons": "^5.5.0",
+    "urql": "^4.2.2"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^5.0.3",
+    "@graphql-codegen/cli": "^5.0.5",
     "@types/node": "22.2.0",
     "@types/react": "18.3.3",
     "@types/react-dom": "18.3.0",
-    "postcss": "^8.4.47",
+    "postcss": "^8.5.3",
     "postcss-import": "^16.1.0",
-    "prettier": "^3.3.3",
-    "tailwindcss": "^3.4.14",
+    "prettier": "^3.5.3",
+    "tailwindcss": "^3.4.17",
     "typescript": "5.5.4"
   },
   "prettier": {
