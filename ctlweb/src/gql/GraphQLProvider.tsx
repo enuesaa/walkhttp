@@ -1,18 +1,25 @@
 import { Client, cacheExchange, fetchExchange, Provider, subscriptionExchange } from 'urql'
 import { createClient as createWSClient } from 'graphql-ws'
-import { ReactNode } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 
 type Props = {
   children: ReactNode
 }
 export const GraphQLProvider = ({ children }: Props) => {
+  const [host, setHost] = useState<string|undefined>()
+ 
+  useEffect(() => setHost(window.location.host), [])
+  if (host === undefined) {
+    return <></>
+  }
+
   const endpoint = process.env.NEXT_PUBLIC_GRAPH_ENDPOINT as string
   const wsclient = createWSClient({
-    url: `ws://${endpoint}`,
+    url: `ws://${host}${endpoint}`,
   })
 
   const client = new Client({
-    url: `http://${endpoint}`,
+    url: `http://${host}${endpoint}`,
     exchanges: [
       cacheExchange,
       fetchExchange,
