@@ -12,7 +12,7 @@ import (
 func New(repos repository.Repos) *cli.App {
 	app := &cli.App{
 		Name:    "walkhttp",
-		Version: "0.0.12",
+		Version: "0.0.13",
 		Usage:   "A CLI tool to proxy HTTP requests for debugging.",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
