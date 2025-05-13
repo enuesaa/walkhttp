@@ -18,10 +18,10 @@ func New() (Repos, error) {
 		Fs:     &FsRepository{},
 		Prompt: &Prompt{},
 		Log:    &LogRepository{},
-		DB:     &DBRepository{
+		DB: &DBRepository{
 			data: map[string]interface{}{},
 		},
-		Env:    env,
+		Env: env,
 	}
 	return repos, nil
 }

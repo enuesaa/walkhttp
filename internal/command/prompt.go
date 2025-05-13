@@ -33,7 +33,7 @@ func (p *Prompter) buildreq() (invoke.Entry, error) {
 	entry := invokeSrv.NewEntry("GET", "")
 
 	methods := []string{"get", "post", "put", "delete", "options", "GET", "POST", "PUT", "DELETE", "OPTIONS"}
-	validate := func (value string) error {
+	validate := func(value string) error {
 		if !slices.Contains(methods, strings.ToUpper(value)) {
 			return fmt.Errorf("method `%s` is invalid", entry.Request.Method)
 		}

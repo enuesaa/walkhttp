@@ -6,8 +6,8 @@ type Props = {
   children: ReactNode
 }
 export const GraphQLProvider = ({ children }: Props) => {
-  const [host, setHost] = useState<string|undefined>()
- 
+  const [host, setHost] = useState<string | undefined>()
+
   useEffect(() => setHost(window.location.host), [])
   if (host === undefined) {
     return <></>

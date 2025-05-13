@@ -16,8 +16,8 @@ func New(repos repository.Repos) *cli.App {
 		Usage:   "A CLI tool to proxy HTTP requests for debugging.",
 		Flags: []cli.Flag{
 			&cli.StringFlag{
-				Name:  "origin",
-				Usage: "Origin URL",
+				Name:        "origin",
+				Usage:       "Origin URL",
 				DefaultText: "https://example.com",
 			},
 			&cli.IntFlag{
@@ -40,7 +40,7 @@ func New(repos repository.Repos) *cli.App {
 			printBanner(repos, port)
 
 			if prompt {
-				go func () {
+				go func() {
 					prompter := Prompter{repos}
 					if err := prompter.Run(); err != nil {
 						log.Fatalf("Error: %s", err.Error())

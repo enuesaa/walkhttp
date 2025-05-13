@@ -4,7 +4,7 @@ import { FaDownload } from 'react-icons/fa'
 export const ExportButton = () => {
   const invocations = useSubscribeInvocations()
 
-  const handleClick = () => {  
+  const handleClick = () => {
     if (invocations.fetching || invocations.error !== undefined) {
       return
     }
@@ -18,10 +18,10 @@ export const ExportButton = () => {
     })
     const url = URL.createObjectURL(blob)
     const link = document.createElement('a')
-		link.download = 'walkhttp.json'
-		link.href = url
-		link.click()
-		URL.revokeObjectURL(url)
+    link.download = 'walkhttp.json'
+    link.href = url
+    link.click()
+    URL.revokeObjectURL(url)
   }
 
   return (
